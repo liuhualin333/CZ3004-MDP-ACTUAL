@@ -50,10 +50,10 @@ public class StateOfMap {
             Controller.updateList.add(Controller.map.getNode(x, y));
     }
     
-    public static void updateDescriptor(int x, int y, int value){
-        CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor2.updateDescriptor2(x, y, value);
-        CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor1.updateDescriptor1(x, y, value);
-    }
+//    public static void updateDescriptor(int x, int y, int value){
+//        CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor2.updateDescriptor2(x, y, value);
+//        CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor1.updateDescriptor1(x, y, value);
+//    }
     
     //Below methods used for robot movement checking, especially for front
     public static boolean frontIsTraversable() {

@@ -23,9 +23,9 @@ public class Mapsimulator  extends JFrame {
         JFrame frame;
         JFrame explorationDescriptor1;
         JFrame explorationDescriptor2;
-        MapGrid contentPanel;
-        public MapGrid gridPanelDescriptor1;
-        public MapGrid gridPanelDescriptor2;
+//        MapGrid contentPanel;
+//        public MapGrid gridPanelDescriptor1;
+//        public MapGrid gridPanelDescriptor2;
         JPanel controlPanel;
         JPanel functionalityPanel;
         JPanel filePanel;
@@ -52,16 +52,16 @@ public class Mapsimulator  extends JFrame {
         JButton savefile2;
         String[] speedList = { "1", "2", "4", "8", "16" };
         String[] percentList = {"10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%"};
-        String[] timeList = {"-", "30s", "60s", "120s", "180s", "240s", "300s", "360s"};
+        String[] timeList = {"-", "30s", "60s", "120s", "180s", "240s", "300s"};
         int speed;
 	public Mapsimulator(){
             frame = new JFrame();
             explorationDescriptor1 = new JFrame();
             explorationDescriptor2 = new JFrame();
             frame.setTitle("Algorithm Simulation");
-            contentPanel = new MapGrid();
-            gridPanelDescriptor1 = new MapGrid(1);
-            gridPanelDescriptor2 = new MapGrid(2);
+//            contentPanel = new MapGrid();
+//            gridPanelDescriptor1 = new MapGrid(1);
+//            gridPanelDescriptor2 = new MapGrid(2);
             controlPanel = new JPanel();
             functionalityPanel = new JPanel();
             filePanel = new JPanel();
@@ -96,8 +96,8 @@ public class Mapsimulator  extends JFrame {
             exploration.addMouseListener(new MouseAdapter(){
                 @Override
                 public void mousePressed(MouseEvent e){
-                    gridPanelDescriptor1 = new MapGrid(1);
-                    gridPanelDescriptor2 = new MapGrid(2);
+//                    gridPanelDescriptor1 = new MapGrid(1);
+//                    gridPanelDescriptor2 = new MapGrid(2);
                     Container content1 = explorationDescriptor1.getContentPane();
                     Container content2 = explorationDescriptor2.getContentPane();
                     explorationDescriptor1.setTitle("Exploration Descriptor1");
@@ -108,8 +108,8 @@ public class Mapsimulator  extends JFrame {
 		    explorationDescriptor2.setLayout(new BorderLayout());
                     explorationDescriptor1.setLocation(frame.getX() + frame.getWidth(), frame.getY());
                     explorationDescriptor2.setLocation(explorationDescriptor1.getX() + explorationDescriptor1.getWidth(), explorationDescriptor1.getY());
-                    content1.add(gridPanelDescriptor1, BorderLayout.CENTER);
-                    content2.add(gridPanelDescriptor2, BorderLayout.CENTER);
+//                    content1.add(gridPanelDescriptor1, BorderLayout.CENTER);
+//                    content2.add(gridPanelDescriptor2, BorderLayout.CENTER);
 //                    descriptor1filePanel.add(savefile1);
 //                    descriptor1ContrPanel.add(descriptor1filePanel);
 //                    descriptor2filePanel.add(savefile2);
@@ -127,24 +127,24 @@ public class Mapsimulator  extends JFrame {
             loadfile.addMouseListener(new MouseAdapter(){
                 @Override
                 public void mousePressed(MouseEvent e){
-                    try{
-                    contentPanel.loadFile();
-                    }
-                    catch (IOException ex){
-                        System.out.println("File loading failed");
-                    }
+//                    try{
+//                    contentPanel.loadFile();
+//                    }
+//                    catch (IOException ex){
+//                        System.out.println("File loading failed");
+//                    }
                 }
             });
             savefile.addMouseListener(new MouseAdapter(){
                 @Override
                 public void mousePressed(MouseEvent e){
-                    try{
-                        contentPanel.saveFile1();
-                        contentPanel.saveFile2();
-                    }
-                    catch (IOException ex){
-                        System.out.println("File saving failed");
-                    }
+//                    try{
+//                        contentPanel.saveFile1();
+//                        contentPanel.saveFile2();
+//                    }
+//                    catch (IOException ex){
+//                        System.out.println("File saving failed");
+//                    }
                 }   
             });
 //            savefile1.addMouseListener(new MouseAdapter(){
@@ -172,7 +172,7 @@ public class Mapsimulator  extends JFrame {
             refresh.addMouseListener(new MouseAdapter(){
                 @Override
                 public void mousePressed(MouseEvent e){
-                    contentPanel.refresh1();
+//                    contentPanel.refresh1();
                 }
             });
             fastestPath.addMouseListener(new MouseAdapter(){
@@ -188,7 +188,7 @@ public class Mapsimulator  extends JFrame {
                 frame.setSize(WIDTH, HEIGHT);
 		frame.setLayout(new BorderLayout());
                 Container content = frame.getContentPane();
-                content.add(contentPanel, BorderLayout.CENTER);
+//                content.add(contentPanel, BorderLayout.CENTER);
                 content.add(controlPanel, BorderLayout.SOUTH);
                 speedLabel.setText("Speed:");
                 percentLabel.setText("Percent:");

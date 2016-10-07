@@ -15,7 +15,7 @@ public class Controller {
     final int ROBOTSIZE = 3;
     static final int width = 15;
     static final int height = 20;
-    static Mapsimulator mapsimulator;
+    //static Mapsimulator mapsimulator;
     static Map map = new Map(width, height);
     static boolean enableTwoTiles;
     
@@ -58,11 +58,11 @@ public class Controller {
     public void start(){
         enableTwoTiles = true;
         initialize();  
-        mapsimulator = new Mapsimulator();
+        //mapsimulator = new Mapsimulator();
         setRobotLocationAsExplored();
         //percentageExplore(50, 1);
         //timedExplore(100, 4);
-        //fullExplore();
+        fullExplore(1);
         //fastPath(1);
     }
     
@@ -203,15 +203,15 @@ public class Controller {
         StateOfMap.setExploredTile(Robot.R8X, Robot.R8Y, 1);
         StateOfMap.setExploredTile(Robot.R9X, Robot.R9Y, 1);  
         
-        StateOfMap.updateDescriptor(Robot.R1X, Robot.R1Y, 1);
-        StateOfMap.updateDescriptor(Robot.R2X, Robot.R2Y, 1);
-        StateOfMap.updateDescriptor(Robot.R3X, Robot.R3Y, 1);
-        StateOfMap.updateDescriptor(Robot.R4X, Robot.R4Y, 1);
-        StateOfMap.updateDescriptor(Robot.R5X, Robot.R5Y, 1);
-        StateOfMap.updateDescriptor(Robot.R6X, Robot.R6Y, 1);
-        StateOfMap.updateDescriptor(Robot.R7X, Robot.R7Y, 1);
-        StateOfMap.updateDescriptor(Robot.R8X, Robot.R8Y, 1);
-        StateOfMap.updateDescriptor(Robot.R9X, Robot.R9Y, 1);
+//        StateOfMap.updateDescriptor(Robot.R1X, Robot.R1Y, 1);
+//        StateOfMap.updateDescriptor(Robot.R2X, Robot.R2Y, 1);
+//        StateOfMap.updateDescriptor(Robot.R3X, Robot.R3Y, 1);
+//        StateOfMap.updateDescriptor(Robot.R4X, Robot.R4Y, 1);
+//        StateOfMap.updateDescriptor(Robot.R5X, Robot.R5Y, 1);
+//        StateOfMap.updateDescriptor(Robot.R6X, Robot.R6Y, 1);
+//        StateOfMap.updateDescriptor(Robot.R7X, Robot.R7Y, 1);
+//        StateOfMap.updateDescriptor(Robot.R8X, Robot.R8Y, 1);
+//        StateOfMap.updateDescriptor(Robot.R9X, Robot.R9Y, 1);
     }
     //elementary behaviours
     //determines where the robot should turn based on current direction and objective direction, then execute
@@ -370,7 +370,7 @@ public class Controller {
             if (!StateOfMap.isExploredTile(Robot.Tile1X, Robot.Tile1Y)){
                 StateOfMap.setExploredTile(Robot.Tile1X, Robot.Tile1Y, 1);
                 StateOfMap.setObstacleTile(Robot.Tile1X, Robot.Tile1Y, map.getNode(Robot.Tile1X, Robot.Tile1Y).isObstacle() ? 1 : 0 );
-                StateOfMap.updateDescriptor(Robot.Tile1X, Robot.Tile1Y, 1);
+                //StateOfMap.updateDescriptor(Robot.Tile1X, Robot.Tile1Y, 1);
                 scannedNodes++;
             }
             
@@ -379,7 +379,7 @@ public class Controller {
                     if (!StateOfMap.isExploredTile(Robot.Tile1EX, Robot.Tile1EY) && !StateOfMap.isObstacleTile(Robot.Tile1X, Robot.Tile1Y)){
                         StateOfMap.setExploredTile(Robot.Tile1EX, Robot.Tile1EY, 1);
                         StateOfMap.setObstacleTile(Robot.Tile1EX, Robot.Tile1EY, map.getNode(Robot.Tile1EX, Robot.Tile1EY).isObstacle() ? 1 : 0 );
-                        StateOfMap.updateDescriptor(Robot.Tile1EX, Robot.Tile1EY, 1);
+                        //StateOfMap.updateDescriptor(Robot.Tile1EX, Robot.Tile1EY, 1);
                         scannedNodes++;
                     }
                 }
@@ -389,7 +389,7 @@ public class Controller {
             if (!StateOfMap.isExploredTile(Robot.Tile2X, Robot.Tile2Y)){
                 StateOfMap.setExploredTile(Robot.Tile2X, Robot.Tile2Y, 1);
                 StateOfMap.setObstacleTile(Robot.Tile2X, Robot.Tile2Y, map.getNode(Robot.Tile2X, Robot.Tile2Y).isObstacle() ? 1 : 0 );
-                StateOfMap.updateDescriptor(Robot.Tile2X, Robot.Tile2Y, 1);
+                //StateOfMap.updateDescriptor(Robot.Tile2X, Robot.Tile2Y, 1);
                 scannedNodes++;                
             }
             
@@ -398,7 +398,7 @@ public class Controller {
                     if (!StateOfMap.isExploredTile(Robot.Tile2EX, Robot.Tile2EY) && !StateOfMap.isObstacleTile(Robot.Tile2X, Robot.Tile2Y)){
                         StateOfMap.setExploredTile(Robot.Tile2EX, Robot.Tile2EY, 1);
                         StateOfMap.setObstacleTile(Robot.Tile2EX, Robot.Tile2EY, map.getNode(Robot.Tile2EX, Robot.Tile2EY).isObstacle() ? 1 : 0 );
-                        StateOfMap.updateDescriptor(Robot.Tile2EX, Robot.Tile2EY, 1);
+                        //StateOfMap.updateDescriptor(Robot.Tile2EX, Robot.Tile2EY, 1);
                         scannedNodes++;
                     }
                 }
@@ -408,7 +408,7 @@ public class Controller {
             if (!StateOfMap.isExploredTile(Robot.Tile3X, Robot.Tile3Y)){
                 StateOfMap.setExploredTile(Robot.Tile3X, Robot.Tile3Y, 1);
                 StateOfMap.setObstacleTile(Robot.Tile3X, Robot.Tile3Y, map.getNode(Robot.Tile3X, Robot.Tile3Y).isObstacle() ? 1 : 0 );
-                StateOfMap.updateDescriptor(Robot.Tile3X, Robot.Tile3Y, 1);
+                //StateOfMap.updateDescriptor(Robot.Tile3X, Robot.Tile3Y, 1);
                 scannedNodes++;                
             }
             
@@ -417,7 +417,7 @@ public class Controller {
                     if (!StateOfMap.isExploredTile(Robot.Tile3EX, Robot.Tile3EY) && !StateOfMap.isObstacleTile(Robot.Tile3X, Robot.Tile3Y)){
                         StateOfMap.setExploredTile(Robot.Tile3EX, Robot.Tile3EY, 1);
                         StateOfMap.setObstacleTile(Robot.Tile3EX, Robot.Tile3EY, map.getNode(Robot.Tile3EX, Robot.Tile3EY).isObstacle() ? 1 : 0 );
-                        StateOfMap.updateDescriptor(Robot.Tile3EX, Robot.Tile3EY, 1);
+                        //StateOfMap.updateDescriptor(Robot.Tile3EX, Robot.Tile3EY, 1);
                         scannedNodes++;
                     }
                 }
@@ -427,7 +427,7 @@ public class Controller {
             if (!StateOfMap.isExploredTile(Robot.Tile5X, Robot.Tile5Y)){ 
                 StateOfMap.setExploredTile(Robot.Tile5X, Robot.Tile5Y, 1);
                 StateOfMap.setObstacleTile(Robot.Tile5X, Robot.Tile5Y, map.getNode(Robot.Tile5X, Robot.Tile5Y).isObstacle() ? 1 : 0 );
-                StateOfMap.updateDescriptor(Robot.Tile5X, Robot.Tile5Y, 1);
+                //StateOfMap.updateDescriptor(Robot.Tile5X, Robot.Tile5Y, 1);
                 scannedNodes++;
             }
                 
@@ -436,7 +436,7 @@ public class Controller {
                     if (!StateOfMap.isExploredTile(Robot.Tile5EX, Robot.Tile5EY) && !StateOfMap.isObstacleTile(Robot.Tile5X, Robot.Tile5Y)){
                         StateOfMap.setExploredTile(Robot.Tile5EX, Robot.Tile5EY, 1);
                         StateOfMap.setObstacleTile(Robot.Tile5EX, Robot.Tile5EY, map.getNode(Robot.Tile5EX, Robot.Tile5EY).isObstacle() ? 1 : 0 );
-                        StateOfMap.updateDescriptor(Robot.Tile5EX, Robot.Tile5EY, 1);
+                        //StateOfMap.updateDescriptor(Robot.Tile5EX, Robot.Tile5EY, 1);
                         scannedNodes++;
                     }
                 }
@@ -446,7 +446,7 @@ public class Controller {
             if (!StateOfMap.isExploredTile(Robot.Tile6X, Robot.Tile6Y)){
                 StateOfMap.setExploredTile(Robot.Tile6X, Robot.Tile6Y, 1);
                 StateOfMap.setObstacleTile(Robot.Tile6X, Robot.Tile6Y, map.getNode(Robot.Tile6X, Robot.Tile6Y).isObstacle() ? 1 : 0 );
-                StateOfMap.updateDescriptor(Robot.Tile6X, Robot.Tile6Y, 1);
+                //StateOfMap.updateDescriptor(Robot.Tile6X, Robot.Tile6Y, 1);
                 scannedNodes++;
             }
                 
@@ -455,7 +455,7 @@ public class Controller {
                     if (!StateOfMap.isExploredTile(Robot.Tile6EX, Robot.Tile6EY) && !StateOfMap.isObstacleTile(Robot.Tile6X, Robot.Tile6Y)){
                         StateOfMap.setExploredTile(Robot.Tile6EX, Robot.Tile6EY, 1);
                         StateOfMap.setObstacleTile(Robot.Tile6EX, Robot.Tile6EY, map.getNode(Robot.Tile6EX, Robot.Tile6EY).isObstacle() ? 1 : 0 );
-                        StateOfMap.updateDescriptor(Robot.Tile6EX, Robot.Tile6EY, 1);
+                        //StateOfMap.updateDescriptor(Robot.Tile6EX, Robot.Tile6EY, 1);
                         scannedNodes++;
                     }
                 }
@@ -465,7 +465,7 @@ public class Controller {
             if (!StateOfMap.isExploredTile(Robot.Tile7X, Robot.Tile7Y)){ 
                 StateOfMap.setExploredTile(Robot.Tile7X, Robot.Tile7Y, 1);
                 StateOfMap.setObstacleTile(Robot.Tile7X, Robot.Tile7Y, map.getNode(Robot.Tile7X, Robot.Tile7Y).isObstacle() ? 1 : 0 );
-                StateOfMap.updateDescriptor(Robot.Tile7X, Robot.Tile7Y, 1);
+                //StateOfMap.updateDescriptor(Robot.Tile7X, Robot.Tile7Y, 1);
                 scannedNodes++;
             }
                 
@@ -474,7 +474,7 @@ public class Controller {
                     if (!StateOfMap.isExploredTile(Robot.Tile7EX, Robot.Tile7EY) && !StateOfMap.isObstacleTile(Robot.Tile7X, Robot.Tile7Y)){
                         StateOfMap.setExploredTile(Robot.Tile7EX, Robot.Tile7EY, 1);
                         StateOfMap.setObstacleTile(Robot.Tile7EX, Robot.Tile7EY, map.getNode(Robot.Tile7EX, Robot.Tile7EY).isObstacle() ? 1 : 0 );
-                        StateOfMap.updateDescriptor(Robot.Tile7EX, Robot.Tile7EY, 1);
+                        //StateOfMap.updateDescriptor(Robot.Tile7EX, Robot.Tile7EY, 1);
                         scannedNodes++;
                     }
                 }
@@ -484,7 +484,7 @@ public class Controller {
             if (!StateOfMap.isExploredTile(Robot.Tile8X, Robot.Tile8Y)){ 
                 StateOfMap.setExploredTile(Robot.Tile8X, Robot.Tile8Y, 1);
                 StateOfMap.setObstacleTile(Robot.Tile8X, Robot.Tile8Y, map.getNode(Robot.Tile8X, Robot.Tile8Y).isObstacle() ? 1 : 0 );
-                StateOfMap.updateDescriptor(Robot.Tile8X, Robot.Tile8Y, 1);
+                //StateOfMap.updateDescriptor(Robot.Tile8X, Robot.Tile8Y, 1);
                 scannedNodes++;
             }
                 
@@ -493,7 +493,7 @@ public class Controller {
                     if (!StateOfMap.isExploredTile(Robot.Tile8EX, Robot.Tile8EY) && !StateOfMap.isObstacleTile(Robot.Tile8X, Robot.Tile8Y)){
                         StateOfMap.setExploredTile(Robot.Tile8EX, Robot.Tile8EY, 1);
                         StateOfMap.setObstacleTile(Robot.Tile8EX, Robot.Tile8EY, map.getNode(Robot.Tile8EX, Robot.Tile8EY).isObstacle() ? 1 : 0 );
-                        StateOfMap.updateDescriptor(Robot.Tile8EX, Robot.Tile8EY, 1);
+                        //StateOfMap.updateDescriptor(Robot.Tile8EX, Robot.Tile8EY, 1);
                         scannedNodes++;
                     }
                 }
@@ -503,7 +503,7 @@ public class Controller {
             if (!StateOfMap.isExploredTile(Robot.Tile9X, Robot.Tile9Y)){
                 StateOfMap.setExploredTile(Robot.Tile9X, Robot.Tile9Y, 1);
                 StateOfMap.setObstacleTile(Robot.Tile9X, Robot.Tile9Y, map.getNode(Robot.Tile9X, Robot.Tile9Y).isObstacle() ? 1 : 0 );
-                StateOfMap.updateDescriptor(Robot.Tile9X, Robot.Tile9Y, 1);
+                //StateOfMap.updateDescriptor(Robot.Tile9X, Robot.Tile9Y, 1);
                 scannedNodes++;
             } 
                 
@@ -512,7 +512,7 @@ public class Controller {
                     if (!StateOfMap.isExploredTile(Robot.Tile9EX, Robot.Tile9EY) && !StateOfMap.isObstacleTile(Robot.Tile9X, Robot.Tile9Y)){
                         StateOfMap.setExploredTile(Robot.Tile9EX, Robot.Tile9EY, 1);
                         StateOfMap.setObstacleTile(Robot.Tile9EX, Robot.Tile9EY, map.getNode(Robot.Tile9EX, Robot.Tile9EY).isObstacle() ? 1 : 0 );
-                        StateOfMap.updateDescriptor(Robot.Tile9EX, Robot.Tile9EY, 1);
+                        //StateOfMap.updateDescriptor(Robot.Tile9EX, Robot.Tile9EY, 1);
                         scannedNodes++;
                     }
                 }
@@ -522,7 +522,7 @@ public class Controller {
             if (!StateOfMap.isExploredTile(Robot.Tile10X, Robot.Tile10Y)){
                 StateOfMap.setExploredTile(Robot.Tile10X, Robot.Tile10Y, 1);
                 StateOfMap.setObstacleTile(Robot.Tile10X, Robot.Tile10Y, map.getNode(Robot.Tile10X, Robot.Tile10Y).isObstacle() ? 1 : 0 );
-                StateOfMap.updateDescriptor(Robot.Tile10X, Robot.Tile10Y, 1);
+                //StateOfMap.updateDescriptor(Robot.Tile10X, Robot.Tile10Y, 1);
                 scannedNodes++;
             }  
                 
@@ -531,7 +531,7 @@ public class Controller {
                     if (!StateOfMap.isExploredTile(Robot.Tile10EX, Robot.Tile10EY) && !StateOfMap.isObstacleTile(Robot.Tile10X, Robot.Tile10Y)){
                         StateOfMap.setExploredTile(Robot.Tile10EX, Robot.Tile10EY, 1);
                         StateOfMap.setObstacleTile(Robot.Tile10EX, Robot.Tile10EY, map.getNode(Robot.Tile10EX, Robot.Tile10EY).isObstacle() ? 1 : 0 );
-                        StateOfMap.updateDescriptor(Robot.Tile10EX, Robot.Tile10EY, 1);
+                        //StateOfMap.updateDescriptor(Robot.Tile10EX, Robot.Tile10EY, 1);
                         scannedNodes++;
                     }
                 }
@@ -633,124 +633,6 @@ public class Controller {
         return tmp;
     }
     
-    //move to a node assuming there is a path to it in the currently explored space
-    public void moveToObjectiveDemo(int[] objective){ 
-                             
-        actionSequence = map.findPath(currentLocation, objective); 
-        for (Node tmp : actionSequence)
-            System.out.println("Action Path: " + tmp.getX() + " " + tmp.getY());
-        if (actionSequence == null)
-            System.out.println("null");
-        if (actionSequence.isEmpty()){  
-            System.out.println("Path is empty");
-            bestPathImpossible = true;
-            impossibleNodes.add( new Node(objective[0], objective[1]));
-        }
-
-        SwingWorker worker = new SwingWorker<Integer, Integer>() {
-            @Override
-            protected Integer doInBackground() {
-                mapsimulator.contentPanel.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
-
-                for (Node s : actionSequence){
-                    //System.out.println("Action Path: " + s.getX() + " " + s.getY());
-                    directionX = s.getX() - Robot.R9X;
-                    directionY = s.getY() - Robot.R9Y;
-                                     
-                        if (directionX < 0 && directionY == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_LEFT){
-                                turn(Direction.DIRECTION_LEFT);
-                                publishAndSleep(); 
-                                if (turnTwiceFlag){
-                                    turn(Direction.DIRECTION_LEFT);
-                                    publishAndSleep();
-                                    turnTwiceFlag = false;
-                                }
-                            }
-                        } else if (directionX > 0 && directionY == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_RIGHT){
-                                turn(Direction.DIRECTION_RIGHT);
-                                publishAndSleep();
-                                if (turnTwiceFlag){
-                                    turn(Direction.DIRECTION_RIGHT);
-                                    publishAndSleep();
-                                    turnTwiceFlag = false;
-                                }
-                            }
-                        } else if (directionY < 0 && directionX == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_DOWN){
-                                turn(Direction.DIRECTION_DOWN);
-                                publishAndSleep(); 
-                                if (turnTwiceFlag){
-                                    turn(Direction.DIRECTION_DOWN);
-                                    publishAndSleep();
-                                    turnTwiceFlag = false;
-                                }
-                            }
-                        } else if (directionY > 0 && directionX == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_UP){
-                                turn(Direction.DIRECTION_UP);
-                                publishAndSleep(); 
-                                if (turnTwiceFlag){
-                                    turn(Direction.DIRECTION_UP);
-                                    publishAndSleep();
-                                    turnTwiceFlag = false;
-                                }
-                            }
-                        }                 
-//                    if (explorationDone){
-//                        forward(1);
-//                        publishAndSleep(); 
-//                    }
-//                    else 
-                        if (StateOfMap.frontIsTraversable()) {            
-                        forward(1);
-                        scan();
-                        publishAndSleep(); 
-                        bestPathImpossible = false;
-                        updateExploredAndObstacleCount();
-                    } 
-                    else {
-                        bestPathImpossible = true;
-                        impossibleNodes.add( actionSequence.get(actionSequence.size()-1) );
-                        break;
-                    }
-                    //publishAndSleep();                 
-                }
-                //if (!explorationDone){
-                    scan();
-                    setRobotLocationAsExplored();
-                //}
-                if(bestPathImpossible != true){
-                    //publishAndSleep();
-                }
-                return 1;
-
-             }
-
-            @Override
-            protected void process(java.util.List<Integer> chunks) {               
-                mapsimulator.contentPanel.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
-            }
-
-            @Override
-            protected void done() {
-                System.out.println("SHORTEST PATH COMPLETED");
-            }
-
-            public void publishAndSleep() {
-                publish();
-                try{
-                    Thread.sleep(1000/speed);
-                }
-                catch(InterruptedException e){
-                    
-                }
-            }
-        };
-        worker.execute();
-        
-    }
     public void explore (String percentage, int speed, String time){
         switch(time){
             case "-":
@@ -804,14 +686,14 @@ public class Controller {
         done = false;
         goalReached = true;
         this.speed = speed;
-        SwingWorker worker = new SwingWorker<Integer, Integer>() {
-            @Override
-            protected Integer doInBackground() {
+//        SwingWorker worker = new SwingWorker<Integer, Integer>() {
+//            @Override
+//            protected Integer doInBackground() {
         
                 for (int i = 0; i < 4; i++){
                     scan();       //detect obstacles
                     executeTurn(Direction.TURN_RIGHT);
-                    publishAndSleep();
+                    //publishAndSleep();
                 }       
 
                 while (!done){
@@ -841,7 +723,7 @@ public class Controller {
                         else{    
                             forward(1);
                             scan();
-                            publishAndSleep();
+                            //publishAndSleep();
                             updateExploredAndObstacleCount();
                             System.out.println("Explored nodes: " + exploredNodeCount);
                         }
@@ -955,128 +837,37 @@ public class Controller {
                 moveToObjective(startZoneLocation);
                 System.out.println("Movements: " + movementCounter);
                 System.out.println("Turns: " + turnCounter);
-                return 1;
-            }
-
-            @Override
-            public void process(java.util.List<Integer> chunks){
-                try{
-                        CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor1.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
-                CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor2.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
-                for (Node node : updateList) {
-                    StateOfMap.updateDescriptor(node.getX(), node.getY(), 0);
-                    updateList.remove(node);
-                }
-                }
-                catch(Exception e){
-                }
-                    
-                    
-            }
-            public void publishAndSleep() {
-                publish();
-                try{
-                    Thread.sleep(1000/speed);
-                }
-                catch(InterruptedException e){
-                    
-                }
-            }
-            public void moveToObjective(int[] objective){ 
-
-                actionSequence = map.findPath(currentLocation, objective); 
-                //for (Node tmp : actionSequence)
-                    //System.out.println("Action Path: " + tmp.getX() + " " + tmp.getY());
-                if (actionSequence == null)
-                    System.out.println("null");
-                if (actionSequence.isEmpty()){  
-                    System.out.println("is empty");
-                    bestPathImpossible = true;                       
-                    impossibleNodes.add( new Node(objective[0], objective[1]));
-                }
-                //SwingWorker worker = new SwingWorker<Integer, Integer>() {
-                  //  @Override
-                    //protected Integer doInBackground() {
-                      //  mapsimulator.contentPanel.paintRobotLocation();  
-                    for (Node s : actionSequence){
-                        System.out.println("Action Path: " + s.getX() + " " + s.getY());
-                        directionX = s.getX() - Robot.R9X;
-                        directionY = s.getY() - Robot.R9Y;
-
-                        if (directionX < 0 && directionY == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_LEFT){
-                                turn(Direction.DIRECTION_LEFT);
-                                publishAndSleep();
-                                if (turnTwiceFlag){
-                                    turn(Direction.DIRECTION_LEFT);
-                                    publishAndSleep();
-                                    turnTwiceFlag = false;
-                                }
-                            }
-                        } else if (directionX > 0 && directionY == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_RIGHT){
-                                turn(Direction.DIRECTION_RIGHT);
-                                publishAndSleep(); 
-                                if (turnTwiceFlag){
-                                    turn(Direction.DIRECTION_RIGHT);
-                                    publishAndSleep();
-                                    turnTwiceFlag = false;
-                                }
-                            }
-                        } else if (directionY < 0 && directionX == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_DOWN){
-                                turn(Direction.DIRECTION_DOWN);
-                                publishAndSleep();
-                                if (turnTwiceFlag){
-                                    turn(Direction.DIRECTION_DOWN);
-                                    publishAndSleep();
-                                    turnTwiceFlag = false;
-                                }
-                            }
-                        } else if (directionY > 0 && directionX == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_UP){
-                                turn(Direction.DIRECTION_UP);
-                                publishAndSleep(); 
-                                if (turnTwiceFlag){
-                                    turn(Direction.DIRECTION_UP);
-                                    publishAndSleep();
-                                    turnTwiceFlag = false;
-                                }
-                            }
-                        }
-
-//                        if (explorationDone){
-//                            forward(1);
-//                            publishAndSleep(); 
-//                        }
-//                        else 
-                            if (StateOfMap.frontIsTraversable()) {            
-                            //setRobotLocationAsExplored();
-                            forward(1);
-                            scan();
-                            publishAndSleep(); 
-                            bestPathImpossible = false;
-                            updateExploredAndObstacleCount();
-                        } 
-                        else {
-                            bestPathImpossible = true;                       
-                            impossibleNodes.add( actionSequence.get(actionSequence.size()-1) );
-                            break;//this is where we handle nearest unexplored or neighbours being obstacles
-                        }
-
-                    }
-                    //if (!explorationDone){
-                        scan();
-                        setRobotLocationAsExplored();
-                    //}
-                    if(bestPathImpossible != true){
-                            //publishAndSleep();
-                    }
-                   // return 1;
-                 }
+//                return 1;
+//            }
+//
+//            @Override
+//            public void process(java.util.List<Integer> chunks){
+//                try{
+//                        CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor1.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
+//                CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor2.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
+//                for (Node node : updateList) {
+//                    StateOfMap.updateDescriptor(node.getX(), node.getY(), 0);
+//                    updateList.remove(node);
+//                }
+//                }
+//                catch(Exception e){
+//                }
+//                    
+//                    
+//            }
+//            public void publishAndSleep() {
+//                publish();
+//                try{
+//                    Thread.sleep(1000/speed);
+//                }
+//                catch(InterruptedException e){
+//                    
+//                }
+//            }
+//            
             
-        };
-        worker.execute();
+//        };
+//        worker.execute();
     }
     
     public void updateExploredAndObstacleCount(){
@@ -1105,14 +896,14 @@ public class Controller {
         nodesToExplore = 300 * percentage/100;
         nodesToExploreRounded = (int) nodesToExplore; //round 
         
-        SwingWorker worker = new SwingWorker<Integer, Integer>() {
-            @Override
-            protected Integer doInBackground() {
+//        SwingWorker worker = new SwingWorker<Integer, Integer>() {
+//            @Override
+//            protected Integer doInBackground() {
         
                 for (int i = 0; i < 4; i++){
                     scan();       //detect obstacles
                     executeTurn(Direction.TURN_RIGHT);
-                    publishAndSleep();
+                    //publishAndSleep();
                 }       
 
                 while (!done){
@@ -1131,7 +922,7 @@ public class Controller {
                         else{    
                             forward(1);
                             scan();
-                            publishAndSleep();
+                            //publishAndSleep();
                             updateExploredAndObstacleCount();
                             System.out.println("Explored nodes: " + exploredNodeCount);
                         }
@@ -1182,122 +973,34 @@ public class Controller {
 //                    moveToObjectivePercentage(goalZoneLocation);
 //                    moveToObjectivePercentage(startZoneLocation);
                 }              
-                return 1;
-            }
-            @Override
-            public void process(java.util.List<Integer> chunks){
-                try{
-                        CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor1.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
-                CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor2.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
-                for (Node node : updateList) {
-                    StateOfMap.updateDescriptor(node.getX(), node.getY(), 0);
-                    updateList.remove(node);
-                }
-                }
-                catch(Exception e){
-                }
-                    
-                    
-            }
-            public void publishAndSleep() {
-                publish();
-                try{
-                    Thread.sleep(1000/speed);
-                }
-                catch(InterruptedException e){
-                    
-                }
-            }
-            public void moveToObjectivePercentage(int[] objective){ 
-
-                actionSequence = map.findPath(currentLocation, objective); 
-                //for (Node tmp : actionSequence)
-                    //System.out.println("Action Path: " + tmp.getX() + " " + tmp.getY());
-                if (actionSequence == null)
-                    System.out.println("null");
-                if (actionSequence.isEmpty()){  
-                    System.out.println("is empty");
-                    bestPathImpossible = true;                       
-                    impossibleNodes.add( new Node(objective[0], objective[1]));
-                }
-                
-                    for (Node s : actionSequence){
-                        System.out.println("Action Path: " + s.getX() + " " + s.getY());
-                        directionX = s.getX() - Robot.R9X;
-                        directionY = s.getY() - Robot.R9Y;
-
-                        if (directionX < 0 && directionY == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_LEFT){
-                                turn(Direction.DIRECTION_LEFT);
-                                publishAndSleep();
-                                if (turnTwiceFlag){
-                                    turn(Direction.DIRECTION_LEFT);
-                                    publishAndSleep();
-                                    turnTwiceFlag = false;
-                                }
-                            }
-                        } else if (directionX > 0 && directionY == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_RIGHT){
-                                turn(Direction.DIRECTION_RIGHT);
-                                publishAndSleep(); 
-                                if (turnTwiceFlag){
-                                    turn(Direction.DIRECTION_RIGHT);
-                                    publishAndSleep();
-                                    turnTwiceFlag = false;
-                                }
-                            }
-                        } else if (directionY < 0 && directionX == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_DOWN){
-                                turn(Direction.DIRECTION_DOWN);
-                                publishAndSleep(); 
-                                if (turnTwiceFlag){
-                                    turn(Direction.DIRECTION_DOWN);
-                                    publishAndSleep();
-                                    turnTwiceFlag = false;
-                                }
-                            }
-                        } else if (directionY > 0 && directionX == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_UP){
-                                turn(Direction.DIRECTION_UP);
-                                publishAndSleep(); 
-                                if (turnTwiceFlag){
-                                    turn(Direction.DIRECTION_UP);
-                                    publishAndSleep();
-                                    turnTwiceFlag = false;
-                                }
-                            }
-                        }
-
-                        if (explorationDone){
-                            forward(1);
-                            publishAndSleep();
-                        }
-                        else 
-                            if (StateOfMap.frontIsTraversable()) {            
-                            //setRobotLocationAsExplored();
-                            forward(1);
-                            scan();
-                            publishAndSleep();
-                            bestPathImpossible = false;
-                            updateExploredAndObstacleCount();
-                            if (exploredNodeCount >= nodesToExploreRounded)
-                                return;
-                        } 
-                        else {
-                            bestPathImpossible = true;                       
-                            impossibleNodes.add( actionSequence.get(actionSequence.size()-1) );
-                            break;//this is where we handle nearest unexplored or neighbours being obstacles
-                        }
-
-                    }
-                    if (!explorationDone){
-                        scan();
-                        setRobotLocationAsExplored();
-                        //publishAndSleep();
-                    }
-    }
-        };
-        worker.execute();
+//                return 1;
+//            }
+//            @Override
+//            public void process(java.util.List<Integer> chunks){
+//                try{
+//                        CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor1.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
+//                CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor2.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
+//                for (Node node : updateList) {
+//                    StateOfMap.updateDescriptor(node.getX(), node.getY(), 0);
+//                    updateList.remove(node);
+//                }
+//                }
+//                catch(Exception e){
+//                }
+//                    
+//                    
+//            }
+//            public void publishAndSleep() {
+//                publish();
+//                try{
+//                    Thread.sleep(1000/speed);
+//                }
+//                catch(InterruptedException e){
+//                    
+//                }
+//            }
+//        };
+//        worker.execute();
     }
     
     public void timedExplore(int timeLimit, int speed){  //just use an integer for now
@@ -1305,13 +1008,14 @@ public class Controller {
         done = false;   //done is used differently in this context, only set when timelimit reached
         this.speed = speed;
         timeLimitAbsolute = timeLimit * speed;
-        SwingWorker worker = new SwingWorker<Integer, Integer>() {
-            @Override
-            protected Integer doInBackground() {
+        
+//        SwingWorker worker = new SwingWorker<Integer, Integer>() {
+//            @Override
+//            protected Integer doInBackground() {
                 for (int i = 0; i < 4; i++){
                     scan();       //detect obstacles
                     executeTurn(Direction.TURN_RIGHT);
-                    publishAndSleep();
+                    //publishAndSleep();
                 }       
 
                 while (!done){
@@ -1328,7 +1032,7 @@ public class Controller {
                         else{    
                             forward(1);
                             scan();
-                            publishAndSleep();
+                            //publishAndSleep();
                             updateExploredAndObstacleCount();
                             System.out.println("Explored nodes: " + exploredNodeCount);
                         }
@@ -1406,125 +1110,41 @@ public class Controller {
                     System.out.println("Movements: " + movementCounter);
                     System.out.println("Turns: " + turnCounter);   
                 }
-                return 1;
-            }
-            @Override
-            public void process(java.util.List<Integer> chunks){
-                try{
-                        CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor1.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
-                CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor2.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
-                for (Node node : updateList) {
-                    StateOfMap.updateDescriptor(node.getX(), node.getY(), 0);
-                    updateList.remove(node);
-                }
-                }
-                catch(Exception e){
-                }
-                    
-                    
-            }
-            public void publishAndSleep() {
-                publish();
-                try{
-                    Thread.sleep(1000/speed);
-                }
-                catch(InterruptedException e){
-                    
-                }
-            }
-            public void moveToObjectiveTimed(int[] objective){ 
-
-                actionSequence = map.findPath(currentLocation, objective); 
-                //for (Node tmp : actionSequence)
-                    //System.out.println("Action Path: " + tmp.getX() + " " + tmp.getY());
-                if (actionSequence == null)
-                    System.out.println("null");
-                if (actionSequence.isEmpty()){  
-                    System.out.println("is empty");
-                    bestPathImpossible = true;                       
-                    impossibleNodes.add( new Node(objective[0], objective[1]));
-                }
-                
-                    for (Node s : actionSequence){
-                        System.out.println("Action Path: " + s.getX() + " " + s.getY());
-                        directionX = s.getX() - Robot.R9X;
-                        directionY = s.getY() - Robot.R9Y;
-                        
-                        if (directionX < 0 && directionY == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_LEFT){
-                                turn(Direction.DIRECTION_LEFT);
-                                publishAndSleep(); 
-                                if (turnTwiceFlag){
-                                    turn(Direction.DIRECTION_LEFT);
-                                    publishAndSleep();
-                                    turnTwiceFlag = false;
-                                }
-                            }
-                        } else if (directionX > 0 && directionY == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_RIGHT){
-                                turn(Direction.DIRECTION_RIGHT);
-                                publishAndSleep(); 
-                                if (turnTwiceFlag){
-                                    turn(Direction.DIRECTION_RIGHT);
-                                    publishAndSleep();
-                                    turnTwiceFlag = false;
-                                }
-                            }
-                        } else if (directionY < 0 && directionX == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_DOWN){
-                                turn(Direction.DIRECTION_DOWN);
-                                publishAndSleep(); 
-                                if (turnTwiceFlag){
-                                    turn(Direction.DIRECTION_DOWN);
-                                    publishAndSleep();
-                                    turnTwiceFlag = false;
-                                }
-                            }
-                        } else if (directionY > 0 && directionX == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_UP){
-                                turn(Direction.DIRECTION_UP);
-                                publishAndSleep(); 
-                                if (turnTwiceFlag){
-                                    turn(Direction.DIRECTION_UP);
-                                    publishAndSleep();
-                                    turnTwiceFlag = false;
-                                }
-                            }
-                        }
-                        if ( (movementCounter + turnCounter) >= timeLimitAbsolute){  //check after a turn
-                            //done = true;
-                            break;
-                        }
-
-                        if (StateOfMap.frontIsTraversable()) {            
-                            forward(1);
-                            scan();
-                            publishAndSleep();
-                            bestPathImpossible = false;
-                            updateExploredAndObstacleCount();
-                        } 
-                        else {
-                            bestPathImpossible = true;                       
-                            impossibleNodes.add( actionSequence.get(actionSequence.size()-1) );
-                            break;
-                        }
-                        if ( (movementCounter + turnCounter) >= timeLimitAbsolute){  //check after sucessful forward movement
-                            //done = true;
-                            break;
-                        }
-                        scan();
-                        setRobotLocationAsExplored();
-                    }
-            }
-        };
-        worker.execute();
+//                return 1;
+//            }
+//            @Override
+//            public void process(java.util.List<Integer> chunks){
+//                try{
+//                        CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor1.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
+//                CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor2.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
+//                for (Node node : updateList) {
+//                    StateOfMap.updateDescriptor(node.getX(), node.getY(), 0);
+//                    updateList.remove(node);
+//                }
+//                }
+//                catch(Exception e){
+//                }
+//                    
+//                    
+//            }
+//            public void publishAndSleep() {
+//                publish();
+//                try{
+//                    Thread.sleep(1000/speed);
+//                }
+//                catch(InterruptedException e){
+//                    
+//                }
+//            }
+//        };
+//        worker.execute();
     }
     
     public void fastPath(int speed){
         //exploration is done here changed that shit
         
         this.speed = speed;
-        Controller.mapsimulator.contentPanel.refresh();
+        //Controller.mapsimulator.contentPanel.refresh();
         for (int i = 0; i < width; i++){
             for (int j = 0; j < height; j++){
                 StateOfMap.exploredMap[i][j] = 1;
@@ -1550,5 +1170,388 @@ public class Controller {
            }
         }
     }
+    
+    //move to a node assuming there is a path to it in the currently explored space
+    public void moveToObjectiveDemo(int[] objective){ 
+                             
+        actionSequence = map.findPath(currentLocation, objective); 
+        for (Node tmp : actionSequence)
+            System.out.println("Action Path: " + tmp.getX() + " " + tmp.getY());
+        if (actionSequence == null)
+            System.out.println("null");
+        if (actionSequence.isEmpty()){  
+            System.out.println("Path is empty");
+            bestPathImpossible = true;
+            impossibleNodes.add( new Node(objective[0], objective[1]));
+        }
+
+//        SwingWorker worker = new SwingWorker<Integer, Integer>() {
+//            @Override
+//            protected Integer doInBackground() {
+//                mapsimulator.contentPanel.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
+
+                for (Node s : actionSequence){
+                    //System.out.println("Action Path: " + s.getX() + " " + s.getY());
+                    directionX = s.getX() - Robot.R9X;
+                    directionY = s.getY() - Robot.R9Y;
+                                     
+                        if (directionX < 0 && directionY == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_LEFT){
+                                turn(Direction.DIRECTION_LEFT);
+                                //publishAndSleep(); 
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_LEFT);
+                                    //publishAndSleep();
+                                    turnTwiceFlag = false;
+                                }
+                            }
+                        } else if (directionX > 0 && directionY == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_RIGHT){
+                                turn(Direction.DIRECTION_RIGHT);
+                                //publishAndSleep();
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_RIGHT);
+                                    //publishAndSleep();
+                                    turnTwiceFlag = false;
+                                }
+                            }
+                        } else if (directionY < 0 && directionX == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_DOWN){
+                                turn(Direction.DIRECTION_DOWN);
+                                //publishAndSleep(); 
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_DOWN);
+                                    //publishAndSleep();
+                                    turnTwiceFlag = false;
+                                }
+                            }
+                        } else if (directionY > 0 && directionX == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_UP){
+                                turn(Direction.DIRECTION_UP);
+                                //publishAndSleep(); 
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_UP);
+                                    //publishAndSleep();
+                                    turnTwiceFlag = false;
+                                }
+                            }
+                        }                 
+//                    if (explorationDone){
+//                        forward(1);
+//                        publishAndSleep(); 
+//                    }
+//                    else 
+                        if (StateOfMap.frontIsTraversable()) {            
+                        forward(1);
+                        scan();
+                        //publishAndSleep(); 
+                        bestPathImpossible = false;
+                        updateExploredAndObstacleCount();
+                    } 
+                    else {
+                        bestPathImpossible = true;
+                        impossibleNodes.add( actionSequence.get(actionSequence.size()-1) );
+                        break;
+                    }
+                    //publishAndSleep();                 
+                }
+                //if (!explorationDone){
+                    scan();
+                    setRobotLocationAsExplored();
+                //}
+                if(bestPathImpossible != true){
+                    //publishAndSleep();
+                }
+//                return 1;
+//
+//             }
+//
+//            @Override
+//            protected void process(java.util.List<Integer> chunks) {               
+//                mapsimulator.contentPanel.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
+//            }
+//
+//            @Override
+//            protected void done() {
+//                System.out.println("SHORTEST PATH COMPLETED");
+//            }
+//
+//            public void publishAndSleep() {
+//                publish();
+//                try{
+//                    Thread.sleep(1000/speed);
+//                }
+//                catch(InterruptedException e){
+//                    
+//                }
+//            }
+//        };
+//        worker.execute();
+        
+    }
+    
+    public void moveToObjective(int[] objective){ 
+
+                actionSequence = map.findPath(currentLocation, objective); 
+                //for (Node tmp : actionSequence)
+                    //System.out.println("Action Path: " + tmp.getX() + " " + tmp.getY());
+                if (actionSequence == null)
+                    System.out.println("null");
+                if (actionSequence.isEmpty()){  
+                    System.out.println("is empty");
+                    bestPathImpossible = true;                       
+                    impossibleNodes.add( new Node(objective[0], objective[1]));
+                }
+
+                    for (Node s : actionSequence){
+                        System.out.println("Action Path: " + s.getX() + " " + s.getY());
+                        directionX = s.getX() - Robot.R9X;
+                        directionY = s.getY() - Robot.R9Y;
+
+                        if (directionX < 0 && directionY == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_LEFT){
+                                turn(Direction.DIRECTION_LEFT);
+                                //publishAndSleep();
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_LEFT);
+                                    //publishAndSleep();
+                                    turnTwiceFlag = false;
+                                }
+                            }
+                        } else if (directionX > 0 && directionY == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_RIGHT){
+                                turn(Direction.DIRECTION_RIGHT);
+                                //publishAndSleep(); 
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_RIGHT);
+                                    //publishAndSleep();
+                                    turnTwiceFlag = false;
+                                }
+                            }
+                        } else if (directionY < 0 && directionX == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_DOWN){
+                                turn(Direction.DIRECTION_DOWN);
+                                //publishAndSleep();
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_DOWN);
+                                    //publishAndSleep();
+                                    turnTwiceFlag = false;
+                                }
+                            }
+                        } else if (directionY > 0 && directionX == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_UP){
+                                turn(Direction.DIRECTION_UP);
+                                //publishAndSleep(); 
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_UP);
+                                    //publishAndSleep();
+                                    turnTwiceFlag = false;
+                                }
+                            }
+                        }
+
+//                        if (explorationDone){
+//                            forward(1);
+//                            publishAndSleep(); 
+//                        }
+//                        else 
+                            if (StateOfMap.frontIsTraversable()) {            
+                            //setRobotLocationAsExplored();
+                            forward(1);
+                            scan();
+                            //publishAndSleep(); 
+                            bestPathImpossible = false;
+                            updateExploredAndObstacleCount();
+                        } 
+                        else {
+                            bestPathImpossible = true;                       
+                            impossibleNodes.add( actionSequence.get(actionSequence.size()-1) );
+                            break;//this is where we handle nearest unexplored or neighbours being obstacles
+                        }
+
+                    }
+                    //if (!explorationDone){
+                        scan();
+                        setRobotLocationAsExplored();
+                    //}
+                    if(bestPathImpossible != true){
+                            //publishAndSleep();
+                    }
+                   // return 1;
+                 }
+    
+            public void moveToObjectivePercentage(int[] objective){ 
+
+                actionSequence = map.findPath(currentLocation, objective); 
+                //for (Node tmp : actionSequence)
+                    //System.out.println("Action Path: " + tmp.getX() + " " + tmp.getY());
+                if (actionSequence == null)
+                    System.out.println("null");
+                if (actionSequence.isEmpty()){  
+                    System.out.println("is empty");
+                    bestPathImpossible = true;                       
+                    impossibleNodes.add( new Node(objective[0], objective[1]));
+                }
+                
+                    for (Node s : actionSequence){
+                        System.out.println("Action Path: " + s.getX() + " " + s.getY());
+                        directionX = s.getX() - Robot.R9X;
+                        directionY = s.getY() - Robot.R9Y;
+
+                        if (directionX < 0 && directionY == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_LEFT){
+                                turn(Direction.DIRECTION_LEFT);
+                                //publishAndSleep();
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_LEFT);
+                                    //publishAndSleep();
+                                    turnTwiceFlag = false;
+                                }
+                            }
+                        } else if (directionX > 0 && directionY == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_RIGHT){
+                                turn(Direction.DIRECTION_RIGHT);
+                                //publishAndSleep(); 
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_RIGHT);
+                                    //publishAndSleep();
+                                    turnTwiceFlag = false;
+                                }
+                            }
+                        } else if (directionY < 0 && directionX == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_DOWN){
+                                turn(Direction.DIRECTION_DOWN);
+                                //publishAndSleep(); 
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_DOWN);
+                                    //publishAndSleep();
+                                    turnTwiceFlag = false;
+                                }
+                            }
+                        } else if (directionY > 0 && directionX == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_UP){
+                                turn(Direction.DIRECTION_UP);
+                                //publishAndSleep(); 
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_UP);
+                                    //publishAndSleep();
+                                    turnTwiceFlag = false;
+                                }
+                            }
+                        }
+
+                        if (explorationDone){
+                            forward(1);
+                            //publishAndSleep();
+                        }
+                        else 
+                            if (StateOfMap.frontIsTraversable()) {            
+                            //setRobotLocationAsExplored();
+                            forward(1);
+                            scan();
+                            //publishAndSleep();
+                            bestPathImpossible = false;
+                            updateExploredAndObstacleCount();
+                            if (exploredNodeCount >= nodesToExploreRounded)
+                                return;
+                        } 
+                        else {
+                            bestPathImpossible = true;                       
+                            impossibleNodes.add( actionSequence.get(actionSequence.size()-1) );
+                            break;//this is where we handle nearest unexplored or neighbours being obstacles
+                        }
+
+                    }
+                    if (!explorationDone){
+                        scan();
+                        setRobotLocationAsExplored();
+                        //publishAndSleep();
+                    }
+              }
+            
+            public void moveToObjectiveTimed(int[] objective){ 
+
+                actionSequence = map.findPath(currentLocation, objective); 
+                //for (Node tmp : actionSequence)
+                    //System.out.println("Action Path: " + tmp.getX() + " " + tmp.getY());
+                if (actionSequence == null)
+                    System.out.println("null");
+                if (actionSequence.isEmpty()){  
+                    System.out.println("is empty");
+                    bestPathImpossible = true;                       
+                    impossibleNodes.add( new Node(objective[0], objective[1]));
+                }
+                
+                    for (Node s : actionSequence){
+                        System.out.println("Action Path: " + s.getX() + " " + s.getY());
+                        directionX = s.getX() - Robot.R9X;
+                        directionY = s.getY() - Robot.R9Y;
+                        
+                        if (directionX < 0 && directionY == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_LEFT){
+                                turn(Direction.DIRECTION_LEFT);
+                                //publishAndSleep(); 
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_LEFT);
+                                    //publishAndSleep();
+                                    turnTwiceFlag = false;
+                                }
+                            }
+                        } else if (directionX > 0 && directionY == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_RIGHT){
+                                turn(Direction.DIRECTION_RIGHT);
+                                //publishAndSleep(); 
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_RIGHT);
+                                    //publishAndSleep();
+                                    turnTwiceFlag = false;
+                                }
+                            }
+                        } else if (directionY < 0 && directionX == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_DOWN){
+                                turn(Direction.DIRECTION_DOWN);
+                                //publishAndSleep(); 
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_DOWN);
+                                    //publishAndSleep();
+                                    turnTwiceFlag = false;
+                                }
+                            }
+                        } else if (directionY > 0 && directionX == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_UP){
+                                turn(Direction.DIRECTION_UP);
+                                //publishAndSleep(); 
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_UP);
+                                    //publishAndSleep();
+                                    turnTwiceFlag = false;
+                                }
+                            }
+                        }
+                        if ( (movementCounter + turnCounter) >= timeLimitAbsolute){  //check after a turn
+                            //done = true;
+                            break;
+                        }
+
+                        if (StateOfMap.frontIsTraversable()) {            
+                            forward(1);
+                            scan();
+                            //publishAndSleep();
+                            bestPathImpossible = false;
+                            updateExploredAndObstacleCount();
+                        } 
+                        else {
+                            bestPathImpossible = true;                       
+                            impossibleNodes.add( actionSequence.get(actionSequence.size()-1) );
+                            break;
+                        }
+                        if ( (movementCounter + turnCounter) >= timeLimitAbsolute){  //check after sucessful forward movement
+                            //done = true;
+                            break;
+                        }
+                        scan();
+                        setRobotLocationAsExplored();
+                    }
+            }
     
 }

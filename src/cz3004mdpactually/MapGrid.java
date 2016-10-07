@@ -234,8 +234,8 @@ public class MapGrid extends JPanel {
                     Controller.map.setIsExplored(i, j, true);
                     StateOfMap.exploredMap[i][j] = 1;
                 }
-                Controller.mapsimulator.gridPanelDescriptor1.updateDescriptor1(i, j, 0);
-                Controller.mapsimulator.gridPanelDescriptor2.updateDescriptor2(i, j, 0);
+//                Controller.mapsimulator.gridPanelDescriptor1.updateDescriptor1(i, j, 0);
+//                Controller.mapsimulator.gridPanelDescriptor2.updateDescriptor2(i, j, 0);
             }
 
         }
@@ -348,8 +348,8 @@ public class MapGrid extends JPanel {
         }
         for (int i = 0; i < Mapsimulator.GRIDWIDTH; i ++){
             for (int j = 0; j< Mapsimulator.GRIDHEIGHT; j++){
-                Controller.mapsimulator.gridPanelDescriptor1.updateDescriptor1(i, j, 0);
-                Controller.mapsimulator.gridPanelDescriptor2.updateDescriptor2(i, j, 0);
+//                Controller.mapsimulator.gridPanelDescriptor1.updateDescriptor1(i, j, 0);
+//                Controller.mapsimulator.gridPanelDescriptor2.updateDescriptor2(i, j, 0);
             }
         }
 //                if(count != exploredNum){
