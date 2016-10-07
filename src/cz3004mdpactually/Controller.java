@@ -15,7 +15,7 @@ public class Controller {
     final int ROBOTSIZE = 3;
     static final int width = 15;
     static final int height = 20;
-    static Mapsimulator mapsimulator;
+//    static Mapsimulator mapsimulator;
     static Map map = new Map(width, height);
     static boolean enableTwoTiles;
     
@@ -58,7 +58,7 @@ public class Controller {
     public void start(){
         enableTwoTiles = true;
         initialize();  
-        mapsimulator = new Mapsimulator();
+//        mapsimulator = new Mapsimulator();
         setRobotLocationAsExplored();
         //percentageExplore(50, 1);
         //timedExplore(100, 4);
@@ -650,7 +650,7 @@ public class Controller {
         SwingWorker worker = new SwingWorker<Integer, Integer>() {
             @Override
             protected Integer doInBackground() {
-                mapsimulator.contentPanel.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
+//                mapsimulator.contentPanel.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
 
                 for (Node s : actionSequence){
                     //System.out.println("Action Path: " + s.getX() + " " + s.getY());
@@ -730,7 +730,7 @@ public class Controller {
 
             @Override
             protected void process(java.util.List<Integer> chunks) {               
-                mapsimulator.contentPanel.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
+//                mapsimulator.contentPanel.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
             }
 
             @Override
@@ -961,8 +961,8 @@ public class Controller {
             @Override
             public void process(java.util.List<Integer> chunks){
                 try{
-                        CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor1.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
-                CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor2.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
+//                        CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor1.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
+//                CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor2.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
                 for (Node node : updateList) {
                     StateOfMap.updateDescriptor(node.getX(), node.getY(), 0);
                     updateList.remove(node);
@@ -1187,8 +1187,8 @@ public class Controller {
             @Override
             public void process(java.util.List<Integer> chunks){
                 try{
-                        CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor1.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
-                CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor2.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
+//                        CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor1.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
+//                CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor2.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
                 for (Node node : updateList) {
                     StateOfMap.updateDescriptor(node.getX(), node.getY(), 0);
                     updateList.remove(node);
@@ -1411,8 +1411,8 @@ public class Controller {
             @Override
             public void process(java.util.List<Integer> chunks){
                 try{
-                        CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor1.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
-                CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor2.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
+//                        CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor1.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
+//                CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor2.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
                 for (Node node : updateList) {
                     StateOfMap.updateDescriptor(node.getX(), node.getY(), 0);
                     updateList.remove(node);
@@ -1524,7 +1524,7 @@ public class Controller {
         //exploration is done here changed that shit
         
         this.speed = speed;
-        Controller.mapsimulator.contentPanel.refresh();
+//        Controller.mapsimulator.contentPanel.refresh();
         for (int i = 0; i < width; i++){
             for (int j = 0; j < height; j++){
                 StateOfMap.exploredMap[i][j] = 1;
