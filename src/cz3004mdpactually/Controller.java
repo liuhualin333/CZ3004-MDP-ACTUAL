@@ -16,6 +16,7 @@ public class Controller {
     static final int width = 15;
     static final int height = 20;
     //static Mapsimulator mapsimulator;
+
     static Map map = new Map(width, height);
     static boolean enableTwoTiles;
     
@@ -58,6 +59,7 @@ public class Controller {
     public void start(){
         enableTwoTiles = true;
         initialize();  
+
         //mapsimulator = new Mapsimulator();
         setRobotLocationAsExplored();
         //percentageExplore(50, 1);
@@ -837,6 +839,7 @@ public class Controller {
                 moveToObjective(startZoneLocation);
                 System.out.println("Movements: " + movementCounter);
                 System.out.println("Turns: " + turnCounter);
+
 //                return 1;
 //            }
 //
@@ -864,8 +867,7 @@ public class Controller {
 //                    
 //                }
 //            }
-//            
-            
+//                       
 //        };
 //        worker.execute();
     }
@@ -1110,6 +1112,7 @@ public class Controller {
                     System.out.println("Movements: " + movementCounter);
                     System.out.println("Turns: " + turnCounter);   
                 }
+                
 //                return 1;
 //            }
 //            @Override

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cz3004mdp;
+package cz3004mdpactually;
 import java.net.*;
 import java.io.*;
 /**
@@ -63,6 +63,34 @@ public class Connection {
         } 
         catch (IOException e){
             System.out.println(e);
+        }
+    }
+    public void messageRecognition(){
+        String message = readData();
+        String[] sensorData = {};
+        int[] sensorDataInt = {};
+        
+        switch(message){
+            case "Move Forward finished":
+                break;
+            case "Turn right finished":
+                break;
+            case "Turn left finished":
+                break;
+            case "Stop finished":
+                break;
+            case "Invalid input":
+                break;
+            default:
+                if(message.matches("Invalid input*")){
+                    break;
+                }
+                sensorData = message.split(" ");
+                for (int i = 0; i < 5; i++){
+                    sensorDataInt[i] = Integer.parseInt(sensorData[i]);
+                }
+                break;
+            
         }
     }
 }
