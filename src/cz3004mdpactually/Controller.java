@@ -12,6 +12,7 @@ import java.util.*;
  */
 public class Controller {
     
+    static Connection con = new Connection();
     final int ROBOTSIZE = 3;
     static final int width = 15;
     static final int height = 20;
@@ -165,21 +166,17 @@ public class Controller {
         startZoneLocation[1] = y;
         for (int i = x-1; i <= x+1; i++){
             for(int j = y-1; j <= y+1; j++){
-                    //System.out.println(startZoneLocation[0]+""+startZoneLocation[1]);
                 Node node = map.getNode(i,j);
                 node.setIsExplored(true);  
                 StateOfMap.setExploredTile(i, j, 1);
             }
         }
-        //System.out.println(startZoneLocation[0]+""+startZoneLocation[1]);
     }
     public void setGoalZone(int x, int y){
         goalZoneLocation[0] = x;
         goalZoneLocation[1] = y;
-        //System.out.println(goalZoneLocation[0]+""+goalZoneLocation[1]);
         for (int i = x-1; i <= x+1; i++){
             for(int j = y-1; j <= y+1; j++){
-                    //System.out.println(startZoneLocation[0]+""+startZoneLocation[1]);
                 Node node = map.getNode(i,j);
                 node.setIsExplored(true);
                 StateOfMap.setExploredTile(i, j, 1);
@@ -194,7 +191,6 @@ public class Controller {
         currentLocation[1] = robotStartLocation[1];
     }
     public void setRobotLocationAsExplored(){
-        //remember to add these nodes to updatelist so can update the descriptor
         StateOfMap.setExploredTile(Robot.R1X, Robot.R1Y, 1);
         StateOfMap.setExploredTile(Robot.R2X, Robot.R2Y, 1);
         StateOfMap.setExploredTile(Robot.R3X, Robot.R3Y, 1);
@@ -293,6 +289,7 @@ public class Controller {
                     case Direction.DIRECTION_UP:
                         Direction.CUR_DIRECTION = Direction.DIRECTION_RIGHT;
                         Robot.defineRobotPosition(Robot.R2X + 1, Robot.R2Y - 1); //after turning, the robots position needs to be redefined
+                        //con.writeData("");
                         break;
                     case Direction.DIRECTION_DOWN:
                         Direction.CUR_DIRECTION = Direction.DIRECTION_LEFT;
@@ -444,44 +441,44 @@ public class Controller {
                 }
             }
         }
-        if (StateOfMap.isValidTile(Robot.Tile6X, Robot.Tile6Y)){
-            if (!StateOfMap.isExploredTile(Robot.Tile6X, Robot.Tile6Y)){
-                StateOfMap.setExploredTile(Robot.Tile6X, Robot.Tile6Y, 1);
-                StateOfMap.setObstacleTile(Robot.Tile6X, Robot.Tile6Y, map.getNode(Robot.Tile6X, Robot.Tile6Y).isObstacle() ? 1 : 0 );
-                //StateOfMap.updateDescriptor(Robot.Tile6X, Robot.Tile6Y, 1);
-                scannedNodes++;
-            }
-                
-            if (enableTwoTiles){
-                if (StateOfMap.isValidTile(Robot.Tile6EX, Robot.Tile6EY) && StateOfMap.isExploredTile(Robot.Tile6X, Robot.Tile6Y)){
-                    if (!StateOfMap.isExploredTile(Robot.Tile6EX, Robot.Tile6EY) && !StateOfMap.isObstacleTile(Robot.Tile6X, Robot.Tile6Y)){
-                        StateOfMap.setExploredTile(Robot.Tile6EX, Robot.Tile6EY, 1);
-                        StateOfMap.setObstacleTile(Robot.Tile6EX, Robot.Tile6EY, map.getNode(Robot.Tile6EX, Robot.Tile6EY).isObstacle() ? 1 : 0 );
-                        //StateOfMap.updateDescriptor(Robot.Tile6EX, Robot.Tile6EY, 1);
-                        scannedNodes++;
-                    }
-                }
-            }
-        }
-        if (StateOfMap.isValidTile(Robot.Tile7X, Robot.Tile7Y)){
-            if (!StateOfMap.isExploredTile(Robot.Tile7X, Robot.Tile7Y)){ 
-                StateOfMap.setExploredTile(Robot.Tile7X, Robot.Tile7Y, 1);
-                StateOfMap.setObstacleTile(Robot.Tile7X, Robot.Tile7Y, map.getNode(Robot.Tile7X, Robot.Tile7Y).isObstacle() ? 1 : 0 );
-                //StateOfMap.updateDescriptor(Robot.Tile7X, Robot.Tile7Y, 1);
-                scannedNodes++;
-            }
-                
-            if (enableTwoTiles){
-                if (StateOfMap.isValidTile(Robot.Tile7EX, Robot.Tile7EY) && StateOfMap.isExploredTile(Robot.Tile7X, Robot.Tile7Y)){
-                    if (!StateOfMap.isExploredTile(Robot.Tile7EX, Robot.Tile7EY) && !StateOfMap.isObstacleTile(Robot.Tile7X, Robot.Tile7Y)){
-                        StateOfMap.setExploredTile(Robot.Tile7EX, Robot.Tile7EY, 1);
-                        StateOfMap.setObstacleTile(Robot.Tile7EX, Robot.Tile7EY, map.getNode(Robot.Tile7EX, Robot.Tile7EY).isObstacle() ? 1 : 0 );
-                        //StateOfMap.updateDescriptor(Robot.Tile7EX, Robot.Tile7EY, 1);
-                        scannedNodes++;
-                    }
-                }
-            }
-        }
+//        if (StateOfMap.isValidTile(Robot.Tile6X, Robot.Tile6Y)){
+//            if (!StateOfMap.isExploredTile(Robot.Tile6X, Robot.Tile6Y)){
+//                StateOfMap.setExploredTile(Robot.Tile6X, Robot.Tile6Y, 1);
+//                StateOfMap.setObstacleTile(Robot.Tile6X, Robot.Tile6Y, map.getNode(Robot.Tile6X, Robot.Tile6Y).isObstacle() ? 1 : 0 );
+//                //StateOfMap.updateDescriptor(Robot.Tile6X, Robot.Tile6Y, 1);
+//                scannedNodes++;
+//            }
+//                
+//            if (enableTwoTiles){
+//                if (StateOfMap.isValidTile(Robot.Tile6EX, Robot.Tile6EY) && StateOfMap.isExploredTile(Robot.Tile6X, Robot.Tile6Y)){
+//                    if (!StateOfMap.isExploredTile(Robot.Tile6EX, Robot.Tile6EY) && !StateOfMap.isObstacleTile(Robot.Tile6X, Robot.Tile6Y)){
+//                        StateOfMap.setExploredTile(Robot.Tile6EX, Robot.Tile6EY, 1);
+//                        StateOfMap.setObstacleTile(Robot.Tile6EX, Robot.Tile6EY, map.getNode(Robot.Tile6EX, Robot.Tile6EY).isObstacle() ? 1 : 0 );
+//                        //StateOfMap.updateDescriptor(Robot.Tile6EX, Robot.Tile6EY, 1);
+//                        scannedNodes++;
+//                    }
+//                }
+//            }
+//        }
+//        if (StateOfMap.isValidTile(Robot.Tile7X, Robot.Tile7Y)){
+//            if (!StateOfMap.isExploredTile(Robot.Tile7X, Robot.Tile7Y)){ 
+//                StateOfMap.setExploredTile(Robot.Tile7X, Robot.Tile7Y, 1);
+//                StateOfMap.setObstacleTile(Robot.Tile7X, Robot.Tile7Y, map.getNode(Robot.Tile7X, Robot.Tile7Y).isObstacle() ? 1 : 0 );
+//                //StateOfMap.updateDescriptor(Robot.Tile7X, Robot.Tile7Y, 1);
+//                scannedNodes++;
+//            }
+//                
+//            if (enableTwoTiles){
+//                if (StateOfMap.isValidTile(Robot.Tile7EX, Robot.Tile7EY) && StateOfMap.isExploredTile(Robot.Tile7X, Robot.Tile7Y)){
+//                    if (!StateOfMap.isExploredTile(Robot.Tile7EX, Robot.Tile7EY) && !StateOfMap.isObstacleTile(Robot.Tile7X, Robot.Tile7Y)){
+//                        StateOfMap.setExploredTile(Robot.Tile7EX, Robot.Tile7EY, 1);
+//                        StateOfMap.setObstacleTile(Robot.Tile7EX, Robot.Tile7EY, map.getNode(Robot.Tile7EX, Robot.Tile7EY).isObstacle() ? 1 : 0 );
+//                        //StateOfMap.updateDescriptor(Robot.Tile7EX, Robot.Tile7EY, 1);
+//                        scannedNodes++;
+//                    }
+//                }
+//            }
+//        }
         if (StateOfMap.isValidTile(Robot.Tile8X, Robot.Tile8Y)){
             if (!StateOfMap.isExploredTile(Robot.Tile8X, Robot.Tile8Y)){ 
                 StateOfMap.setExploredTile(Robot.Tile8X, Robot.Tile8Y, 1);
@@ -501,44 +498,44 @@ public class Controller {
                 }
             }
         }
-        if (StateOfMap.isValidTile(Robot.Tile9X, Robot.Tile9Y)){
-            if (!StateOfMap.isExploredTile(Robot.Tile9X, Robot.Tile9Y)){
-                StateOfMap.setExploredTile(Robot.Tile9X, Robot.Tile9Y, 1);
-                StateOfMap.setObstacleTile(Robot.Tile9X, Robot.Tile9Y, map.getNode(Robot.Tile9X, Robot.Tile9Y).isObstacle() ? 1 : 0 );
-                //StateOfMap.updateDescriptor(Robot.Tile9X, Robot.Tile9Y, 1);
-                scannedNodes++;
-            } 
-                
-            if (enableTwoTiles){
-                if (StateOfMap.isValidTile(Robot.Tile9EX, Robot.Tile9EY) && StateOfMap.isExploredTile(Robot.Tile9X, Robot.Tile9Y)){
-                    if (!StateOfMap.isExploredTile(Robot.Tile9EX, Robot.Tile9EY) && !StateOfMap.isObstacleTile(Robot.Tile9X, Robot.Tile9Y)){
-                        StateOfMap.setExploredTile(Robot.Tile9EX, Robot.Tile9EY, 1);
-                        StateOfMap.setObstacleTile(Robot.Tile9EX, Robot.Tile9EY, map.getNode(Robot.Tile9EX, Robot.Tile9EY).isObstacle() ? 1 : 0 );
-                        //StateOfMap.updateDescriptor(Robot.Tile9EX, Robot.Tile9EY, 1);
-                        scannedNodes++;
-                    }
-                }
-            }
-        }
-        if (StateOfMap.isValidTile(Robot.Tile10X, Robot.Tile10Y)){
-            if (!StateOfMap.isExploredTile(Robot.Tile10X, Robot.Tile10Y)){
-                StateOfMap.setExploredTile(Robot.Tile10X, Robot.Tile10Y, 1);
-                StateOfMap.setObstacleTile(Robot.Tile10X, Robot.Tile10Y, map.getNode(Robot.Tile10X, Robot.Tile10Y).isObstacle() ? 1 : 0 );
-                //StateOfMap.updateDescriptor(Robot.Tile10X, Robot.Tile10Y, 1);
-                scannedNodes++;
-            }  
-                
-            if (enableTwoTiles){
-                if (StateOfMap.isValidTile(Robot.Tile10EX, Robot.Tile10EY) && StateOfMap.isExploredTile(Robot.Tile10X, Robot.Tile10Y)){
-                    if (!StateOfMap.isExploredTile(Robot.Tile10EX, Robot.Tile10EY) && !StateOfMap.isObstacleTile(Robot.Tile10X, Robot.Tile10Y)){
-                        StateOfMap.setExploredTile(Robot.Tile10EX, Robot.Tile10EY, 1);
-                        StateOfMap.setObstacleTile(Robot.Tile10EX, Robot.Tile10EY, map.getNode(Robot.Tile10EX, Robot.Tile10EY).isObstacle() ? 1 : 0 );
-                        //StateOfMap.updateDescriptor(Robot.Tile10EX, Robot.Tile10EY, 1);
-                        scannedNodes++;
-                    }
-                }
-            }
-        }
+//        if (StateOfMap.isValidTile(Robot.Tile9X, Robot.Tile9Y)){
+//            if (!StateOfMap.isExploredTile(Robot.Tile9X, Robot.Tile9Y)){
+//                StateOfMap.setExploredTile(Robot.Tile9X, Robot.Tile9Y, 1);
+//                StateOfMap.setObstacleTile(Robot.Tile9X, Robot.Tile9Y, map.getNode(Robot.Tile9X, Robot.Tile9Y).isObstacle() ? 1 : 0 );
+//                //StateOfMap.updateDescriptor(Robot.Tile9X, Robot.Tile9Y, 1);
+//                scannedNodes++;
+//            } 
+//                
+//            if (enableTwoTiles){
+//                if (StateOfMap.isValidTile(Robot.Tile9EX, Robot.Tile9EY) && StateOfMap.isExploredTile(Robot.Tile9X, Robot.Tile9Y)){
+//                    if (!StateOfMap.isExploredTile(Robot.Tile9EX, Robot.Tile9EY) && !StateOfMap.isObstacleTile(Robot.Tile9X, Robot.Tile9Y)){
+//                        StateOfMap.setExploredTile(Robot.Tile9EX, Robot.Tile9EY, 1);
+//                        StateOfMap.setObstacleTile(Robot.Tile9EX, Robot.Tile9EY, map.getNode(Robot.Tile9EX, Robot.Tile9EY).isObstacle() ? 1 : 0 );
+//                        //StateOfMap.updateDescriptor(Robot.Tile9EX, Robot.Tile9EY, 1);
+//                        scannedNodes++;
+//                    }
+//                }
+//            }
+//        }
+//        if (StateOfMap.isValidTile(Robot.Tile10X, Robot.Tile10Y)){
+//            if (!StateOfMap.isExploredTile(Robot.Tile10X, Robot.Tile10Y)){
+//                StateOfMap.setExploredTile(Robot.Tile10X, Robot.Tile10Y, 1);
+//                StateOfMap.setObstacleTile(Robot.Tile10X, Robot.Tile10Y, map.getNode(Robot.Tile10X, Robot.Tile10Y).isObstacle() ? 1 : 0 );
+//                //StateOfMap.updateDescriptor(Robot.Tile10X, Robot.Tile10Y, 1);
+//                scannedNodes++;
+//            }  
+//                
+//            if (enableTwoTiles){
+//                if (StateOfMap.isValidTile(Robot.Tile10EX, Robot.Tile10EY) && StateOfMap.isExploredTile(Robot.Tile10X, Robot.Tile10Y)){
+//                    if (!StateOfMap.isExploredTile(Robot.Tile10EX, Robot.Tile10EY) && !StateOfMap.isObstacleTile(Robot.Tile10X, Robot.Tile10Y)){
+//                        StateOfMap.setExploredTile(Robot.Tile10EX, Robot.Tile10EY, 1);
+//                        StateOfMap.setObstacleTile(Robot.Tile10EX, Robot.Tile10EY, map.getNode(Robot.Tile10EX, Robot.Tile10EY).isObstacle() ? 1 : 0 );
+//                        //StateOfMap.updateDescriptor(Robot.Tile10EX, Robot.Tile10EY, 1);
+//                        scannedNodes++;
+//                    }
+//                }
+//            }
+//        }
         return scannedNodes; 
     }
     
