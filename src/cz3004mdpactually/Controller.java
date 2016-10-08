@@ -285,12 +285,13 @@ public class Controller {
         turnCounter++;
         switch (direction) {
             case Direction.TURN_RIGHT:
+                
+                con.writeData("AD"); //Arduino turn right             
                 switch (Direction.CUR_DIRECTION) {
                     case Direction.DIRECTION_UP:
                         Direction.CUR_DIRECTION = Direction.DIRECTION_RIGHT;
                         Robot.defineRobotPosition(Robot.R2X + 1, Robot.R2Y - 1); //after turning, the robots position needs to be redefined
-                        //con.writeData("");
-                        break;
+                        break; 
                     case Direction.DIRECTION_DOWN:
                         Direction.CUR_DIRECTION = Direction.DIRECTION_LEFT;
                         Robot.defineRobotPosition(Robot.R2X - 1, Robot.R2Y + 1);
@@ -303,9 +304,19 @@ public class Controller {
                         Direction.CUR_DIRECTION = Direction.DIRECTION_UP;
                         Robot.defineRobotPosition(Robot.R2X + 1, Robot.R2Y + 1);
                         break;
+                }              
+                while (true){
+                    //after writing put switch statement in between, before reading
+                    //need to wait for response from Arduino anyway, might as well process while reading
+                    if ( con.messageRecognition() == 2 ){
+                        break;
+                    }
                 }
                 break;
+                
             case Direction.TURN_LEFT:
+                
+                con.writeData("AA"); //Arduino turn left
                 switch (Direction.CUR_DIRECTION) {
                     case Direction.DIRECTION_UP:
                         Direction.CUR_DIRECTION = Direction.DIRECTION_LEFT;
@@ -323,6 +334,11 @@ public class Controller {
                         Direction.CUR_DIRECTION = Direction.DIRECTION_DOWN;
                         Robot.defineRobotPosition(Robot.R2X + 1, Robot.R2Y - 1);
                         break;
+                }              
+                while (true){
+                    if ( con.messageRecognition() == 3 ){
+                        break;
+                    }
                 }
                 break;
         }
@@ -332,7 +348,8 @@ public class Controller {
         
         int x = Robot.R2X;
         int y = Robot.R2Y;
-        //eraseRobot(); might need to erase before redefining
+        
+        con.writeData("AW"); //Arduino move forward for tileCount, not specified as of yet cause hardware programming not ready
         for (int i = 0; i < tileCount; i++) {
             switch (Direction.CUR_DIRECTION) {
                 case Direction.DIRECTION_UP:
@@ -352,11 +369,16 @@ public class Controller {
             currentLocation[0] = Robot.R9X;
             currentLocation[1] = Robot.R9Y;
             System.out.println(currentLocation[0] + " " + currentLocation[1]);
-            //System.out.println("Status of 14 11: " + StateOfMap.isExploredTile(14, 11));
             movementCounter++;   
             if (isGoalState()){      //for percentage explore, doesn't affect fullExplore
                 goalReached = true;
                 System.out.println("Is GOAL!");
+            }
+        }
+        //just like turn, process then busy wait till Arduino response
+        while (true){
+            if ( con.messageRecognition() == 1 ){
+                break;
             }
         }
     }

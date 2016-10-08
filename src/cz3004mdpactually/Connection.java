@@ -65,32 +65,46 @@ public class Connection {
             System.out.println(e);
         }
     }
-    public void messageRecognition(){
+    public int messageRecognition(){
+        String message = readData();
+        
+        switch(message){
+            case "Move Forward finished":
+                return 1;
+                //break;
+            case "Turn right finished":
+                return 2;
+                //break;
+            case "Turn left finished":
+                return 3;
+                //break;
+            case "Stop finished":
+                return 4;
+                //break;
+            case "Invalid input":
+                return 5;
+                //break;
+            default:
+                if(message.matches("Invalid input*")){
+                    return 5;
+                    //break;
+                }
+                else //this means scanner input is coming
+                    return 6;
+                //break;    
+        }
+    }
+    
+    public int[] sensorDataParse(){
         String message = readData();
         String[] sensorData = {};
         int[] sensorDataInt = {};
         
-        switch(message){
-            case "Move Forward finished":
-                break;
-            case "Turn right finished":
-                break;
-            case "Turn left finished":
-                break;
-            case "Stop finished":
-                break;
-            case "Invalid input":
-                break;
-            default:
-                if(message.matches("Invalid input*")){
-                    break;
-                }
-                sensorData = message.split(" ");
-                for (int i = 0; i < 5; i++){
-                    sensorDataInt[i] = Integer.parseInt(sensorData[i]);
-                }
-                break;
-            
+        sensorData = message.split(" ");
+        for (int i = 0; i < 5; i++){
+            sensorDataInt[i] = Integer.parseInt(sensorData[i]);
         }
+        
+        return sensorDataInt;
     }
 }
