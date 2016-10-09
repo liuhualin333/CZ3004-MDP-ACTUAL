@@ -84,6 +84,8 @@ public class Connection {
             case "Set Start Zone":
                 return 7;
             case "Set Goal Zone":
+                return 8;
+            case "Set Robot Location":
                 return 9;
             case "Explore Function":
                 return 10;
@@ -94,9 +96,14 @@ public class Connection {
                     return -1;
                 }
                 else //this means sensor input is coming
-                    return 8;
+                    return 12;
                 //break;    
         }
+    }
+    
+    public int[] zoneParse(){
+        //used to get start/end/robot location from Android, what format?
+        return new int[2];
     }
     
     public int[] sensorDataParse(){
