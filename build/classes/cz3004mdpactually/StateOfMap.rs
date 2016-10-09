@@ -1,1 +1,0 @@
-cz3004mdp.StateOfMap
