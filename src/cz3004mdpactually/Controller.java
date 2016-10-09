@@ -73,7 +73,7 @@ public class Controller {
             if(con.messageRecognition() == 10){
                 setRobotLocationAsExplored();
                 fullExplore(1);
-                con.writeData(" "); //need to write the descriptor to android here
+                con.writeData("B "); //need to write the descriptor to android here
                 while (true){
                     if (con.messageRecognition() == 6)
                         break;
@@ -81,23 +81,23 @@ public class Controller {
             }
             else if(con.messageRecognition() == 11){
                 fastPath(1);
-                con.writeData("Fastest Path done");
+                con.writeData("BFastest Path done");
             }         
             //changing the following 3 after initialize() and mapsimulator instantiation might cause problems
             else if(con.messageRecognition() == 7){
                 tmp = con.zoneParse();
                 setStartZone(tmp[0], tmp[1]);
-                con.writeData("Set start done");
+                con.writeData("BSet start done");
             }
             else if(con.messageRecognition() == 8){
                 tmp = con.zoneParse();
                 setGoalZone(tmp[0], tmp[1]);
-                con.writeData("Set goal done");
+                con.writeData("BSet goal done");
             }
             else if(con.messageRecognition() == 9){
                 tmp = con.zoneParse();
                 setRobotStartLocation(tmp[0], tmp[1]);
-                con.writeData("Set robot done");
+                con.writeData("BSet robot done");
             }
             
         }
