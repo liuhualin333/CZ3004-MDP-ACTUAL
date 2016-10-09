@@ -71,26 +71,24 @@ public class Connection {
         switch(message){
             case "Move Forward finished":
                 return 1;
-                //break;
             case "Turn right finished":
                 return 2;
-                //break;
             case "Turn left finished":
                 return 3;
-                //break;
             case "Stop finished":
                 return 4;
-                //break;
             case "Invalid input":
                 return 5;
-                //break;
+            case "Part1 String Received":
+                return 6;
+            case "Part2 String Received":
+                return 7;
             default:
                 if(message.matches("Invalid input*")){
-                    return 5;
-                    //break;
+                    return -1;
                 }
-                else //this means scanner input is coming
-                    return 6;
+                else //this means sensor input is coming
+                    return 8;
                 //break;    
         }
     }
