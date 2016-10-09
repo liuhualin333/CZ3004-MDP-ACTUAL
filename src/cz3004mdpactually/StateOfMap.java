@@ -39,15 +39,15 @@ public class StateOfMap {
     public static void setObstacleTile(int x, int y, int value){
         if ( isValidTile(x,y) )
             obstacleMap[x][y] = value;
-        if ( !Controller.updateList.contains(Controller.map.getNode(x, y)))
-            Controller.updateList.add(Controller.map.getNode(x, y));
+//        if ( !Controller.updateList.contains(Controller.map.getNode(x, y)))
+//            Controller.updateList.add(Controller.map.getNode(x, y));
     }
     
     public static void setExploredTile(int x, int y, int value){
         if ( isValidTile(x,y) )
             exploredMap[x][y] = value;
-        if ( !Controller.updateList.contains(Controller.map.getNode(x, y)))
-            Controller.updateList.add(Controller.map.getNode(x, y));
+//        if ( !Controller.updateList.contains(Controller.map.getNode(x, y)))
+//            Controller.updateList.add(Controller.map.getNode(x, y));
     }
     
 //    public static void updateDescriptor(int x, int y, int value){

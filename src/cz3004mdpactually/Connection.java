@@ -67,8 +67,6 @@ public class Connection {
     }
     public int messageRecognition(){
         String message = readData();
-        String[] sensorData = {};
-        int[] sensorDataInt = {};
         
         switch(message){
             case "Move Forward finished":
@@ -89,12 +87,22 @@ public class Connection {
                 if(message.matches("Invalid input*")){
                     return -1;
                 }
-                sensorData = message.split(" ");
-                for (int i = 0; i < 5; i++){
-                    sensorDataInt[i] = Integer.parseInt(sensorData[i]);
-                }
-                return 8;
-            
+                else //this means sensor input is coming
+                    return 8;
+                //break;    
         }
+    }
+    
+    public int[] sensorDataParse(){
+        String message = readData();
+        String[] sensorData = {};
+        int[] sensorDataInt = {};
+        
+        sensorData = message.split(" ");
+        for (int i = 0; i < 5; i++){
+            sensorDataInt[i] = Integer.parseInt(sensorData[i]);
+        }
+        
+        return sensorDataInt;
     }
 }
