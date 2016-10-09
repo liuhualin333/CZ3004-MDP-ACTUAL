@@ -1729,7 +1729,7 @@ public class Controller {
                 System.out.println(part1String);
 
                 con.writeData("B"+" "+part1String+" "+part2String);
-                while(con.messageRecognition() != 7){
+                while(con.messageRecognition() != 6){
 
                 }
 
