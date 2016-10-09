@@ -1580,20 +1580,11 @@ public class Controller {
                     }
             }
                 public void saveFile2() throws IOException{
-            //        File file = new File("Mapfilepart1.txt");
-//                    File file1 = new File("Mapfilepart2.txt");
-            //        file.createNewFile();
-//                    file1.createNewFile();
-            //                String part1String = "";
                     String part2String = "";
-//                    String tmpString = "";
-//            //                String tmpPart1Str = "";
-//                    String tmpPart2Str = "";
                     for(int j = 0; j< height; j++){
                         for(int i = 0; i< width; i++){
-                            Node node = Controller.map.getNode(i, j);
-                            if(node.isExplored()){
-                                if(node.isObstacle()){
+                            if(StateOfMap.exploredMap[i][j] == 1){
+                                if(StateOfMap.obstacleMap[i][j] == 1){
                                     part2String+="1";
                                 }
                                 else{
@@ -1602,47 +1593,19 @@ public class Controller {
                             }
                         }
                     }
-                    //padding part
-            //                part1String = "11"+part1String+"11";
                     for (int i = 0; i < part2String.length()%4; i++){
                         part2String = part2String+"0";
                     }
-                    con.writeData("A"+part2String);
+                    con.writeData("B"+part2String);
                     while(con.messageRecognition() != 7){
                         
                     }
-//                    tmpString = "";
-//                    for (int i = 0 ; i < part2String.length(); i++){
-//                        tmpPart2Str += part2String.charAt(i);
-//                        if(tmpPart2Str.length() == 4){
-//                            int number = Integer.parseInt(tmpPart2Str,2);
-//                            String hexStr = Integer.toString(number,16);
-//                            tmpString += hexStr;
-//                            tmpPart2Str = "";
-//                        }
-//
-//                    }
-//                    System.out.println(tmpString);
-//                    try(BufferedWriter writer = new BufferedWriter(new FileWriter(file1))){
-//                        writer.write(tmpString);
-//                        writer.flush();
-//                        writer.close();
-//                    }
                 }
                 public void saveFile1() throws IOException{
-//                    File file = new File("Mapfilepart1.txt");
-            //        File file1 = new File("Mapfilepart2.txt");
-//                    file.createNewFile();
-            //        file1.createNewFile();
                     String part1String = "";
-            //        String part2String = "";
-//                    String tmpString = "";
-//                    String tmpPart1Str = "";
-            //        String tmpPart2Str = "";
                     for(int j = 0; j < height; j++){
-                        for(int i = 0; i< width; i++){
-                            Node node = Controller.map.getNode(i, j);
-                            if(node.isExplored()){
+                        for(int i = 0; i< width; i++){                       
+                            if(StateOfMap.exploredMap[i][j] == 1){
                                 part1String+="1";
                             }
                             else{
@@ -1653,30 +1616,10 @@ public class Controller {
                     //padding part
                     part1String = "11"+part1String+"11";
                     System.out.println(part1String);
-                    con.writeData("A"+part1String);
+                    con.writeData("B"+part1String);
                     while(con.messageRecognition() != 6){
                         
                     }
-            //        for (int i = 0; i < part2String.length()%4; i++){
-            //            part2String = part2String+"0";
-            //        }
-//                    for (int i = 0 ; i < part1String.length(); i++){
-//                        tmpPart1Str += part1String.charAt(i);
-//                        if(tmpPart1Str.length() == 4){
-//                            int number = Integer.parseInt(tmpPart1Str,2);
-//                            String hexStr = Integer.toString(number,16);
-//                            tmpString += hexStr;
-//                            tmpPart1Str = "";
-//                        }
-//
-//                    }
-//                    System.out.println(tmpString);
-//                    try(BufferedWriter writer = new BufferedWriter(new FileWriter(file))){
-//                        writer.write(tmpString);
-//                        writer.flush();
-//                        writer.close();
-//                    }
-//                    tmpString = "";
                 }
     
 }
