@@ -73,11 +73,7 @@ public class Controller {
             if(con.messageRecognition() == 10){
                 setRobotLocationAsExplored();
                 fullExplore(1);
-                con.writeData("B "); //need to write the descriptor to android here
-                while (true){
-                    if (con.messageRecognition() == 6)
-                        break;
-                }
+                con.writeData("BExplore done");
             }
             else if(con.messageRecognition() == 11){
                 fastPath(1);
