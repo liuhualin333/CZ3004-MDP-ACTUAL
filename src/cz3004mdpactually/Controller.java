@@ -22,7 +22,7 @@ public class Controller {
     static Mapsimulator mapsimulator;
 
     static Map map = new Map(width, height);
-    static boolean enableTwoTiles;
+    static boolean enableTwoTiles = true;
     
     //used in moveToObjective()
     static List<Node> actionSequence = new LinkedList<Node>();
@@ -65,11 +65,42 @@ public class Controller {
     int[] scanResult = new int[5];
     
     public void start(){
-        enableTwoTiles = true;
+        int[] tmp = new int[2];
         initialize();  
-
         mapsimulator = new Mapsimulator();
-        setRobotLocationAsExplored();
+               
+        while (true){
+            if(con.messageRecognition() == 10){
+                setRobotLocationAsExplored();
+                fullExplore(1);
+                con.writeData("B "); //need to write the descriptor to android here
+                while (true){
+                    if (con.messageRecognition() == 6)
+                        break;
+                }
+            }
+            else if(con.messageRecognition() == 11){
+                fastPath(1);
+                con.writeData("BFastest Path done");
+            }         
+            //changing the following 3 after initialize() and mapsimulator instantiation might cause problems
+            else if(con.messageRecognition() == 7){
+                tmp = con.zoneParse();
+                setStartZone(tmp[0], tmp[1]);
+                con.writeData("BSet start done");
+            }
+            else if(con.messageRecognition() == 8){
+                tmp = con.zoneParse();
+                setGoalZone(tmp[0], tmp[1]);
+                con.writeData("BSet goal done");
+            }
+            else if(con.messageRecognition() == 9){
+                tmp = con.zoneParse();
+                setRobotStartLocation(tmp[0], tmp[1]);
+                con.writeData("BSet robot done");
+            }
+            
+        }
         //percentageExplore(50, 1);
         //timedExplore(100, 4);
         //fullExplore(1);
@@ -94,7 +125,6 @@ public class Controller {
            }
         }
         setRobotStartLocation(robotX, robotY);
-        Robot.defineRobotPosition(robotX + 1, robotY);   
         setStartZone(1, 1);
         setGoalZone(13, 18);
 
@@ -168,7 +198,18 @@ public class Controller {
 //        map.setIsObstacle(14, 13, true);
         
     }
-    public void setStartZone(int x, int y){
+    public void setStartZone(int x, int y){       
+        //first reset
+        if (startZoneLocation[0] != 0 && startZoneLocation[1] != 0){
+            for (int i = startZoneLocation[0] - 1; i <= startZoneLocation[0] + 1; i++){
+                for(int j = startZoneLocation[1] - 1; j <= startZoneLocation[1] + 1; j++){
+                    Node node = map.getNode(i,j);
+                    node.setIsExplored(false);  
+                    StateOfMap.setExploredTile(i, j, 0);
+                }
+            }
+        }
+  
         startZoneLocation[0] = x;
         startZoneLocation[1] = y;
         for (int i = x-1; i <= x+1; i++){
@@ -180,6 +221,17 @@ public class Controller {
         }
     }
     public void setGoalZone(int x, int y){
+        //first reset
+        if (goalZoneLocation[0] != 0 && goalZoneLocation[1] != 0){
+            for (int i = goalZoneLocation[0] - 1; i <= goalZoneLocation[0] + 1; i++){
+                for(int j = goalZoneLocation[1] - 1; j <= goalZoneLocation[1] + 1; j++){
+                    Node node = map.getNode(i,j);
+                    node.setIsExplored(false);  
+                    StateOfMap.setExploredTile(i, j, 0);
+                }
+            }
+        }
+        
         goalZoneLocation[0] = x;
         goalZoneLocation[1] = y;
         for (int i = x-1; i <= x+1; i++){
@@ -193,6 +245,8 @@ public class Controller {
     public void setRobotStartLocation(int x, int y){
         robotStartLocation[0] = x;
         robotStartLocation[1] = y;
+        
+        Robot.defineRobotPosition(x + 1, y);   
         
         currentLocation[0] = robotStartLocation[0];
         currentLocation[1] = robotStartLocation[1];
@@ -394,7 +448,7 @@ public class Controller {
     public int scan(){
         con.writeData("AC"); //Arduino scan
         while (true){        //Wait till scanning finishes
-            if (con.messageRecognition() == 8)
+            if (con.messageRecognition() == 12)
                 break;
         }
         scanResult = con.sensorDataParse();
