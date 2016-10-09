@@ -139,33 +139,33 @@ public class Controller {
 //        map.setIsObstacle(3, 17, true);
         
         
-        map.setIsObstacle(6, 1, true);      //the toughest test
-        map.setIsObstacle(7, 1, true);
-        map.setIsObstacle(8, 1, true);
-        map.setIsObstacle(8, 0, true);
-        
-        map.setIsObstacle(2, 3, true);
-        map.setIsObstacle(2, 4, true);
-        
-        map.setIsObstacle(14, 4, true);
-        
-        map.setIsObstacle(10, 5, true);
-        map.setIsObstacle(10, 6, true);
-        
-        map.setIsObstacle(1, 8, true);
-        map.setIsObstacle(1, 9, true);
-        map.setIsObstacle(1, 10, true);
-        
-        map.setIsObstacle(2, 14, true);
-        map.setIsObstacle(3, 14, true);
-        map.setIsObstacle(4, 14, true);
-        
-        map.setIsObstacle(12, 8, true);
-        map.setIsObstacle(12, 9, true);
-        
-        map.setIsObstacle(12, 13, true);
-        map.setIsObstacle(13, 13, true);
-        map.setIsObstacle(14, 13, true);
+//        map.setIsObstacle(6, 1, true);      //the toughest test
+//        map.setIsObstacle(7, 1, true);
+//        map.setIsObstacle(8, 1, true);
+//        map.setIsObstacle(8, 0, true);
+//        
+//        map.setIsObstacle(2, 3, true);
+//        map.setIsObstacle(2, 4, true);
+//        
+//        map.setIsObstacle(14, 4, true);
+//        
+//        map.setIsObstacle(10, 5, true);
+//        map.setIsObstacle(10, 6, true);
+//        
+//        map.setIsObstacle(1, 8, true);
+//        map.setIsObstacle(1, 9, true);
+//        map.setIsObstacle(1, 10, true);
+//        
+//        map.setIsObstacle(2, 14, true);
+//        map.setIsObstacle(3, 14, true);
+//        map.setIsObstacle(4, 14, true);
+//        
+//        map.setIsObstacle(12, 8, true);
+//        map.setIsObstacle(12, 9, true);
+//        
+//        map.setIsObstacle(12, 13, true);
+//        map.setIsObstacle(13, 13, true);
+//        map.setIsObstacle(14, 13, true);
         
     }
     public void setStartZone(int x, int y){
