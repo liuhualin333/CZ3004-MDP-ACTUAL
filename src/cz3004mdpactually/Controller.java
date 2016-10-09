@@ -1201,17 +1201,17 @@ public class Controller {
         
         this.speed = speed;
         //Controller.mapsimulator.contentPanel.refresh();
-        for (int i = 0; i < width; i++){
-            for (int j = 0; j < height; j++){
-                StateOfMap.exploredMap[i][j] = 1;
-                if(Controller.map.getNode(i, j).isObstacle()){
-                    StateOfMap.obstacleMap[i][j] = 1;
-                }
-                else{
-                    StateOfMap.obstacleMap[i][j] = 0;
-                }
-           }
-        }
+//        for (int i = 0; i < width; i++){
+//            for (int j = 0; j < height; j++){
+//                StateOfMap.exploredMap[i][j] = 1;
+//                if(Controller.map.getNode(i, j).isObstacle()){
+//                    StateOfMap.obstacleMap[i][j] = 1;
+//                }
+//                else{
+//                    StateOfMap.obstacleMap[i][j] = 0;
+//                }
+//           }
+//        }
         for (int i = 1; i < 9; i++){
             nearestUnexplored[i][0] = -1;
             nearestUnexplored[i][1] = -1;
@@ -1219,12 +1219,12 @@ public class Controller {
         explorationDone = true;
         moveToObjectiveDemo(goalZoneLocation);
 
-        for (int i = 0; i < width; i++){
-            for (int j = 0; j < height; j++){
-                StateOfMap.exploredMap[i][j] = 0;
-                StateOfMap.obstacleMap[i][j] = 0;
-           }
-        }
+//        for (int i = 0; i < width; i++){
+//            for (int j = 0; j < height; j++){
+//                StateOfMap.exploredMap[i][j] = 0;
+//                StateOfMap.obstacleMap[i][j] = 0;
+//           }
+//        }
     }
     
     //move to a node assuming there is a path to it in the currently explored space
