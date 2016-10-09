@@ -65,31 +65,35 @@ public class Connection {
             System.out.println(e);
         }
     }
-    public void messageRecognition(){
+    public int messageRecognition(){
         String message = readData();
         String[] sensorData = {};
         int[] sensorDataInt = {};
         
         switch(message){
             case "Move Forward finished":
-                break;
+                return 1;
             case "Turn right finished":
-                break;
+                return 2;
             case "Turn left finished":
-                break;
+                return 3;
             case "Stop finished":
-                break;
+                return 4;
             case "Invalid input":
-                break;
+                return 5;
+            case "Part1 String Received":
+                return 6;
+            case "Part2 String Received":
+                return 7;
             default:
                 if(message.matches("Invalid input*")){
-                    break;
+                    return -1;
                 }
                 sensorData = message.split(" ");
                 for (int i = 0; i < 5; i++){
                     sensorDataInt[i] = Integer.parseInt(sensorData[i]);
                 }
-                break;
+                return 8;
             
         }
     }
