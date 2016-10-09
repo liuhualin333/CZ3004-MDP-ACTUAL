@@ -898,11 +898,11 @@ public class Controller {
             public void process(java.util.List<Integer> chunks){
                 try{
                     CZ3004MDPACTUALLY.controller.mapsimulator.contentPanel.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
-                
                     for (Node node : updateList) {
                         StateOfMap.updateDescriptor(node.getX(), node.getY(), 0);
                         updateList.remove(node);
                     }
+                    saveFile();
                 }
                 catch(Exception e){
                 }
@@ -1003,7 +1003,7 @@ public class Controller {
                         setRobotLocationAsExplored();
                     //}
                     if(bestPathImpossible != true){
-                            publishAndSleep();
+                            //publishAndSleep();
                     }
                  }
                        
@@ -1327,10 +1327,10 @@ public class Controller {
             impossibleNodes.add( new Node(objective[0], objective[1]));
         }
 
-//        SwingWorker worker = new SwingWorker<Integer, Integer>() {
-//            @Override
-//            protected Integer doInBackground() {
-//                mapsimulator.contentPanel.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
+        SwingWorker worker = new SwingWorker<Integer, Integer>() {
+            @Override
+            protected Integer doInBackground() {
+                mapsimulator.contentPanel.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
 
                 for (Node s : actionSequence){
                     //System.out.println("Action Path: " + s.getX() + " " + s.getY());
@@ -1340,40 +1340,40 @@ public class Controller {
                         if (directionX < 0 && directionY == 0) {
                             if (Direction.CUR_DIRECTION != Direction.DIRECTION_LEFT){
                                 turn(Direction.DIRECTION_LEFT);
-                                //publishAndSleep(); 
+                                publishAndSleep(); 
                                 if (turnTwiceFlag){
                                     turn(Direction.DIRECTION_LEFT);
-                                    //publishAndSleep();
+                                    publishAndSleep();
                                     turnTwiceFlag = false;
                                 }
                             }
                         } else if (directionX > 0 && directionY == 0) {
                             if (Direction.CUR_DIRECTION != Direction.DIRECTION_RIGHT){
                                 turn(Direction.DIRECTION_RIGHT);
-                                //publishAndSleep();
+                                publishAndSleep();
                                 if (turnTwiceFlag){
                                     turn(Direction.DIRECTION_RIGHT);
-                                    //publishAndSleep();
+                                    publishAndSleep();
                                     turnTwiceFlag = false;
                                 }
                             }
                         } else if (directionY < 0 && directionX == 0) {
                             if (Direction.CUR_DIRECTION != Direction.DIRECTION_DOWN){
                                 turn(Direction.DIRECTION_DOWN);
-                                //publishAndSleep(); 
+                                publishAndSleep(); 
                                 if (turnTwiceFlag){
                                     turn(Direction.DIRECTION_DOWN);
-                                    //publishAndSleep();
+                                    publishAndSleep();
                                     turnTwiceFlag = false;
                                 }
                             }
                         } else if (directionY > 0 && directionX == 0) {
                             if (Direction.CUR_DIRECTION != Direction.DIRECTION_UP){
                                 turn(Direction.DIRECTION_UP);
-                                //publishAndSleep(); 
+                                publishAndSleep(); 
                                 if (turnTwiceFlag){
                                     turn(Direction.DIRECTION_UP);
-                                    //publishAndSleep();
+                                    publishAndSleep();
                                     turnTwiceFlag = false;
                                 }
                             }
@@ -1386,7 +1386,7 @@ public class Controller {
                         if (StateOfMap.frontIsTraversable()) {            
                         forward(1);
                         scan();
-                        //publishAndSleep(); 
+                        publishAndSleep(); 
                         bestPathImpossible = false;
                         updateExploredAndObstacleCount();
                     } 
@@ -1404,31 +1404,32 @@ public class Controller {
                 if(bestPathImpossible != true){
                     //publishAndSleep();
                 }
-//                return 1;
-//
-//             }
-//
-//            @Override
-//            protected void process(java.util.List<Integer> chunks) {               
-//                mapsimulator.contentPanel.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
-//            }
-//
-//            @Override
-//            protected void done() {
-//                System.out.println("SHORTEST PATH COMPLETED");
-//            }
-//
-//            public void publishAndSleep() {
-//                publish();
-//                try{
-//                    Thread.sleep(1000/speed);
-//                }
-//                catch(InterruptedException e){
-//                    
-//                }
-//            }
-//        };
-//        worker.execute();
+                return 1;
+
+             }
+
+            @Override
+            protected void process(java.util.List<Integer> chunks) {               
+                mapsimulator.contentPanel.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
+                
+            }
+
+            @Override
+            protected void done() {
+                System.out.println("SHORTEST PATH COMPLETED");
+            }
+
+            public void publishAndSleep() {
+                publish();
+                try{
+                    Thread.sleep(1000/speed);
+                }
+                catch(InterruptedException e){
+                    
+                }
+            }
+        };
+        worker.execute();
         
     }
     
@@ -1695,47 +1696,43 @@ public class Controller {
                         setRobotLocationAsExplored();
                     }
             }
-                public void saveFile2() throws IOException{
-                    String part2String = "";
-                    for(int j = 0; j< height; j++){
-                        for(int i = 0; i< width; i++){
-                            if(StateOfMap.exploredMap[i][j] == 1){
-                                if(StateOfMap.obstacleMap[i][j] == 1){
-                                    part2String+="1";
-                                }
-                                else{
-                                    part2String+="0";
-                                }//no need of part1String
-                            }
-                        }
-                    }
-                    for (int i = 0; i < part2String.length()%4; i++){
-                        part2String = part2String+"0";
-                    }
-                    con.writeData("B"+part2String);
-                    while(con.messageRecognition() != 7){
-                        
-                    }
-                }
-                public void saveFile1() throws IOException{
-                    String part1String = "";
-                    for(int j = 0; j < height; j++){
-                        for(int i = 0; i< width; i++){                       
-                            if(StateOfMap.exploredMap[i][j] == 1){
-                                part1String+="1";
+            public void saveFile() throws IOException{
+                String part2String = "";
+                for(int j = 0; j< height; j++){
+                    for(int i = 0; i< width; i++){
+                        if(StateOfMap.exploredMap[i][j] == 1){
+                            if(StateOfMap.obstacleMap[i][j] == 1){
+                                part2String+="1";
                             }
                             else{
-                                part1String+="0";
-                            }
+                                part2String+="0";
+                            }//no need of part1String
                         }
                     }
-                    //padding part
-                    part1String = "11"+part1String+"11";
-                    System.out.println(part1String);
-                    con.writeData("B"+part1String);
-                    while(con.messageRecognition() != 6){
-                        
+                }
+                for (int i = 0; i < part2String.length()%4; i++){
+                    part2String = part2String+"0";
+                }
+                String part1String = "";
+                for(int j = 0; j < height; j++){
+                    for(int i = 0; i< width; i++){                       
+                        if(StateOfMap.exploredMap[i][j] == 1){
+                            part1String+="1";
+                        }
+                        else{
+                            part1String+="0";
+                        }
                     }
                 }
+                //padding part
+                part1String = "11"+part1String+"11";
+                System.out.println(part1String);
+
+                con.writeData("B"+" "+part1String+" "+part2String);
+                while(con.messageRecognition() != 7){
+
+                }
+
+            }
     
 }

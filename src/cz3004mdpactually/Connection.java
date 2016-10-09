@@ -79,18 +79,16 @@ public class Connection {
                 return 4;
             case "Invalid Input":
                 return 5;
-            case "Part1 String Received":
+            case "String Received":
                 return 6;
-            case "Part2 String Received":
-                return 7;
             case "Set Start Zone":
-                return 9;
+                return 7;
             case "Set Goal Zone":
-                return 10;
+                return 9;
             case "Explore Function":
-                return 11;
+                return 10;
             case "Fastest Path":
-                return 12;
+                return 11;
             default:
                 if(message.matches("Invalid input*")){
                     return -1;
