@@ -19,7 +19,7 @@ public class Controller {
     final int ROBOTSIZE = 3;
     static final int width = 15;
     static final int height = 20;
-    //static Mapsimulator mapsimulator;
+    static Mapsimulator mapsimulator;
 
     static Map map = new Map(width, height);
     static boolean enableTwoTiles;
@@ -65,11 +65,11 @@ public class Controller {
         enableTwoTiles = true;
         initialize();  
 
-        //mapsimulator = new Mapsimulator();
+        mapsimulator = new Mapsimulator();
         setRobotLocationAsExplored();
         //percentageExplore(50, 1);
         //timedExplore(100, 4);
-        fullExplore(1);
+        //fullExplore(1);
         //fastPath(1);
     }
     
@@ -711,14 +711,14 @@ public class Controller {
         done = false;
         goalReached = true;
         this.speed = speed;
-//        SwingWorker worker = new SwingWorker<Integer, Integer>() {
-//            @Override
-//            protected Integer doInBackground() {
+        SwingWorker worker = new SwingWorker<Integer, Integer>() {
+            @Override
+            protected Integer doInBackground() {
         
                 for (int i = 0; i < 4; i++){
                     scan();       //detect obstacles
                     executeTurn(Direction.TURN_RIGHT);
-                    //publishAndSleep();
+                    publishAndSleep();
                 }       
 
                 while (!done){
@@ -741,14 +741,12 @@ public class Controller {
                         if (!StateOfMap.frontIsTraversable()){ 
                             if (actionSequence.isEmpty())   //skips sleep and publish if robot didn't move
                                 break;
-                            //scan();
-                            //publishAndSleep();
                             break;
                         }
                         else{    
                             forward(1);
                             scan();
-                            //publishAndSleep();
+                            publishAndSleep();
                             updateExploredAndObstacleCount();
                             System.out.println("Explored nodes: " + exploredNodeCount);
                         }
@@ -863,36 +861,124 @@ public class Controller {
                 System.out.println("Movements: " + movementCounter);
                 System.out.println("Turns: " + turnCounter);
 
-//                return 1;
-//            }
-//
-//            @Override
-//            public void process(java.util.List<Integer> chunks){
-//                try{
-//                        CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor1.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
-//                CZ3004MDPACTUALLY.controller.mapsimulator.gridPanelDescriptor2.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
-//                for (Node node : updateList) {
-//                    StateOfMap.updateDescriptor(node.getX(), node.getY(), 0);
-//                    updateList.remove(node);
-//                }
-//                }
-//                catch(Exception e){
-//                }
-//                    
-//                    
-//            }
-//            public void publishAndSleep() {
-//                publish();
-//                try{
-//                    Thread.sleep(1000/speed);
-//                }
-//                catch(InterruptedException e){
-//                    
-//                }
-//            }
-//                       
-//        };
-//        worker.execute();
+                return 1;
+            }
+
+            @Override
+            public void process(java.util.List<Integer> chunks){
+                try{
+                    CZ3004MDPACTUALLY.controller.mapsimulator.contentPanel.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
+                
+                    for (Node node : updateList) {
+                        StateOfMap.updateDescriptor(node.getX(), node.getY(), 0);
+                        updateList.remove(node);
+                    }
+                }
+                catch(Exception e){
+                }
+                    
+                    
+            }
+            public void publishAndSleep() {
+                publish();
+                try{
+                    Thread.sleep(1000/speed);
+                }
+                catch(InterruptedException e){
+                    
+                }
+            }
+            public void moveToObjective(int[] objective){ 
+
+                actionSequence = map.findPath(currentLocation, objective); 
+                //for (Node tmp : actionSequence)
+                    //System.out.println("Action Path: " + tmp.getX() + " " + tmp.getY());
+                if (actionSequence == null)
+                    System.out.println("null");
+                if (actionSequence.isEmpty()){  
+                    System.out.println("is empty");
+                    bestPathImpossible = true;                       
+                    impossibleNodes.add( new Node(objective[0], objective[1]));
+                }
+
+                    for (Node s : actionSequence){
+                        System.out.println("Action Path: " + s.getX() + " " + s.getY());
+                        directionX = s.getX() - Robot.R9X;
+                        directionY = s.getY() - Robot.R9Y;
+
+                        if (directionX < 0 && directionY == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_LEFT){
+                                turn(Direction.DIRECTION_LEFT);
+                                publishAndSleep();
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_LEFT);
+                                    publishAndSleep();
+                                    turnTwiceFlag = false;
+                                }
+                            }
+                        } else if (directionX > 0 && directionY == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_RIGHT){
+                                turn(Direction.DIRECTION_RIGHT);
+                                publishAndSleep(); 
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_RIGHT);
+                                    publishAndSleep();
+                                    turnTwiceFlag = false;
+                                }
+                            }
+                        } else if (directionY < 0 && directionX == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_DOWN){
+                                turn(Direction.DIRECTION_DOWN);
+                                publishAndSleep();
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_DOWN);
+                                    publishAndSleep();
+                                    turnTwiceFlag = false;
+                                }
+                            }
+                        } else if (directionY > 0 && directionX == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_UP){
+                                turn(Direction.DIRECTION_UP);
+                                publishAndSleep(); 
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_UP);
+                                    publishAndSleep();
+                                    turnTwiceFlag = false;
+                                }
+                            }
+                        }
+
+//                        if (explorationDone){
+//                            forward(1);
+//                            publishAndSleep(); 
+//                        }
+//                        else 
+                        if (StateOfMap.frontIsTraversable()) {            
+                            //setRobotLocationAsExplored();
+                            forward(1);
+                            scan();
+                            publishAndSleep(); 
+                            bestPathImpossible = false;
+                            updateExploredAndObstacleCount();
+                        } 
+                        else {
+                            bestPathImpossible = true;                       
+                            impossibleNodes.add( actionSequence.get(actionSequence.size()-1) );
+                            break;//this is where we handle nearest unexplored or neighbours being obstacles
+                        }
+
+                    }
+                    //if (!explorationDone){
+                        scan();
+                        setRobotLocationAsExplored();
+                    //}
+                    if(bestPathImpossible != true){
+                            publishAndSleep();
+                    }
+                 }
+                       
+        };
+        worker.execute();
     }
     
     public void updateExploredAndObstacleCount(){
@@ -1610,7 +1696,7 @@ public class Controller {
                             }
                             else{
                                 part1String+="0";
-                            }//no need of part1String
+                            }
                         }
                     }
                     //padding part

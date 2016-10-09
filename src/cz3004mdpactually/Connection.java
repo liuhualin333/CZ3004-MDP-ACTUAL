@@ -69,20 +69,28 @@ public class Connection {
         String message = readData();
         
         switch(message){
-            case "Move Forward finished":
+            case "Move Forward Finished":
                 return 1;
-            case "Turn right finished":
+            case "Turn Right Finished":
                 return 2;
-            case "Turn left finished":
+            case "Turn Left Finished":
                 return 3;
-            case "Stop finished":
+            case "Stop Finished":
                 return 4;
-            case "Invalid input":
+            case "Invalid Input":
                 return 5;
             case "Part1 String Received":
                 return 6;
             case "Part2 String Received":
                 return 7;
+            case "Set Start Zone":
+                return 9;
+            case "Set Goal Zone":
+                return 10;
+            case "Explore Function":
+                return 11;
+            case "Fastest Path":
+                return 12;
             default:
                 if(message.matches("Invalid input*")){
                     return -1;
