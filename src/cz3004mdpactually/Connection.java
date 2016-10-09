@@ -81,22 +81,37 @@ public class Connection {
                 return 5;
             case "String Received":
                 return 6;
-            case "Set Start Zone":
-                return 7;
-            case "Set Goal Zone":
-                return 9;
             case "Explore Function":
                 return 10;
             case "Fastest Path":
                 return 11;
             default:
-                if(message.matches("Invalid input*")){
+                if(message.matches("Invalid input*"))
                     return -1;
-                }
-                else //this means sensor input is coming
+                if(message.matches("SSZ*"))  //Set Start Zone
+                    return 7;
+                if(message.matches("SGZ*"))  //Set Goal Zone
                     return 8;
+                if(message.matches("SRL*"))  //Set Robot Location
+                    return 9;                
+                else //this means sensor input is coming
+                    return 12;
                 //break;    
         }
+    }
+    
+    //used to get start/end/robot location from Android
+    public int[] zoneParse(){
+        String message = readData();
+        String[] coordinates = {};
+        int[] coordinatesInt = {};
+        
+        message = message.substring(3);     //get the coordinates after the 3 char header  
+        coordinates = message.split(" ");
+        coordinatesInt[0] = Integer.parseInt(coordinates[0]);
+        coordinatesInt[1] = Integer.parseInt(coordinates[1]);
+        
+        return coordinatesInt;
     }
     
     public int[] sensorDataParse(){
