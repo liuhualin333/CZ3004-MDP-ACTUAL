@@ -6,6 +6,7 @@
 package cz3004mdpactually;
 import java.net.*;
 import java.io.*;
+import java.nio.charset.Charset;
 /**
  *
  * @author Jo
@@ -13,13 +14,15 @@ import java.io.*;
 public class Connection {
     Socket client;
     BufferedReader input;
-    DataOutputStream output;
+    //BufferedWriter output;
+    OutputStream output;
     
     public Connection(){
         try{
             client = new Socket("192.168.9.1", 1111); //IP, and port number
             input = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            output = new DataOutputStream(client.getOutputStream());
+            //output = new BufferedWriter (new OutputStreamWriter(client.getOutputStream()));
+            output = client.getOutputStream();
         }
         catch (UnknownHostException e){
             System.err.println("Don't know host");
@@ -33,7 +36,10 @@ public class Connection {
     public void writeData(String data){
         if (client != null && output != null){
             try{
-                output.writeUTF(data);
+                //output.write(data);
+                output.write(data.getBytes(Charset.forName("utf-8")));
+                output.flush();
+                System.out.println(data);
             }
             catch (IOException e){
                 e.printStackTrace();
