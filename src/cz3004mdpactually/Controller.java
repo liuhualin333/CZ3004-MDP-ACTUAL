@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.*;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 /**
  *
  * @author HuaBa
@@ -69,37 +70,54 @@ public class Controller {
         initialize();  
         mapsimulator = new Mapsimulator();
                
-        while (true){
-            if(con.messageRecognition() == 10){
-                setRobotLocationAsExplored();
-                fullExplore(1);
-                con.writeData("BExplore done");
-            }
-            else if(con.messageRecognition() == 11){
-                fastPath(1);
-                con.writeData("BFastest Path done");
-            }         
-            //changing the following 3 after initialize() and mapsimulator instantiation might cause problems
-            else if(con.messageRecognition() == 7){
-                tmp = con.zoneParse();
-                setStartZone(tmp[0], tmp[1]);
-                con.writeData("BSet start done");
-            }
-            else if(con.messageRecognition() == 8){
-                tmp = con.zoneParse();
-                setGoalZone(tmp[0], tmp[1]);
-                con.writeData("BSet goal done");
-            }
-            else if(con.messageRecognition() == 9){
-                tmp = con.zoneParse();
-                setRobotStartLocation(tmp[0], tmp[1]);
-                con.writeData("BSet robot done");
-            }
-            
-        }
+//        while (true){
+//            if(con.messageRecognition() == 10){
+//                setRobotLocationAsExplored();
+//                fullExplore(1);
+//                con.writeData("BExplore done");
+//            }
+//            else if(con.messageRecognition() == 11){
+//                fastPath(1);
+//                con.writeData("BFastest Path done");
+//            }         
+//            //changing the following 3 after initialize() and mapsimulator instantiation might cause problems
+//            else if(con.messageRecognition() == 7){
+//                tmp = con.zoneParse();
+//                setStartZone(tmp[0], tmp[1]);
+//                con.writeData("BSet start done");
+//            }
+//            else if(con.messageRecognition() == 8){
+//                tmp = con.zoneParse();
+//                setGoalZone(tmp[0], tmp[1]);
+//                con.writeData("BSet goal done");
+//            }
+//            else if(con.messageRecognition() == 9){
+//                tmp = con.zoneParse();
+//                setRobotStartLocation(tmp[0], tmp[1]);
+//                con.writeData("BSet robot done");
+//            }
+//            
+//        }
         //percentageExplore(50, 1);
         //timedExplore(100, 4);
         //fullExplore(1);
+        
+        //test for integration
+        try{
+        TimeUnit.SECONDS.sleep(20);
+        }
+        catch (Exception e){}
+        
+        con.writeData("aW\n");
+        while (true){
+            if (con.messageRecognition() == 1)
+                break;
+        }
+        con.writeData("aD\n");
+        while (true){
+            if (con.messageRecognition() == 2)
+                break;
+        }
         //fastPath(1);
     }
     
