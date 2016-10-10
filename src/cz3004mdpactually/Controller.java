@@ -104,20 +104,20 @@ public class Controller {
         
         //test for integration
         try{
-        TimeUnit.SECONDS.sleep(20);
+        TimeUnit.SECONDS.sleep(10);
         }
         catch (Exception e){}
-        
-        con.writeData("aW\n");
-        while (true){
-            if (con.messageRecognition() == 1)
-                break;
-        }
-        con.writeData("aD\n");
-        while (true){
-            if (con.messageRecognition() == 2)
-                break;
-        }
+             fullExplore(1);
+//        con.writeData("aw");
+//        while (true){
+//            if (con.messageRecognition() == 1)
+//                break;
+//        }
+//        con.writeData("ad");
+//        while (true){
+//            if (con.messageRecognition() == 2)
+//                break;
+//        }
         //fastPath(1);
     }
     
@@ -361,7 +361,7 @@ public class Controller {
         switch (direction) {
             case Direction.TURN_RIGHT:
                 
-                con.writeData("AD"); //Arduino turn right             
+                con.writeData("ad"); //Arduino turn right             
                 switch (Direction.CUR_DIRECTION) {
                     case Direction.DIRECTION_UP:
                         Direction.CUR_DIRECTION = Direction.DIRECTION_RIGHT;
@@ -391,7 +391,7 @@ public class Controller {
                 
             case Direction.TURN_LEFT:
                 
-                con.writeData("AA"); //Arduino turn left
+                con.writeData("aa"); //Arduino turn left
                 switch (Direction.CUR_DIRECTION) {
                     case Direction.DIRECTION_UP:
                         Direction.CUR_DIRECTION = Direction.DIRECTION_LEFT;
@@ -424,7 +424,7 @@ public class Controller {
         int x = Robot.R2X;
         int y = Robot.R2Y;
         
-        con.writeData("AW"); //Arduino move forward for tileCount, not specified as of yet cause hardware programming not ready
+        con.writeData("aw"); //Arduino move forward for tileCount, not specified as of yet cause hardware programming not ready
         for (int i = 0; i < tileCount; i++) {
             switch (Direction.CUR_DIRECTION) {
                 case Direction.DIRECTION_UP:
@@ -460,10 +460,11 @@ public class Controller {
     
     //scan for obstacles
     public int scan(){
-        con.writeData("AC"); //Arduino scan
+        con.writeData("ac"); //Arduino scan
         while (true){        //Wait till scanning finishes
             if (con.messageRecognition() == 12)
                 break;
+            System.out.println(con.messageRecognition());
         }
         scanResult = con.sensorDataParse();
         
@@ -1794,12 +1795,11 @@ public class Controller {
                 }
                 //padding part
                 part1String = "11"+part1String+"11";
-                System.out.println(part1String);
 
                 con.writeData("B"+" "+part1String+" "+part2String);
-                while(con.messageRecognition() != 6){
-
-                }
+//                while(con.messageRecognition() != 6){
+//
+//                }
 
             }
     

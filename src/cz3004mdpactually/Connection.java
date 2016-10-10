@@ -75,13 +75,13 @@ public class Connection {
         String message = readData();
         
         switch(message){
-            case "Move Forward Finished":
+            case "Move Forward finished":
                 return 1;
-            case "Turn Right Finished":
+            case "Turn right finished":
                 return 2;
-            case "Turn Left Finished":
+            case "Turn left Finished":
                 return 3;
-            case "Stop Finished":
+            case "Stop finished":
                 return 4;
             case "Invalid Input":
                 return 5;
@@ -99,7 +99,20 @@ public class Connection {
                 if(message.matches("SGZ*"))  //Set Goal Zone
                     return 8;
                 if(message.matches("SRL*"))  //Set Robot Location
-                    return 9;                
+                    return 9;
+                if(message.matches("Close the port*")){
+                    try {
+                        output.close();
+                        input.close();
+                        client.close();
+                        System.out.println("Close the port");
+                    } 
+                    catch (IOException e){
+                        System.out.println(e);
+                    }
+                    return -2;
+                }
+                    
                 else //this means sensor input is coming
                     return 12;
                 //break;    
@@ -123,11 +136,13 @@ public class Connection {
     public int[] sensorDataParse(){
         String message = readData();
         String[] sensorData = {};
-        int[] sensorDataInt = {};
-        
+        int[] sensorDataInt = new int[5];
+        System.out.println(message);
         sensorData = message.split(" ");
+        
         for (int i = 0; i < 5; i++){
             sensorDataInt[i] = Integer.parseInt(sensorData[i]);
+            System.out.println(sensorDataInt[i]);
         }
         
         return sensorDataInt;
