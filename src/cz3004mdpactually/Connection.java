@@ -16,7 +16,7 @@ public class Connection {
     BufferedReader input;
     //BufferedWriter output;
     OutputStream output;
-    
+    static String receiveMsg;
     public Connection(){
         try{
             client = new Socket("192.168.9.1", 1111); //IP, and port number
@@ -48,16 +48,24 @@ public class Connection {
     }
     
     public String readData(){
+//        try{
+//            Thread.sleep(2000);
+//        }
+//        catch(Exception e){
+//            
+//        }
         String data = null;
-        
+        System.out.println("Inside");
         if (client != null && input != null){
             try{
                 data = input.readLine();  //read each individual line then break?
+                
             }                           //otherwise might be reading forever. TODO
             catch (IOException e){
-                e.printStackTrace();
+                System.out.println("Exception!");
             }
         }
+        System.out.println(data);
         return data;
     }
     
@@ -73,7 +81,6 @@ public class Connection {
     }
     public int messageRecognition(){
         String message = readData();
-        
         switch(message){
             case "Move Forward finished":
                 return 1;
@@ -113,8 +120,10 @@ public class Connection {
                     return -2;
                 }
                     
-                else //this means sensor input is coming
+                else {//this means sensor input is coming
+                    receiveMsg = message;
                     return 12;
+                }
                 //break;    
         }
     }
@@ -134,7 +143,8 @@ public class Connection {
     }
     
     public int[] sensorDataParse(){
-        String message = readData();
+        System.out.println("message");
+        String message = receiveMsg;
         String[] sensorData = {};
         int[] sensorDataInt = new int[5];
         System.out.println(message);

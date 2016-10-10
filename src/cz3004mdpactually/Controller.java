@@ -107,6 +107,7 @@ public class Controller {
         TimeUnit.SECONDS.sleep(10);
         }
         catch (Exception e){}
+        con.readData();
              fullExplore(1);
 //        con.writeData("aw");
 //        while (true){
@@ -276,15 +277,15 @@ public class Controller {
         StateOfMap.setExploredTile(Robot.R8X, Robot.R8Y, 1);
         StateOfMap.setExploredTile(Robot.R9X, Robot.R9Y, 1);  
         
-//        StateOfMap.updateDescriptor(Robot.R1X, Robot.R1Y, 1);
-//        StateOfMap.updateDescriptor(Robot.R2X, Robot.R2Y, 1);
-//        StateOfMap.updateDescriptor(Robot.R3X, Robot.R3Y, 1);
-//        StateOfMap.updateDescriptor(Robot.R4X, Robot.R4Y, 1);
-//        StateOfMap.updateDescriptor(Robot.R5X, Robot.R5Y, 1);
-//        StateOfMap.updateDescriptor(Robot.R6X, Robot.R6Y, 1);
-//        StateOfMap.updateDescriptor(Robot.R7X, Robot.R7Y, 1);
-//        StateOfMap.updateDescriptor(Robot.R8X, Robot.R8Y, 1);
-//        StateOfMap.updateDescriptor(Robot.R9X, Robot.R9Y, 1);
+        StateOfMap.updateDescriptor(Robot.R1X, Robot.R1Y, 1);
+        StateOfMap.updateDescriptor(Robot.R2X, Robot.R2Y, 1);
+        StateOfMap.updateDescriptor(Robot.R3X, Robot.R3Y, 1);
+        StateOfMap.updateDescriptor(Robot.R4X, Robot.R4Y, 1);
+        StateOfMap.updateDescriptor(Robot.R5X, Robot.R5Y, 1);
+        StateOfMap.updateDescriptor(Robot.R6X, Robot.R6Y, 1);
+        StateOfMap.updateDescriptor(Robot.R7X, Robot.R7Y, 1);
+        StateOfMap.updateDescriptor(Robot.R8X, Robot.R8Y, 1);
+        StateOfMap.updateDescriptor(Robot.R9X, Robot.R9Y, 1);
     }
     //elementary behaviours
     //determines where the robot should turn based on current direction and objective direction, then execute
@@ -462,9 +463,12 @@ public class Controller {
     public int scan(){
         con.writeData("ac"); //Arduino scan
         while (true){        //Wait till scanning finishes
-            if (con.messageRecognition() == 12)
+            int tmp = con.messageRecognition();
+            if (tmp== 12){
+                System.out.println(12);
                 break;
-            System.out.println(con.messageRecognition());
+            }
+            System.out.println(tmp);
         }
         scanResult = con.sensorDataParse();
         
@@ -476,7 +480,7 @@ public class Controller {
                 if (scanResult[1] == 0)
                     StateOfMap.setObstacleTile(Robot.Tile1X, Robot.Tile1Y, 1);
                 //StateOfMap.setObstacleTile(Robot.Tile1X, Robot.Tile1Y, map.getNode(Robot.Tile1X, Robot.Tile1Y).isObstacle() ? 1 : 0 );
-                //StateOfMap.updateDescriptor(Robot.Tile1X, Robot.Tile1Y, 1);
+                StateOfMap.updateDescriptor(Robot.Tile1X, Robot.Tile1Y, 1);
                 scannedNodes++;
             }
             
@@ -487,7 +491,7 @@ public class Controller {
                         if (scanResult[1] == 1)
                             StateOfMap.setObstacleTile(Robot.Tile1EX, Robot.Tile1EY, 1);
                         //StateOfMap.setObstacleTile(Robot.Tile1EX, Robot.Tile1EY, map.getNode(Robot.Tile1EX, Robot.Tile1EY).isObstacle() ? 1 : 0 );
-                        //StateOfMap.updateDescriptor(Robot.Tile1EX, Robot.Tile1EY, 1);
+                        StateOfMap.updateDescriptor(Robot.Tile1EX, Robot.Tile1EY, 1);
                         scannedNodes++;
                     }
                 }
@@ -499,7 +503,7 @@ public class Controller {
                 if (scanResult[2] == 0)
                     StateOfMap.setObstacleTile(Robot.Tile2X, Robot.Tile2Y, 1);
                 //StateOfMap.setObstacleTile(Robot.Tile2X, Robot.Tile2Y, map.getNode(Robot.Tile2X, Robot.Tile2Y).isObstacle() ? 1 : 0 );
-                //StateOfMap.updateDescriptor(Robot.Tile2X, Robot.Tile2Y, 1);
+                StateOfMap.updateDescriptor(Robot.Tile2X, Robot.Tile2Y, 1);
                 scannedNodes++;                
             }
             
@@ -510,7 +514,7 @@ public class Controller {
                         if (scanResult[2] == 1)
                             StateOfMap.setObstacleTile(Robot.Tile2EX, Robot.Tile2EY, 1);
                         //StateOfMap.setObstacleTile(Robot.Tile2EX, Robot.Tile2EY, map.getNode(Robot.Tile2EX, Robot.Tile2EY).isObstacle() ? 1 : 0 );
-                        //StateOfMap.updateDescriptor(Robot.Tile2EX, Robot.Tile2EY, 1);
+                        StateOfMap.updateDescriptor(Robot.Tile2EX, Robot.Tile2EY, 1);
                         scannedNodes++;
                     }
                 }
@@ -522,7 +526,7 @@ public class Controller {
                 if (scanResult[3] == 0)
                     StateOfMap.setObstacleTile(Robot.Tile3X, Robot.Tile3Y, 1);
                 //StateOfMap.setObstacleTile(Robot.Tile3X, Robot.Tile3Y, map.getNode(Robot.Tile3X, Robot.Tile3Y).isObstacle() ? 1 : 0 );
-                //StateOfMap.updateDescriptor(Robot.Tile3X, Robot.Tile3Y, 1);
+                StateOfMap.updateDescriptor(Robot.Tile3X, Robot.Tile3Y, 1);
                 scannedNodes++;                
             }
             
@@ -533,7 +537,7 @@ public class Controller {
                         if (scanResult[3] == 1)
                             StateOfMap.setObstacleTile(Robot.Tile3EX, Robot.Tile3EY, 1);
                         //StateOfMap.setObstacleTile(Robot.Tile3EX, Robot.Tile3EY, map.getNode(Robot.Tile3EX, Robot.Tile3EY).isObstacle() ? 1 : 0 );
-                        //StateOfMap.updateDescriptor(Robot.Tile3EX, Robot.Tile3EY, 1);
+                        StateOfMap.updateDescriptor(Robot.Tile3EX, Robot.Tile3EY, 1);
                         scannedNodes++;
                     }
                 }
@@ -545,7 +549,7 @@ public class Controller {
                 if (scanResult[0] == 0)
                     StateOfMap.setObstacleTile(Robot.Tile5X, Robot.Tile5Y, 1);
                 //StateOfMap.setObstacleTile(Robot.Tile5X, Robot.Tile5Y, map.getNode(Robot.Tile5X, Robot.Tile5Y).isObstacle() ? 1 : 0 );
-                //StateOfMap.updateDescriptor(Robot.Tile5X, Robot.Tile5Y, 1);
+                StateOfMap.updateDescriptor(Robot.Tile5X, Robot.Tile5Y, 1);
                 scannedNodes++;
             }
                 
@@ -556,7 +560,7 @@ public class Controller {
                         if (scanResult[0] == 1)
                             StateOfMap.setObstacleTile(Robot.Tile5EX, Robot.Tile5EY, 1);
                         //StateOfMap.setObstacleTile(Robot.Tile5EX, Robot.Tile5EY, map.getNode(Robot.Tile5EX, Robot.Tile5EY).isObstacle() ? 1 : 0 );
-                        //StateOfMap.updateDescriptor(Robot.Tile5EX, Robot.Tile5EY, 1);
+                        StateOfMap.updateDescriptor(Robot.Tile5EX, Robot.Tile5EY, 1);
                         scannedNodes++;
                     }
                 }
@@ -606,7 +610,7 @@ public class Controller {
                 if (scanResult[4] == 0)
                     StateOfMap.setObstacleTile(Robot.Tile8X, Robot.Tile8Y, 1);
                 //StateOfMap.setObstacleTile(Robot.Tile8X, Robot.Tile8Y, map.getNode(Robot.Tile8X, Robot.Tile8Y).isObstacle() ? 1 : 0 );
-                //StateOfMap.updateDescriptor(Robot.Tile8X, Robot.Tile8Y, 1);
+                StateOfMap.updateDescriptor(Robot.Tile8X, Robot.Tile8Y, 1);
                 scannedNodes++;
             }
                 
@@ -617,7 +621,7 @@ public class Controller {
                         if (scanResult[4] == 1)
                             StateOfMap.setObstacleTile(Robot.Tile8EX, Robot.Tile8EY, 1);
                         //StateOfMap.setObstacleTile(Robot.Tile8EX, Robot.Tile8EY, map.getNode(Robot.Tile8EX, Robot.Tile8EY).isObstacle() ? 1 : 0 );
-                        //StateOfMap.updateDescriptor(Robot.Tile8EX, Robot.Tile8EY, 1);
+                        StateOfMap.updateDescriptor(Robot.Tile8EX, Robot.Tile8EY, 1);
                         scannedNodes++;
                     }
                 }
@@ -962,7 +966,6 @@ public class Controller {
 
                 return 1;
             }
-
             @Override
             public void process(java.util.List<Integer> chunks){
                 try{
@@ -1078,8 +1081,8 @@ public class Controller {
                        
         };
         worker.execute();
-    }
     
+    }
     public void updateExploredAndObstacleCount(){
         int explore = 0;
         int obstacle = 0;
