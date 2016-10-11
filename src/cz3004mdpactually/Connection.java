@@ -12,11 +12,13 @@ import java.nio.charset.Charset;
  * @author Jo
  */
 public class Connection {
+    
     Socket client;
     BufferedReader input;
     //BufferedWriter output;
     OutputStream output;
     static String receiveMsg;
+
     public Connection(){
         try{
             client = new Socket("192.168.9.1", 1111); //IP, and port number
@@ -48,19 +50,12 @@ public class Connection {
     }
     
     public String readData(){
-//        try{
-//            Thread.sleep(2000);
-//        }
-//        catch(Exception e){
-//            
-//        }
         String data = null;
         System.out.println("Inside");
         if (client != null && input != null){
             try{
-                data = input.readLine();  //read each individual line then break?
-                
-            }                           //otherwise might be reading forever. TODO
+                data = input.readLine();      
+            }                          
             catch (IOException e){
                 System.out.println("Exception!");
             }
@@ -74,16 +69,41 @@ public class Connection {
             output.close();
             input.close();
             client.close();
+            System.out.println("Close the port");
         } 
         catch (IOException e){
             System.out.println(e);
         }
     }
+    
     public int messageRecognition(){
         String message = readData();
+        String tmp = "Invalid Input"; //just a placeholder
+        
+        if (message.equals("Pause")){
+            while (true){
+                message = readData();
+                if (message.equals("Resume"))
+                    break;
+                else if(message.equals("Stop")){
+                    close();
+                    System.exit(0);
+                }
+                else{
+                    if (!message.equals(""))  //if the message isn't empty
+                        tmp = message;  //this means a message arrived after the pause command, store it
+                }
+            }
+            message = tmp;
+        }     
+        if(message.equals("Stop")){
+            close();
+            System.exit(0);
+        }   
+        
         switch(message){
             case "Move Forward finished":
-                return 1;
+                return 1;                                 
             case "Turn right finished":
                 return 2;
             case "Turn left finished":
@@ -92,8 +112,8 @@ public class Connection {
                 return 4;
             case "Invalid Input":
                 return 5;
-            case "String Received":
-                return 6;
+//            case "String Received":
+//                return 6;
             case "Explore Function":
                 return 10;
             case "Fastest Path":
@@ -101,38 +121,35 @@ public class Connection {
             default:
                 if(message.matches("Invalid input*"))
                     return -1;
-                if(message.matches("SSZ*"))  //Set Start Zone
+                if(message.matches("SSZ*")){  //Set Start Zone
+                    receiveMsg = message;
                     return 7;
-                if(message.matches("SGZ*"))  //Set Goal Zone
+                }
+                if(message.matches("SGZ*")){  //Set Goal Zone
+                    receiveMsg = message;
                     return 8;
-                if(message.matches("SRL*"))  //Set Robot Location
+                }
+                if(message.matches("SRL*")){  //Set Robot Location
+                    receiveMsg = message;
                     return 9;
+                }
                 if(message.matches("Close the port*")){
-                    try {
-                        output.close();
-                        input.close();
-                        client.close();
-                        System.out.println("Close the port");
-                    } 
-                    catch (IOException e){
-                        System.out.println(e);
-                    }
+                    close();
                     return -2;
                 }
                     
                 else {//this means sensor input is coming
-                    receiveMsg = message;
-                    return 12;
-                }
-                //break;    
+                        receiveMsg = message;
+                        return 12;
+                }              
         }
     }
     
     //used to get start/end/robot location from Android
     public int[] zoneParse(){
-        String message = readData();
+        String message = receiveMsg;
         String[] coordinates = {};
-        int[] coordinatesInt = {};
+        int[] coordinatesInt = new int[2];
         
         message = message.substring(3);     //get the coordinates after the 3 char header  
         coordinates = message.split(" ");

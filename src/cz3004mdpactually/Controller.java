@@ -72,6 +72,11 @@ public class Controller {
                
 //        while (true){
 //            if(con.messageRecognition() == 10){
+//                try{
+//                TimeUnit.SECONDS.sleep(10);
+//                }
+//                catch (Exception e){}
+//                con.readData();
 //                setRobotLocationAsExplored();
 //                fullExplore(1);
 //                con.writeData("BExplore done");
