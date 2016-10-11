@@ -86,7 +86,7 @@ public class Connection {
                 return 1;
             case "Turn right finished":
                 return 2;
-            case "Turn left Finished":
+            case "Turn left finished":
                 return 3;
             case "Stop finished":
                 return 4;
