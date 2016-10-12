@@ -1804,7 +1804,13 @@ public class Controller {
                 //padding part
                 part1String = "11"+part1String+"11";
 
-                con.writeData("B"+" "+part1String+" "+part2String);
+                con.writeData( "b"+" "
+                        +Direction.CUR_DIRECTION+" "
+                        +Robot.R9X+" "
+                        +Robot.R9Y+" "
+                        +part1String+" "
+                        +part2String);
+                        
 //                while(con.messageRecognition() != 6){
 //
 //                }
