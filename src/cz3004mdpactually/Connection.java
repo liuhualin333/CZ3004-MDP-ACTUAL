@@ -114,9 +114,9 @@ public class Connection {
                 return 5;
 //            case "String Received":
 //                return 6;
-            case "Explore Function":
+            case "explore":
                 return 10;
-            case "Fastest Path":
+            case "race":
                 return 11;
             default:
                 if(message.matches("Invalid input*"))
