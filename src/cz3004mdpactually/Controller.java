@@ -51,6 +51,7 @@ public class Controller {
     static int timeLimitAbsolute = 0;
     
     static int speed;
+    static final int sleepTime = 250;
     static boolean turnTwiceFlag;
     static int movementCounter = 0;
     static int turnCounter = 0;
@@ -995,7 +996,7 @@ public class Controller {
             public void publishAndSleep() {
                 publish();
                 try{
-                    Thread.sleep(1000/speed);
+                    Thread.sleep(sleepTime/speed);
                 }
                 catch(InterruptedException e){
                     
@@ -1217,7 +1218,7 @@ public class Controller {
 //            public void publishAndSleep() {
 //                publish();
 //                try{
-//                    Thread.sleep(1000/speed);
+//                    Thread.sleep(sleepTime/speed);
 //                }
 //                catch(InterruptedException e){
 //                    
@@ -1355,7 +1356,7 @@ public class Controller {
 //            public void publishAndSleep() {
 //                publish();
 //                try{
-//                    Thread.sleep(1000/speed);
+//                    Thread.sleep(sleepTime/speed);
 //                }
 //                catch(InterruptedException e){
 //                    
@@ -1505,7 +1506,7 @@ public class Controller {
             public void publishAndSleep() {
                 publish();
                 try{
-                    Thread.sleep(1000/speed);
+                    Thread.sleep(sleepTime/speed);
                 }
                 catch(InterruptedException e){
                     
