@@ -838,6 +838,15 @@ public class Controller {
 
                 while (!done){
                     while (true){
+                        if (Connection.STOP){ //stop exploration and return to start zone
+                            for (int i = 1; i < 9; i++){
+                                nearestUnexplored[i][0] = -1;
+                                nearestUnexplored[i][1] = -1;
+                            }
+                            moveToObjective(startZoneLocation);
+                            return 1;
+                        }
+                            
                         if (!bestPathImpossible || impossibleNodes.size() > 60)
                             impossibleNodes.clear();
 //                        else{
@@ -912,6 +921,14 @@ public class Controller {
                         System.out.println("Explored nodes: " + exploredNodeCount);
                         //for (int lastTries = 0; lastTries < 2; lastTries++){
                             for (Node remainingNode: adjustedImpossibleNodes){
+                                if (Connection.STOP){ //stop exploration and return to start zone
+                                    for (int i = 1; i < 9; i++){
+                                        nearestUnexplored[i][0] = -1;
+                                        nearestUnexplored[i][1] = -1;
+                                    }
+                                    moveToObjective(startZoneLocation);
+                                    return 1;
+                                }
                                 System.out.println("Remaning Node: " + remainingNode.getX() + " " + remainingNode.getY());
                                 //if (!StateOfMap.isExploredTile(impossibleNodes.get(increment).getX(), impossibleNodes.get(increment).getY())){
                                     tmp[0] = remainingNode.getX();
@@ -1016,6 +1033,8 @@ public class Controller {
                 }
 
                     for (Node s : actionSequence){
+                        if (Connection.STOP)
+                            return;
                         System.out.println("Action Path: " + s.getX() + " " + s.getY());
                         directionX = s.getX() - Robot.R9X;
                         directionY = s.getY() - Robot.R9Y;

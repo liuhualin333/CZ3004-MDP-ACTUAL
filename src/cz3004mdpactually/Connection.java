@@ -18,6 +18,7 @@ public class Connection {
     //BufferedWriter output;
     OutputStream output;
     static String receiveMsg;
+    static boolean STOP = false;
 
     public Connection(){
         try{
@@ -80,26 +81,29 @@ public class Connection {
         String message = readData();
         String tmp = "Invalid Input"; //just a placeholder
         
+        //Pause might not be safe to use
         if (message.equals("Pause")){
             while (true){
                 message = readData();
                 if (message.equals("Resume"))
                     break;
                 else if(message.equals("Stop")){
-                    close();
-                    System.exit(0);
+                    STOP = true;
+                    return 0;
                 }
                 else{
                     if (!message.equals(""))  //if the message isn't empty
-                        tmp = message;  //this means a message arrived after the pause command, store it
+                        tmp = message;  //this means a message arrived after the pause command that isn't resume, store it
                 }
             }
             message = tmp;
         }     
+        
+        //if Android says stop, return 0 but set a flag, still wait for any acknowledgement leftover from Arduino then stop
         if(message.equals("Stop")){
-            close();
-            System.exit(0);
-        }   
+            STOP = true;
+            return 0;
+        }
         
         switch(message){
             case "Move Forward finished":
