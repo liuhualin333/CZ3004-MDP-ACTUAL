@@ -927,6 +927,7 @@ public class Controller {
                                         nearestUnexplored[i][0] = -1;
                                         nearestUnexplored[i][1] = -1;
                                     }
+                                    Connection.STOP = false;
                                     moveToObjective(startZoneLocation);
                                     return 1;
                                 }
