@@ -72,18 +72,17 @@ public class Controller {
         
         initialize();  
         mapsimulator = new Mapsimulator();
-               
+             
+//        con.readData();     //always read the empty string first
 //        while (true){
 //            readInt = con.messageRecognition();
-//            if(readInt == 10){
+//            if(readInt == 10){                            
+//                setRobotLocationAsExplored();
 //                try{
 //                TimeUnit.SECONDS.sleep(10);
 //                }
 //                catch (Exception e){}
-//                               
 //                con.writeData("bExplore start");
-//                setRobotLocationAsExplored();
-//                con.readData();
 //                fullExplore(1);
 //                con.writeData("bExplore done");
 //            }
@@ -110,9 +109,12 @@ public class Controller {
 //            }
 //            
 //        }
+        
+        
         //percentageExplore(50, 1);
         //timedExplore(100, 4);
         //fullExplore(1);
+        //fastPath(1);
         
         //test for integration
         try{
@@ -120,18 +122,7 @@ public class Controller {
         }
         catch (Exception e){}
         con.readData();
-             fullExplore(1);
-//        con.writeData("aw");
-//        while (true){
-//            if (con.messageRecognition() == 1)
-//                break;
-//        }
-//        con.writeData("ad");
-//        while (true){
-//            if (con.messageRecognition() == 2)
-//                break;
-//        }
-        //fastPath(1);
+        fullExplore(1);      
     }
     
     //check if this is the goal zone
@@ -1437,8 +1428,8 @@ public class Controller {
             System.out.println("null");
         if (actionSequence.isEmpty()){  
             System.out.println("Path is empty");
-            bestPathImpossible = true;
-            impossibleNodes.add( new Node(objective[0], objective[1]));
+//            bestPathImpossible = true;
+//            impossibleNodes.add( new Node(objective[0], objective[1]));
         }
 
         SwingWorker worker = new SwingWorker<Integer, Integer>() {
@@ -1492,31 +1483,14 @@ public class Controller {
                                 }
                             }
                         }                 
-//                    if (explorationDone){
-//                        forward(1);
-//                        publishAndSleep(); 
-//                    }
-//                    else 
-                        if (StateOfMap.frontIsTraversable()) {            
+                       
+                    if (StateOfMap.frontIsTraversable()) {            
                         forward(1);
-                        scan();
+                        //scan();
                         publishAndSleep(); 
-                        bestPathImpossible = false;
-                        updateExploredAndObstacleCount();
-                    } 
-                    else {
-                        bestPathImpossible = true;
-                        impossibleNodes.add( actionSequence.get(actionSequence.size()-1) );
-                        break;
-                    }
-                    //publishAndSleep();                 
-                }
-                //if (!explorationDone){
-                    scan();
-                    setRobotLocationAsExplored();
-                //}
-                if(bestPathImpossible != true){
-                    //publishAndSleep();
+//                        bestPathImpossible = false;
+//                        updateExploredAndObstacleCount();
+                    }               
                 }
                 return 1;
 
@@ -1547,95 +1521,7 @@ public class Controller {
         
     }
     
-    public void moveToObjective(int[] objective){ 
-
-                actionSequence = map.findPath(currentLocation, objective); 
-                //for (Node tmp : actionSequence)
-                    //System.out.println("Action Path: " + tmp.getX() + " " + tmp.getY());
-                if (actionSequence == null)
-                    System.out.println("null");
-                if (actionSequence.isEmpty()){  
-                    System.out.println("is empty");
-                    bestPathImpossible = true;                       
-                    impossibleNodes.add( new Node(objective[0], objective[1]));
-                }
-
-                    for (Node s : actionSequence){
-                        System.out.println("Action Path: " + s.getX() + " " + s.getY());
-                        directionX = s.getX() - Robot.R9X;
-                        directionY = s.getY() - Robot.R9Y;
-
-                        if (directionX < 0 && directionY == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_LEFT){
-                                turn(Direction.DIRECTION_LEFT);
-                                //publishAndSleep();
-                                if (turnTwiceFlag){
-                                    turn(Direction.DIRECTION_LEFT);
-                                    //publishAndSleep();
-                                    turnTwiceFlag = false;
-                                }
-                            }
-                        } else if (directionX > 0 && directionY == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_RIGHT){
-                                turn(Direction.DIRECTION_RIGHT);
-                                //publishAndSleep(); 
-                                if (turnTwiceFlag){
-                                    turn(Direction.DIRECTION_RIGHT);
-                                    //publishAndSleep();
-                                    turnTwiceFlag = false;
-                                }
-                            }
-                        } else if (directionY < 0 && directionX == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_DOWN){
-                                turn(Direction.DIRECTION_DOWN);
-                                //publishAndSleep();
-                                if (turnTwiceFlag){
-                                    turn(Direction.DIRECTION_DOWN);
-                                    //publishAndSleep();
-                                    turnTwiceFlag = false;
-                                }
-                            }
-                        } else if (directionY > 0 && directionX == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_UP){
-                                turn(Direction.DIRECTION_UP);
-                                //publishAndSleep(); 
-                                if (turnTwiceFlag){
-                                    turn(Direction.DIRECTION_UP);
-                                    //publishAndSleep();
-                                    turnTwiceFlag = false;
-                                }
-                            }
-                        }
-
-//                        if (explorationDone){
-//                            forward(1);
-//                            publishAndSleep(); 
-//                        }
-//                        else 
-                            if (StateOfMap.frontIsTraversable()) {            
-                            //setRobotLocationAsExplored();
-                            forward(1);
-                            scan();
-                            //publishAndSleep(); 
-                            bestPathImpossible = false;
-                            updateExploredAndObstacleCount();
-                        } 
-                        else {
-                            bestPathImpossible = true;                       
-                            impossibleNodes.add( actionSequence.get(actionSequence.size()-1) );
-                            break;//this is where we handle nearest unexplored or neighbours being obstacles
-                        }
-
-                    }
-                    //if (!explorationDone){
-                        scan();
-                        setRobotLocationAsExplored();
-                    //}
-                    if(bestPathImpossible != true){
-                            //publishAndSleep();
-                    }
-                   // return 1;
-                 }
+    //THE BELOW IS NOT USED
     
             public void moveToObjectivePercentage(int[] objective){ 
 
