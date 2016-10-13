@@ -43,7 +43,7 @@ public class Controller {
     static boolean explorationDone = false;
     
     //for percentage explore
-    static boolean goalReached = false;
+    static boolean goalReached = false;  //and fullExplore also
     static double nodesToExplore;
     static int nodesToExploreRounded;
     
@@ -824,7 +824,6 @@ public class Controller {
     public void fullExplore(int speed){
         obstacleCount = 0;
         done = false;
-        goalReached = true;
         this.speed = speed;
         SwingWorker worker = new SwingWorker<Integer, Integer>() {
             @Override
@@ -909,6 +908,14 @@ public class Controller {
                             }
                         }
                         else {
+                            if (!goalReached){
+                                for (int i = 1; i < 9; i++){
+                                    nearestUnexplored[i][0] = -1;
+                                    nearestUnexplored[i][1] = -1;
+                                }
+                                moveToObjective(goalZoneLocation);
+                            }
+                            
                             nearestUnexplored[0] = determineNearestUnexplored(); 
                             nearestUnexplored = nearestUnexploredNeighbours(nearestUnexplored[0]);
                             System.out.print("Nearest unexplored: " + nearestUnexplored[0][0] + " ");
@@ -990,7 +997,9 @@ public class Controller {
                     nearestUnexplored[i][0] = -1;
                     nearestUnexplored[i][1] = -1;
                 }
-                moveToObjective(goalZoneLocation);
+                
+                if(!goalReached)
+                    moveToObjective(goalZoneLocation);
                 moveToObjective(startZoneLocation);
                 System.out.println("Movements: " + movementCounter);
                 System.out.println("Turns: " + turnCounter);
