@@ -41,6 +41,7 @@ public class Controller {
     static List<Node> clearedImpossibleNodes = new LinkedList<Node>();
     static int [][] nearestUnexploredExtended = new int[9][2];
     static boolean explorationDone = false;
+    static boolean fastestPathDone = false;
     
     //for percentage explore
     static boolean goalReached = false;  //and fullExplore also
@@ -73,42 +74,44 @@ public class Controller {
         initialize();  
         mapsimulator = new Mapsimulator();
              
-//        con.readData();     //always read the empty string first
-//        while (true){
-//            readInt = con.messageRecognition();
-//            if(readInt == 10){                            
-//                //setRobotLocationAsExplored();
-//                try{
-//                TimeUnit.SECONDS.sleep(10);
-//                }
-//                catch (Exception e){}
-//                con.writeData("bExplore start");
-//                fullExplore(1);
-//                con.writeData("bExplore done");
-//            }
-//            else if(readInt == 11){
-//                con.writeData("bFastest Path start");
-//                fastPath(1);
-//                con.writeData("bFastest Path done");
-//            }         
-//            //changing the following 3 after initialize() and mapsimulator instantiation might cause problems
-//            else if(readInt == 7){
-//                tmp = con.zoneParse();
-//                setStartZone(tmp[0], tmp[1]);
-//                con.writeData("bSet start done");
-//            }
-//            else if(readInt == 8){
-//                tmp = con.zoneParse();
-//                setGoalZone(tmp[0], tmp[1]);
-//                con.writeData("bSet goal done");
-//            }
-//            else if(readInt == 9){
-//                tmp = con.zoneParse();
-//                setRobotStartLocation(tmp[0], tmp[1]);
-//                con.writeData("bSet robot done");
-//            }
-//            
-//        }
+        con.readData();     //always read the empty string first
+        while (true){
+            readInt = con.messageRecognition();
+            if(readInt == 10){                            
+                setRobotLocationAsExplored();
+                try{
+                TimeUnit.SECONDS.sleep(10);
+                }
+                catch (Exception e){}
+                con.writeData("bExplore start");
+                fullExplore(1);
+                while (!explorationDone){}
+                con.writeData("bExplore done");
+            }
+            else if(readInt == 11){
+                con.writeData("bFastest Path start");
+                fastPath(1);
+                while (!fastestPathDone){}
+                con.writeData("bFastest Path done");
+            }         
+            //changing the following 3 after initialize() and mapsimulator instantiation might cause problems
+            else if(readInt == 7){
+                tmp = con.zoneParse();
+                setStartZone(tmp[0], tmp[1]);
+                con.writeData("bSet start done");
+            }
+            else if(readInt == 8){
+                tmp = con.zoneParse();
+                setGoalZone(tmp[0], tmp[1]);
+                con.writeData("bSet goal done");
+            }
+            else if(readInt == 9){
+                tmp = con.zoneParse();
+                setRobotStartLocation(tmp[0], tmp[1]);
+                con.writeData("bSet robot done");
+            }
+            
+        }
         
         
         //percentageExplore(50, 1);
@@ -117,12 +120,12 @@ public class Controller {
         //fastPath(1);
         
         //test for integration
-        try{
-        TimeUnit.SECONDS.sleep(10);
-        }
-        catch (Exception e){}
-        con.readData();
-        fullExplore(1);      
+//        try{
+//        TimeUnit.SECONDS.sleep(10);
+//        }
+//        catch (Exception e){}
+//        con.readData();
+//        fullExplore(1);      
     }
     
     //check if this is the goal zone
@@ -982,19 +985,17 @@ public class Controller {
                     System.out.println("Movements: " + movementCounter);
                     System.out.println("Turns: " + turnCounter);
                 }
-                explorationDone = true;
-                
+                             
                 for (int i = 1; i < 9; i++){
                     nearestUnexplored[i][0] = -1;
                     nearestUnexplored[i][1] = -1;
-                }
-                
+                }             
                 if(!goalReached)
                     moveToObjective(goalZoneLocation);
                 moveToObjective(startZoneLocation);
                 System.out.println("Movements: " + movementCounter);
                 System.out.println("Turns: " + turnCounter);
-
+                explorationDone = true;
                 return 1;
             }
             @Override
@@ -1407,7 +1408,7 @@ public class Controller {
             nearestUnexplored[i][0] = -1;
             nearestUnexplored[i][1] = -1;
         }
-        explorationDone = true;
+        //explorationDone = true;
         moveToObjectiveDemo(goalZoneLocation);
 
 //        for (int i = 0; i < width; i++){
@@ -1492,6 +1493,7 @@ public class Controller {
 //                        updateExploredAndObstacleCount();
                     }               
                 }
+                fastestPathDone = true;
                 return 1;
 
              }
@@ -1728,7 +1730,7 @@ public class Controller {
                 part1String = "11"+part1String+"11";
 
                 con.writeData( "b"+" "
-                        +"15" + " " + "20"
+                        +"15" + " " + "20" + " "
                         +Robot.R9Y+" "
                         +Robot.R9X+" "
                         +Direction.CUR_DIRECTION+" " 
