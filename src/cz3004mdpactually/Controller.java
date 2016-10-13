@@ -51,6 +51,9 @@ public class Controller {
     //for timed explore
     static int timeLimitAbsolute = 0;
     
+    //for fastest path
+    static int consecutiveForward = 0;
+    
     static int speed;
     static final int sleepTime = 250;
     static boolean turnTwiceFlag;
@@ -1445,6 +1448,10 @@ public class Controller {
                                      
                         if (directionX < 0 && directionY == 0) {
                             if (Direction.CUR_DIRECTION != Direction.DIRECTION_LEFT){
+//                                if (consecutiveForward != 0){
+//                                    forward(consecutiveForward);
+//                                    consecutiveForward = 0;
+//                                }
                                 turn(Direction.DIRECTION_LEFT);
                                 publishAndSleep(); 
                                 if (turnTwiceFlag){
@@ -1453,8 +1460,15 @@ public class Controller {
                                     turnTwiceFlag = false;
                                 }
                             }
+//                            else {
+//                                consecutiveForward++;
+//                            }
                         } else if (directionX > 0 && directionY == 0) {
                             if (Direction.CUR_DIRECTION != Direction.DIRECTION_RIGHT){
+//                                if (consecutiveForward != 0){
+//                                    forward(consecutiveForward);
+//                                    consecutiveForward = 0;
+//                                }
                                 turn(Direction.DIRECTION_RIGHT);
                                 publishAndSleep();
                                 if (turnTwiceFlag){
@@ -1463,8 +1477,15 @@ public class Controller {
                                     turnTwiceFlag = false;
                                 }
                             }
+//                            else {
+//                                consecutiveForward++;
+//                            }
                         } else if (directionY < 0 && directionX == 0) {
                             if (Direction.CUR_DIRECTION != Direction.DIRECTION_DOWN){
+//                                if (consecutiveForward != 0){
+//                                    forward(consecutiveForward);
+//                                    consecutiveForward = 0;
+//                                }
                                 turn(Direction.DIRECTION_DOWN);
                                 publishAndSleep(); 
                                 if (turnTwiceFlag){
@@ -1473,8 +1494,15 @@ public class Controller {
                                     turnTwiceFlag = false;
                                 }
                             }
+//                            else {
+//                                consecutiveForward++;
+//                            }
                         } else if (directionY > 0 && directionX == 0) {
                             if (Direction.CUR_DIRECTION != Direction.DIRECTION_UP){
+//                                if (consecutiveForward != 0){
+//                                    forward(consecutiveForward);
+//                                    consecutiveForward = 0;
+//                                }
                                 turn(Direction.DIRECTION_UP);
                                 publishAndSleep(); 
                                 if (turnTwiceFlag){
@@ -1483,9 +1511,12 @@ public class Controller {
                                     turnTwiceFlag = false;
                                 }
                             }
+//                            else {
+//                                consecutiveForward++;
+//                            }
                         }                 
                        
-                    if (StateOfMap.frontIsTraversable()) {            
+                    if (StateOfMap.frontIsTraversable() ) {//&& consecutiveForward == 0) {            
                         forward(1);
                         //scan();
                         publishAndSleep(); 
@@ -1727,9 +1758,9 @@ public class Controller {
                     }
                 }
                 //padding part
-                part1String = "11"+part1String+"11";
+                //part1String = "11"+part1String+"11";
 
-                con.writeData( "b"+" "
+                con.writeData( "b"
                         +"15" + " " + "20" + " "
                         +Robot.R9Y+" "
                         +Robot.R9X+" "
