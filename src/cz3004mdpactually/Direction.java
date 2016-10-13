@@ -10,10 +10,10 @@ package cz3004mdpactually;
  * @author Jo
  */
 public class Direction {
-    public static final int DIRECTION_UP = 1;
-    public static final int DIRECTION_RIGHT = 2;
-    public static final int DIRECTION_DOWN = 3;
-    public static final int DIRECTION_LEFT = 4;
+    public static final int DIRECTION_UP = 0;
+    public static final int DIRECTION_RIGHT = 90;
+    public static final int DIRECTION_DOWN = 180;
+    public static final int DIRECTION_LEFT = 270;
     public static int CUR_DIRECTION = DIRECTION_RIGHT;
     
     public static final int TURN_RIGHT = 1;

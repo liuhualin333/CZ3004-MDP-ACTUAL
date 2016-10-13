@@ -77,7 +77,7 @@ public class Controller {
 //        while (true){
 //            readInt = con.messageRecognition();
 //            if(readInt == 10){                            
-//                setRobotLocationAsExplored();
+//                //setRobotLocationAsExplored();
 //                try{
 //                TimeUnit.SECONDS.sleep(10);
 //                }
@@ -1728,9 +1728,10 @@ public class Controller {
                 part1String = "11"+part1String+"11";
 
                 con.writeData( "b"+" "
-                        +Direction.CUR_DIRECTION+" "
-                        +Robot.R9X+" "
+                        +"15" + " " + "20"
                         +Robot.R9Y+" "
+                        +Robot.R9X+" "
+                        +Direction.CUR_DIRECTION+" " 
                         +part1String+" "
                         +part2String);
                         
