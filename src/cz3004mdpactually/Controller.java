@@ -1109,8 +1109,8 @@ public class Controller {
 
                     }
                     //if (!explorationDone){
-                        scan();
-                        setRobotLocationAsExplored();
+                        //scan();           //redundent, especially if there's no path, no need to scan if didn't move
+                        //setRobotLocationAsExplored();
                     //}
                     if(bestPathImpossible != true){
                             //publishAndSleep();
@@ -1440,6 +1440,7 @@ public class Controller {
             protected Integer doInBackground() {
                 mapsimulator.contentPanel.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
 
+                //COMMENTED OUT CONSECUTIVE FORWARD BLOCKS FOR NOW
 //                prevX = Robot.R9X;
 //                prevY = Robot.R9Y;
                 for (Node s : actionSequence){
