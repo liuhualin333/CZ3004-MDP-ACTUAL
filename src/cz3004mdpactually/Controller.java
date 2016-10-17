@@ -50,6 +50,7 @@ public class Controller {
     
     //for timed explore
     static int timeLimitAbsolute = 0;
+    static int prevX = 0, prevY = 0;
     
     //for fastest path
     static int consecutiveForward = 0;
@@ -1432,8 +1433,6 @@ public class Controller {
             System.out.println("null");
         if (actionSequence.isEmpty()){  
             System.out.println("Path is empty");
-//            bestPathImpossible = true;
-//            impossibleNodes.add( new Node(objective[0], objective[1]));
         }
 
         SwingWorker worker = new SwingWorker<Integer, Integer>() {
@@ -1441,13 +1440,17 @@ public class Controller {
             protected Integer doInBackground() {
                 mapsimulator.contentPanel.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
 
+//                prevX = Robot.R9X;
+//                prevY = Robot.R9Y;
                 for (Node s : actionSequence){
                     //System.out.println("Action Path: " + s.getX() + " " + s.getY());
-                    directionX = s.getX() - Robot.R9X;
-                    directionY = s.getY() - Robot.R9Y;
+                    directionX = s.getX() - Robot.R9X;  //- prevX;
+                    directionY = s.getY() - Robot.R9Y;  //- prevY;
+//                    prevX = s.getX();
+//                    prevY = s.getY();
                                      
                         if (directionX < 0 && directionY == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_LEFT){
+//                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_LEFT){
 //                                if (consecutiveForward != 0){
 //                                    forward(consecutiveForward);
 //                                    consecutiveForward = 0;
@@ -1459,12 +1462,12 @@ public class Controller {
                                     publishAndSleep();
                                     turnTwiceFlag = false;
                                 }
-                            }
+//                            }
 //                            else {
 //                                consecutiveForward++;
 //                            }
                         } else if (directionX > 0 && directionY == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_RIGHT){
+//                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_RIGHT){
 //                                if (consecutiveForward != 0){
 //                                    forward(consecutiveForward);
 //                                    consecutiveForward = 0;
@@ -1476,12 +1479,12 @@ public class Controller {
                                     publishAndSleep();
                                     turnTwiceFlag = false;
                                 }
-                            }
+//                            }
 //                            else {
 //                                consecutiveForward++;
 //                            }
                         } else if (directionY < 0 && directionX == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_DOWN){
+//                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_DOWN){
 //                                if (consecutiveForward != 0){
 //                                    forward(consecutiveForward);
 //                                    consecutiveForward = 0;
@@ -1493,12 +1496,12 @@ public class Controller {
                                     publishAndSleep();
                                     turnTwiceFlag = false;
                                 }
-                            }
+//                            }
 //                            else {
 //                                consecutiveForward++;
 //                            }
                         } else if (directionY > 0 && directionX == 0) {
-                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_UP){
+//                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_UP){
 //                                if (consecutiveForward != 0){
 //                                    forward(consecutiveForward);
 //                                    consecutiveForward = 0;
@@ -1510,7 +1513,7 @@ public class Controller {
                                     publishAndSleep();
                                     turnTwiceFlag = false;
                                 }
-                            }
+//                            }
 //                            else {
 //                                consecutiveForward++;
 //                            }
@@ -1518,12 +1521,15 @@ public class Controller {
                        
                     if (StateOfMap.frontIsTraversable() ) {//&& consecutiveForward == 0) {            
                         forward(1);
-                        //scan();
                         publishAndSleep(); 
-//                        bestPathImpossible = false;
-//                        updateExploredAndObstacleCount();
                     }               
                 }
+                
+                //just in case the objective reached before you had the chance to execute all the delayed forwards
+//                if (consecutiveForward != 0){            
+//                    forward(consecutiveForward);
+//                    publishAndSleep(); 
+//                }
                 fastestPathDone = true;
                 return 1;
 
