@@ -1738,6 +1738,10 @@ public class Controller {
             }
             public void saveFile() throws IOException{
                 String part2String = "";
+        String tmpString = "";
+        String tmpPart2Str = "";
+        String part1String = "";        
+        String tmpPart1Str = "";
                 for(int j = 0; j< height; j++){
                     for(int i = 0; i< width; i++){
                         if(StateOfMap.exploredMap[i][j] == 1){
@@ -1753,7 +1757,7 @@ public class Controller {
                 for (int i = 0; i < part2String.length()%4; i++){
                     part2String = part2String+"0";
                 }
-                String part1String = "";
+                
                 for(int j = 0; j < height; j++){
                     for(int i = 0; i< width; i++){                       
                         if(StateOfMap.exploredMap[i][j] == 1){
@@ -1765,9 +1769,37 @@ public class Controller {
                     }
                 }
                 //padding part
-                //part1String = "11"+part1String+"11";
+                part1String = "11"+part1String+"11";
+for (int i = 0; i < part2String.length()%4; i++){
+            part2String = part2String+"0";
+        }
+        tmpString = "";
+        for (int i = 0 ; i < part2String.length(); i++){
+            tmpPart2Str += part2String.charAt(i);
+            if(tmpPart2Str.length() == 4){
+                int number = Integer.parseInt(tmpPart2Str,2);
+                String hexStr = Integer.toString(number,16);
+                tmpString += hexStr;
+                tmpPart2Str = "";
+            }
 
-                con.writeData( "b"
+        }
+        part2String = tmpString;
+        
+        tmpString = "";
+        for (int i = 0 ; i < part1String.length(); i++){
+            tmpPart1Str += part1String.charAt(i);
+            if(tmpPart1Str.length() == 4){
+                int number = Integer.parseInt(tmpPart1Str,2);
+                String hexStr = Integer.toString(number,16);
+                tmpString += hexStr;
+                tmpPart1Str = "";
+            }
+
+        }
+        part1String = tmpString;
+        
+                con.writeData( "bGRID "
                         +"15" + " " + "20" + " "
                         +Robot.R9Y+" "
                         +Robot.R9X+" "
