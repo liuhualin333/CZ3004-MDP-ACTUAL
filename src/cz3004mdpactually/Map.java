@@ -169,20 +169,39 @@ public class Map {
                 
             //if it is not obstacle, not processed yet, and explored
             //and there is space for robot to move through, then add to the list
-            if ( StateOfMap.NotObstacleIsExplored(tmp1.getX(), tmp1.getY()) && !closedList.contains(tmp) ){
-                if ( StateOfMap.NotObstacleIsExplored(tmp2.getX(), tmp2.getY()) && StateOfMap.NotObstacleIsExplored(tmp3.getX(), tmp3.getY()) ){
-                    tmp.setIsDiagonally(false);
-                    adjac.add(tmp);
-                }
+            if ( !closedList.contains(tmp)
+                    && StateOfMap.NotObstacleIsExplored(tmp1.getX(), tmp1.getY()) 
+                    && StateOfMap.NotObstacleIsExplored(tmp2.getX(), tmp2.getY()) 
+                    && StateOfMap.NotObstacleIsExplored(tmp3.getX(), tmp3.getY()) ){
+                tmp.setIsDiagonally(false);
+                adjac.add(tmp);
             }
             else{
-                for (int i = 0; i < 9; i++){
-                    if (Controller.nearestUnexplored[i][0] == tmp1.getX() && Controller.nearestUnexplored[i][1] == tmp1.getY())
-                        nearestUnexploredCounter++;
-                    if (Controller.nearestUnexplored[i][0] == tmp2.getX() && Controller.nearestUnexplored[i][1] == tmp2.getY())
-                        nearestUnexploredCounter++;
-                    if (Controller.nearestUnexplored[i][0] == tmp3.getX() && Controller.nearestUnexplored[i][1] == tmp3.getY())
-                        nearestUnexploredCounter++;
+                if (!Controller.leniencyTrigger){
+                    for (int i = 0; i < 9; i++){
+                        if (Controller.nearestUnexplored[i][0] == tmp1.getX() 
+                                && Controller.nearestUnexplored[i][1] == tmp1.getY()
+                                && !StateOfMap.isObstacleTile(tmp1.getX(), tmp1.getY()))
+                            nearestUnexploredCounter++;
+                        if (Controller.nearestUnexplored[i][0] == tmp2.getX() 
+                                && Controller.nearestUnexplored[i][1] == tmp2.getY()
+                                && !StateOfMap.isObstacleTile(tmp2.getX(), tmp2.getY()))
+                            nearestUnexploredCounter++;
+                        if (Controller.nearestUnexplored[i][0] == tmp3.getX() 
+                                && Controller.nearestUnexplored[i][1] == tmp3.getY()
+                                && !StateOfMap.isObstacleTile(tmp3.getX(), tmp3.getY()))
+                            nearestUnexploredCounter++;
+                    }
+                }
+                else {
+                    for (int i = 0; i < 9; i++){
+                        if (Controller.nearestUnexplored[i][0] == tmp1.getX() && Controller.nearestUnexplored[i][1] == tmp1.getY())
+                            nearestUnexploredCounter++;
+                        if (Controller.nearestUnexplored[i][0] == tmp2.getX() && Controller.nearestUnexplored[i][1] == tmp2.getY())
+                            nearestUnexploredCounter++;
+                        if (Controller.nearestUnexplored[i][0] == tmp3.getX() && Controller.nearestUnexplored[i][1] == tmp3.getY())
+                            nearestUnexploredCounter++;
+                    }
                 }
                 if (nearestUnexploredCounter >= 3){
                     tmp.setIsDiagonally(false);
@@ -192,13 +211,15 @@ public class Map {
                 nearestUnexploredCounter = 0;
             }
             
-            if (Controller.thereAreImpossibleNodesLeft){
-                if ( !StateOfMap.isObstacleTile(tmp1.getX(), tmp1.getY()) && !closedList.contains(tmp) ){
-                    if ( !StateOfMap.isObstacleTile(tmp2.getX(), tmp2.getY()) && !StateOfMap.isObstacleTile(tmp3.getX(), tmp3.getY()) ){
-                        tmp.setIsDiagonally(false);
-                        adjac.add(tmp);
-                    }
+            if (Controller.thereAreImpossibleNodesLeft && !adjac.contains(tmp)){
+                if ( !closedList.contains(tmp) 
+                        && !StateOfMap.isObstacleTile(tmp1.getX(), tmp1.getY())
+                        && !StateOfMap.isObstacleTile(tmp2.getX(), tmp2.getY())
+                        && !StateOfMap.isObstacleTile(tmp3.getX(), tmp3.getY()) ){     
+                    tmp.setIsDiagonally(false);
+                    adjac.add(tmp);      
                 }
+                
             }
         }
         
@@ -214,25 +235,39 @@ public class Map {
             tmp2 = this.getNode((x + 2), (y + 1));  //6
             tmp3 = this.getNode((x + 2), (y - 1));  //10
             
-            //if (objective[0] == x+2 && objective[1] == y){
-                //tmp.setIsDiagonally(false);
-                //adjac.add(tmp);
-                //adjac.add(tmp1);
-            //}
-            if ( StateOfMap.NotObstacleIsExplored(tmp1.getX(), tmp1.getY()) && !closedList.contains(tmp) ){
-                if ( StateOfMap.NotObstacleIsExplored(tmp2.getX(), tmp2.getY()) && StateOfMap.NotObstacleIsExplored(tmp3.getX(), tmp3.getY()) ){
-                    tmp.setIsDiagonally(false);
-                    adjac.add(tmp);
-                }
+            if ( !closedList.contains(tmp)
+                    && StateOfMap.NotObstacleIsExplored(tmp1.getX(), tmp1.getY()) 
+                    && StateOfMap.NotObstacleIsExplored(tmp2.getX(), tmp2.getY()) 
+                    && StateOfMap.NotObstacleIsExplored(tmp3.getX(), tmp3.getY()) ){
+                tmp.setIsDiagonally(false);
+                adjac.add(tmp);
             }
             else{
-                for (int i = 0; i < 9; i++){
-                    if (Controller.nearestUnexplored[i][0] == tmp1.getX() && Controller.nearestUnexplored[i][1] == tmp1.getY())
-                        nearestUnexploredCounter++;
-                    if (Controller.nearestUnexplored[i][0] == tmp2.getX() && Controller.nearestUnexplored[i][1] == tmp2.getY())
-                        nearestUnexploredCounter++;
-                    if (Controller.nearestUnexplored[i][0] == tmp3.getX() && Controller.nearestUnexplored[i][1] == tmp3.getY())
-                        nearestUnexploredCounter++;
+                if (!Controller.leniencyTrigger){
+                    for (int i = 0; i < 9; i++){
+                        if (Controller.nearestUnexplored[i][0] == tmp1.getX() 
+                                && Controller.nearestUnexplored[i][1] == tmp1.getY()
+                                && !StateOfMap.isObstacleTile(tmp1.getX(), tmp1.getY()))
+                            nearestUnexploredCounter++;
+                        if (Controller.nearestUnexplored[i][0] == tmp2.getX() 
+                                && Controller.nearestUnexplored[i][1] == tmp2.getY()
+                                && !StateOfMap.isObstacleTile(tmp2.getX(), tmp2.getY()))
+                            nearestUnexploredCounter++;
+                        if (Controller.nearestUnexplored[i][0] == tmp3.getX() 
+                                && Controller.nearestUnexplored[i][1] == tmp3.getY()
+                                && !StateOfMap.isObstacleTile(tmp3.getX(), tmp3.getY()))
+                            nearestUnexploredCounter++;
+                    }
+                }
+                else {
+                    for (int i = 0; i < 9; i++){
+                        if (Controller.nearestUnexplored[i][0] == tmp1.getX() && Controller.nearestUnexplored[i][1] == tmp1.getY())
+                            nearestUnexploredCounter++;
+                        if (Controller.nearestUnexplored[i][0] == tmp2.getX() && Controller.nearestUnexplored[i][1] == tmp2.getY())
+                            nearestUnexploredCounter++;
+                        if (Controller.nearestUnexplored[i][0] == tmp3.getX() && Controller.nearestUnexplored[i][1] == tmp3.getY())
+                            nearestUnexploredCounter++;
+                    }
                 }
                 if (nearestUnexploredCounter >= 3){
                     tmp.setIsDiagonally(false);
@@ -242,13 +277,15 @@ public class Map {
                 nearestUnexploredCounter = 0;
             }
             
-            if (Controller.thereAreImpossibleNodesLeft){
-                if ( !StateOfMap.isObstacleTile(tmp1.getX(), tmp1.getY()) && !closedList.contains(tmp) ){
-                    if ( !StateOfMap.isObstacleTile(tmp2.getX(), tmp2.getY()) && !StateOfMap.isObstacleTile(tmp3.getX(), tmp3.getY()) ){
-                        tmp.setIsDiagonally(false);
-                        adjac.add(tmp);
-                    }
+            if (Controller.thereAreImpossibleNodesLeft && !adjac.contains(tmp)){
+                if ( !closedList.contains(tmp) 
+                        && !StateOfMap.isObstacleTile(tmp1.getX(), tmp1.getY())
+                        && !StateOfMap.isObstacleTile(tmp2.getX(), tmp2.getY())
+                        && !StateOfMap.isObstacleTile(tmp3.getX(), tmp3.getY()) ){     
+                    tmp.setIsDiagonally(false);
+                    adjac.add(tmp);      
                 }
+                
             }
         }
 
@@ -264,25 +301,39 @@ public class Map {
             tmp2 = this.getNode((x - 1), (y - 2));  //12
             tmp3 = this.getNode((x + 1), (y - 2));  //14
             
-            //if (objective[0] == x && objective[1] == y-2){
-                //tmp.setIsDiagonally(false);
-                //adjac.add(tmp);
-                //adjac.add(tmp1);
-            //}
-            if ( StateOfMap.NotObstacleIsExplored(tmp1.getX(), tmp1.getY()) && !closedList.contains(tmp) ){
-                if ( StateOfMap.NotObstacleIsExplored(tmp2.getX(), tmp2.getY()) && StateOfMap.NotObstacleIsExplored(tmp3.getX(), tmp3.getY()) ){
-                    tmp.setIsDiagonally(false);
-                    adjac.add(tmp);
-                }
+            if ( !closedList.contains(tmp)
+                    && StateOfMap.NotObstacleIsExplored(tmp1.getX(), tmp1.getY()) 
+                    && StateOfMap.NotObstacleIsExplored(tmp2.getX(), tmp2.getY()) 
+                    && StateOfMap.NotObstacleIsExplored(tmp3.getX(), tmp3.getY()) ){
+                tmp.setIsDiagonally(false);
+                adjac.add(tmp);
             }
             else{
-                for (int i = 0; i < 9; i++){
-                    if (Controller.nearestUnexplored[i][0] == tmp1.getX() && Controller.nearestUnexplored[i][1] == tmp1.getY())
-                        nearestUnexploredCounter++;
-                    if (Controller.nearestUnexplored[i][0] == tmp2.getX() && Controller.nearestUnexplored[i][1] == tmp2.getY())
-                        nearestUnexploredCounter++;
-                    if (Controller.nearestUnexplored[i][0] == tmp3.getX() && Controller.nearestUnexplored[i][1] == tmp3.getY())
-                        nearestUnexploredCounter++;
+                if (!Controller.leniencyTrigger){
+                    for (int i = 0; i < 9; i++){
+                        if (Controller.nearestUnexplored[i][0] == tmp1.getX() 
+                                && Controller.nearestUnexplored[i][1] == tmp1.getY()
+                                && !StateOfMap.isObstacleTile(tmp1.getX(), tmp1.getY()))
+                            nearestUnexploredCounter++;
+                        if (Controller.nearestUnexplored[i][0] == tmp2.getX() 
+                                && Controller.nearestUnexplored[i][1] == tmp2.getY()
+                                && !StateOfMap.isObstacleTile(tmp2.getX(), tmp2.getY()))
+                            nearestUnexploredCounter++;
+                        if (Controller.nearestUnexplored[i][0] == tmp3.getX() 
+                                && Controller.nearestUnexplored[i][1] == tmp3.getY()
+                                && !StateOfMap.isObstacleTile(tmp3.getX(), tmp3.getY()))
+                            nearestUnexploredCounter++;
+                    }
+                }
+                else {
+                    for (int i = 0; i < 9; i++){
+                        if (Controller.nearestUnexplored[i][0] == tmp1.getX() && Controller.nearestUnexplored[i][1] == tmp1.getY())
+                            nearestUnexploredCounter++;
+                        if (Controller.nearestUnexplored[i][0] == tmp2.getX() && Controller.nearestUnexplored[i][1] == tmp2.getY())
+                            nearestUnexploredCounter++;
+                        if (Controller.nearestUnexplored[i][0] == tmp3.getX() && Controller.nearestUnexplored[i][1] == tmp3.getY())
+                            nearestUnexploredCounter++;
+                    }
                 }
                 if (nearestUnexploredCounter >= 3){
                     tmp.setIsDiagonally(false);
@@ -292,13 +343,15 @@ public class Map {
                 nearestUnexploredCounter = 0;
             }
             
-            if (Controller.thereAreImpossibleNodesLeft){
-                if ( !StateOfMap.isObstacleTile(tmp1.getX(), tmp1.getY()) && !closedList.contains(tmp) ){
-                    if ( !StateOfMap.isObstacleTile(tmp2.getX(), tmp2.getY()) && !StateOfMap.isObstacleTile(tmp3.getX(), tmp3.getY()) ){
-                        tmp.setIsDiagonally(false);
-                        adjac.add(tmp);
-                    }
+            if (Controller.thereAreImpossibleNodesLeft && !adjac.contains(tmp)){
+                if ( !closedList.contains(tmp) 
+                        && !StateOfMap.isObstacleTile(tmp1.getX(), tmp1.getY())
+                        && !StateOfMap.isObstacleTile(tmp2.getX(), tmp2.getY())
+                        && !StateOfMap.isObstacleTile(tmp3.getX(), tmp3.getY()) ){     
+                    tmp.setIsDiagonally(false);
+                    adjac.add(tmp);      
                 }
+                
             }
         }
         
@@ -314,25 +367,39 @@ public class Map {
             tmp2 = this.getNode((x - 1), (y + 2));  //1
             tmp3 = this.getNode((x + 1), (y + 2));  //3
             
-            //if (objective[0] == x && objective[1] == y+2){
-                //tmp.setIsDiagonally(false);
-                //adjac.add(tmp);
-                //adjac.add(tmp1);
-            //}
-            if ( StateOfMap.NotObstacleIsExplored(tmp1.getX(), tmp1.getY()) && !closedList.contains(tmp) ){
-                if ( StateOfMap.NotObstacleIsExplored(tmp2.getX(), tmp2.getY()) && StateOfMap.NotObstacleIsExplored(tmp3.getX(), tmp3.getY()) ){
-                    tmp.setIsDiagonally(false);
-                    adjac.add(tmp);
-                }
+            if ( !closedList.contains(tmp)
+                    && StateOfMap.NotObstacleIsExplored(tmp1.getX(), tmp1.getY()) 
+                    && StateOfMap.NotObstacleIsExplored(tmp2.getX(), tmp2.getY()) 
+                    && StateOfMap.NotObstacleIsExplored(tmp3.getX(), tmp3.getY()) ){
+                tmp.setIsDiagonally(false);
+                adjac.add(tmp);
             }
             else{
-                for (int i = 0; i < 9; i++){
-                    if (Controller.nearestUnexplored[i][0] == tmp1.getX() && Controller.nearestUnexplored[i][1] == tmp1.getY())
-                        nearestUnexploredCounter++;
-                    if (Controller.nearestUnexplored[i][0] == tmp2.getX() && Controller.nearestUnexplored[i][1] == tmp2.getY())
-                        nearestUnexploredCounter++;
-                    if (Controller.nearestUnexplored[i][0] == tmp3.getX() && Controller.nearestUnexplored[i][1] == tmp3.getY())
-                        nearestUnexploredCounter++;
+                if (!Controller.leniencyTrigger){
+                    for (int i = 0; i < 9; i++){
+                        if (Controller.nearestUnexplored[i][0] == tmp1.getX() 
+                                && Controller.nearestUnexplored[i][1] == tmp1.getY()
+                                && !StateOfMap.isObstacleTile(tmp1.getX(), tmp1.getY()))
+                            nearestUnexploredCounter++;
+                        if (Controller.nearestUnexplored[i][0] == tmp2.getX() 
+                                && Controller.nearestUnexplored[i][1] == tmp2.getY()
+                                && !StateOfMap.isObstacleTile(tmp2.getX(), tmp2.getY()))
+                            nearestUnexploredCounter++;
+                        if (Controller.nearestUnexplored[i][0] == tmp3.getX() 
+                                && Controller.nearestUnexplored[i][1] == tmp3.getY()
+                                && !StateOfMap.isObstacleTile(tmp3.getX(), tmp3.getY()))
+                            nearestUnexploredCounter++;
+                    }
+                }
+                else {
+                    for (int i = 0; i < 9; i++){
+                        if (Controller.nearestUnexplored[i][0] == tmp1.getX() && Controller.nearestUnexplored[i][1] == tmp1.getY())
+                            nearestUnexploredCounter++;
+                        if (Controller.nearestUnexplored[i][0] == tmp2.getX() && Controller.nearestUnexplored[i][1] == tmp2.getY())
+                            nearestUnexploredCounter++;
+                        if (Controller.nearestUnexplored[i][0] == tmp3.getX() && Controller.nearestUnexplored[i][1] == tmp3.getY())
+                            nearestUnexploredCounter++;
+                    }
                 }
                 if (nearestUnexploredCounter >= 3){
                     tmp.setIsDiagonally(false);
@@ -342,13 +409,15 @@ public class Map {
                 nearestUnexploredCounter = 0;
             }
             
-            if (Controller.thereAreImpossibleNodesLeft){
-                if ( !StateOfMap.isObstacleTile(tmp1.getX(), tmp1.getY()) && !closedList.contains(tmp) ){
-                    if ( !StateOfMap.isObstacleTile(tmp2.getX(), tmp2.getY()) && !StateOfMap.isObstacleTile(tmp3.getX(), tmp3.getY()) ){
-                        tmp.setIsDiagonally(false);
-                        adjac.add(tmp);
-                    }
+            if (Controller.thereAreImpossibleNodesLeft && !adjac.contains(tmp)){
+                if ( !closedList.contains(tmp) 
+                        && !StateOfMap.isObstacleTile(tmp1.getX(), tmp1.getY())
+                        && !StateOfMap.isObstacleTile(tmp2.getX(), tmp2.getY())
+                        && !StateOfMap.isObstacleTile(tmp3.getX(), tmp3.getY()) ){     
+                    tmp.setIsDiagonally(false);
+                    adjac.add(tmp);      
                 }
+                
             }
         }
         

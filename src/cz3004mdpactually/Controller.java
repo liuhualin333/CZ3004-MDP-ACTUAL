@@ -36,6 +36,8 @@ public class Controller {
     static int obstacleCount;
     boolean done;  //means explored 100%
     static boolean thereAreImpossibleNodesLeft = false;
+    static boolean leniencyTrigger = false;
+    static boolean isUnique = true;
     static List<Node> impossibleNodes = new LinkedList<Node>();
     static List<Node> adjustedImpossibleNodes = new LinkedList<Node>();
     static List<Node> clearedImpossibleNodes = new LinkedList<Node>();
@@ -152,75 +154,6 @@ public class Controller {
         setRobotStartLocation(robotX, robotY);
         setStartZone(1, 1);
         setGoalZone(13, 18);
-
-//        map.setIsObstacle(12, 3, true);
-//        
-//        map.setIsObstacle(9, 3, true);
-//        map.setIsObstacle(10, 3, true);
-//        map.setIsObstacle(11, 3, true);
-//        
-//        map.setIsObstacle(9, 6, true);
-//        map.setIsObstacle(8, 6, true);
-//        map.setIsObstacle(7, 6, true);
-//        
-//        map.setIsObstacle(2, 6, true);
-//        map.setIsObstacle(1, 6, true);
-//        map.setIsObstacle(0, 6, true);
-//        map.setIsObstacle(2, 7, true);
-//        
-//        map.setIsObstacle(6, 9, true);
-//        map.setIsObstacle(6, 10, true);
-//        map.setIsObstacle(6, 11, true);
-//        map.setIsObstacle(6, 12, true);
-//        map.setIsObstacle(7, 12, true);
-//        
-//        map.setIsObstacle(11, 11, true);
-//        map.setIsObstacle(12, 11, true);
-//        map.setIsObstacle(13, 11, true);
-//        map.setIsObstacle(14, 11, true);
-//        
-//        map.setIsObstacle(2, 12, true);
-//        map.setIsObstacle(1, 12, true);
-//        map.setIsObstacle(0, 12, true);
-//        map.setIsObstacle(2, 13, true);
-//        
-//        map.setIsObstacle(9, 16, true);
-//        map.setIsObstacle(8, 16, true);
-//        map.setIsObstacle(9, 15, true);
-//        map.setIsObstacle(8, 15, true);
-//        
-//        map.setIsObstacle(3, 19, true);
-//        map.setIsObstacle(3, 18, true);
-//        map.setIsObstacle(3, 17, true);
-        
-        
-//        map.setIsObstacle(6, 1, true);      //the toughest test
-//        map.setIsObstacle(7, 1, true);
-//        map.setIsObstacle(8, 1, true);
-//        map.setIsObstacle(8, 0, true);
-//        
-//        map.setIsObstacle(2, 3, true);
-//        map.setIsObstacle(2, 4, true);
-//        
-//        map.setIsObstacle(14, 4, true);
-//        
-//        map.setIsObstacle(10, 5, true);
-//        map.setIsObstacle(10, 6, true);
-//        
-//        map.setIsObstacle(1, 8, true);
-//        map.setIsObstacle(1, 9, true);
-//        map.setIsObstacle(1, 10, true);
-//        
-//        map.setIsObstacle(2, 14, true);
-//        map.setIsObstacle(3, 14, true);
-//        map.setIsObstacle(4, 14, true);
-//        
-//        map.setIsObstacle(12, 8, true);
-//        map.setIsObstacle(12, 9, true);
-//        
-//        map.setIsObstacle(12, 13, true);
-//        map.setIsObstacle(13, 13, true);
-//        map.setIsObstacle(14, 13, true);
         
     }
     public void setStartZone(int x, int y){       
@@ -845,8 +778,13 @@ public class Controller {
                             return 1;
                         }
                             
-                        if (!bestPathImpossible || impossibleNodes.size() > 60)
+                        if (!bestPathImpossible || impossibleNodes.size() > 60){
+                            if (impossibleNodes.size() > 60)
+                                leniencyTrigger = true;
+                            else
+                                leniencyTrigger = false;
                             impossibleNodes.clear();
+                        }
 //                        else{
 //                            for (Node tmp : impossibleNodes){
 //                                if (StateOfMap.isExploredTile(tmp.getX(), tmp.getY())){
@@ -878,7 +816,7 @@ public class Controller {
                         done = true;
                     
                     else{
-                        System.out.println("Impossible Nodes: " + impossibleNodes.size());
+                        //System.out.println("Impossible Nodes: " + impossibleNodes.size());
                         if ( 300 - exploredNodeCount == impossibleNodes.size() ){
                             thereAreImpossibleNodesLeft = true;
                             System.out.println("\nThere are nodes remaining: " + impossibleNodes.size() + "\n");
@@ -902,7 +840,13 @@ public class Controller {
                                     nearestUnexplored[0][1]--;
                                 }
                                 
-                                adjustedImpossibleNodes.add(new Node(nearestUnexplored[0][0], nearestUnexplored[0][1]));
+                                for (Node unique: adjustedImpossibleNodes){
+                                    if (unique.getX() == nearestUnexplored[0][0] && unique.getY() == nearestUnexplored[0][1])
+                                        isUnique = false;
+                                }
+                                if (isUnique)
+                                    adjustedImpossibleNodes.add(new Node(nearestUnexplored[0][0], nearestUnexplored[0][1]));
+                                isUnique = true;
                             }
                         }
                         else {
@@ -924,6 +868,7 @@ public class Controller {
                     
                     if (thereAreImpossibleNodesLeft){
                         int[] tmp = new int[2];
+                        //leniencyTrigger = true;
                         System.out.println("Explored nodes: " + exploredNodeCount);
                         //for (int lastTries = 0; lastTries < 2; lastTries++){
                             for (Node remainingNode: adjustedImpossibleNodes){
@@ -948,7 +893,7 @@ public class Controller {
 //                                            moveToObjective(nearestUnexplored[0]);
 //                                    }
                                     nearestUnexplored = nearestUnexploredNeighbours(tmp);
-                                    if (!StateOfMap.isObstacleTile(nearestUnexplored[0][0], nearestUnexplored[0][1]))
+                                    //if (!StateOfMap.isObstacleTile(nearestUnexplored[0][0], nearestUnexplored[0][1]))
                                         moveToObjective(nearestUnexplored[0]);
                                     System.out.println("Explored nodes: " + exploredNodeCount);
                                 //}
@@ -1037,6 +982,7 @@ public class Controller {
                     System.out.println("is empty");
                     bestPathImpossible = true;                       
                     impossibleNodes.add( new Node(objective[0], objective[1]));
+                    System.out.println("Impossible Nodes: " + impossibleNodes.size());
                 }
 
                     for (Node s : actionSequence){
@@ -1104,6 +1050,7 @@ public class Controller {
                         else {
                             bestPathImpossible = true;                       
                             impossibleNodes.add( actionSequence.get(actionSequence.size()-1) );
+                            System.out.println("Impossible Nodes: " + impossibleNodes.size());
                             break;//this is where we handle nearest unexplored or neighbours being obstacles
                         }
 
