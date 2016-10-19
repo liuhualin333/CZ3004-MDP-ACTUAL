@@ -86,10 +86,6 @@ public class Controller {
             readInt = con.messageRecognition();
             if(readInt == 10){                            
                 setRobotLocationAsExplored();
-                try{
-                TimeUnit.SECONDS.sleep(10);
-                }
-                catch (Exception e){}
                 con.writeData("bExplore start");
                 fullExplore(1);
                 while (!explorationDone){}
