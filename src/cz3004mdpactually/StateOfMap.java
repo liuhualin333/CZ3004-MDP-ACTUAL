@@ -89,6 +89,27 @@ public class StateOfMap {
         }
         return false;
     }
+    
+    public static boolean canCalibrateFront() {
+        if (frontIsBorder())
+            return true;
+        if ( obstacleMap[Robot.Tile1X][Robot.Tile1Y] == 1 && 
+             obstacleMap[Robot.Tile2X][Robot.Tile2Y] == 1 && 
+             obstacleMap[Robot.Tile3X][Robot.Tile3Y] == 1 )
+            return true;
+//        if ( NotObstacleIsExplored(Robot.Tile1X, Robot.Tile1Y) && 
+//             NotObstacleIsExplored(Robot.Tile2X, Robot.Tile2Y) && 
+//             NotObstacleIsExplored(Robot.Tile3X, Robot.Tile3Y) &&
+//             isValidTile(Robot.Tile1EX, Robot.Tile1EY) &&
+//             isValidTile(Robot.Tile2EX, Robot.Tile2EY) &&
+//             isValidTile(Robot.Tile3EX, Robot.Tile3EY) &&
+//             obstacleMap[Robot.Tile1EX][Robot.Tile1EY] == 1 && 
+//             obstacleMap[Robot.Tile2EX][Robot.Tile2EY] == 1 && 
+//             obstacleMap[Robot.Tile3EX][Robot.Tile3EY] == 1     
+//           )
+//            return true;
+        return false;
+    } 
 
     public static boolean leftIsTraversable() {
         if (leftIsBorder()) {

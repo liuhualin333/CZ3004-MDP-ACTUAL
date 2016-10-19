@@ -43,8 +43,7 @@ public class Controller {
     static List<Node> clearedImpossibleNodes = new LinkedList<Node>();
     static int [][] nearestUnexploredExtended = new int[9][2];
     static boolean explorationDone = false;
-    static boolean fastestPathDone = false;
-    
+      
     //for percentage explore
     static boolean goalReached = false;  //and fullExplore also
     static double nodesToExplore;
@@ -56,11 +55,13 @@ public class Controller {
     
     //for fastest path
     static int consecutiveForward = 0;
+    static boolean fastestPathDone = false;
     
     static int speed;
     static final int sleepTime = 250;
     static boolean turnTwiceFlag;
     static int movementCounter = 0;
+    static int lastCaliMovementCounter = 0;
     static int turnCounter = 0;
     static int [] currentLocation = new int [2];
     static int [] startZoneLocation = new int [2]; //start and end zone are 3x3 tiles
@@ -126,10 +127,6 @@ public class Controller {
         //fastPath(1);
         
         //test for integration
-//        try{
-//        TimeUnit.SECONDS.sleep(10);
-//        }
-//        catch (Exception e){}
 //        con.readData();
 //        fullExplore(1);      
     }
@@ -398,6 +395,16 @@ public class Controller {
         while (true){
             if ( con.messageRecognition() == 1 ){
                 break;
+            }
+        }
+        if (movementCounter - lastCaliMovementCounter >= 0){  //will change condition later
+            if(StateOfMap.canCalibrateFront()){
+                con.writeData("ap");
+                while (true){
+                    if (con.messageRecognition() == 6)
+                        break;
+                }
+                lastCaliMovementCounter = movementCounter;
             }
         }
     }
@@ -764,6 +771,13 @@ public class Controller {
                     scan();       //detect obstacles
                     executeTurn(Direction.TURN_RIGHT);
                     publishAndSleep();
+                    if (i < 2){
+                        con.writeData("ap");
+                        while (true){
+                            if (con.messageRecognition() == 6)
+                                break;
+                        }
+                    }
                 }       
 
                 while (!done){
@@ -1343,6 +1357,7 @@ public class Controller {
         //exploration is done here changed that shit
         
         this.speed = speed;
+        explorationDone = true;
         //Controller.mapsimulator.contentPanel.refresh();
 //        for (int i = 0; i < width; i++){
 //            for (int j = 0; j < height; j++){
@@ -1715,6 +1730,7 @@ public class Controller {
                 //part1String = "11"+part1String+"11";
 
                 con.writeData( "b"
+                        +"GRID" + " "
                         +"15" + " " + "20" + " "
                         +Robot.R9Y+" "
                         +Robot.R9X+" "
