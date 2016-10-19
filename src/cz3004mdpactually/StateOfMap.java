@@ -145,6 +145,16 @@ public class StateOfMap {
         }
         return false;
     }
+    
+    public static boolean canCalibrateLeft() {
+        if (leftIsBorder())
+            return true;
+        if ( obstacleMap[Robot.Tile5X][Robot.Tile5Y] == 1 && 
+             obstacleMap[Robot.Tile6X][Robot.Tile6Y] == 1 && 
+             obstacleMap[Robot.Tile7X][Robot.Tile7Y] == 1 )
+            return true;
+        return false;
+    } 
 
     public static boolean rightIsTraversable() {
         if (rightIsBorder()) {
@@ -180,4 +190,14 @@ public class StateOfMap {
         }
         return false;
     }
+    
+    public static boolean canCalibrateRight() {
+        if (rightIsBorder())
+            return true;
+        if ( obstacleMap[Robot.Tile8X][Robot.Tile8Y] == 1 && 
+             obstacleMap[Robot.Tile9X][Robot.Tile9Y] == 1 && 
+             obstacleMap[Robot.Tile10X][Robot.Tile10Y] == 1 )
+            return true;
+        return false;
+    } 
 }

@@ -58,7 +58,7 @@ public class Controller {
     static boolean fastestPathDone = false;
     
     static int speed;
-    static final int sleepTime = 250;
+    static final int sleepTime = 100;
     static boolean turnTwiceFlag;
     static int movementCounter = 0;
     static int lastCaliMovementCounter = 0;
@@ -393,16 +393,46 @@ public class Controller {
                 break;
             }
         }
-        if (movementCounter - lastCaliMovementCounter >= 0){  //will change condition later
-            if(StateOfMap.canCalibrateFront()){
-                con.writeData("ap");
-                while (true){
-                    if (con.messageRecognition() == 6)
-                        break;
-                }
-                lastCaliMovementCounter = movementCounter;
-            }
+        if (movementCounter - lastCaliMovementCounter >= 3){  //will change condition later
+            calibrate();
         }
+    }
+    
+    public void calibrate(){
+        
+        if(StateOfMap.canCalibrateFront()){
+            con.writeData("ap");
+            while (true){
+                if (con.messageRecognition() == 6)
+                    break;
+            }
+            lastCaliMovementCounter = movementCounter;
+        }
+        else if (StateOfMap.canCalibrateRight()){      
+            executeTurn(Direction.DIRECTION_RIGHT);
+            
+            con.writeData("ap");
+            while (true){
+                if (con.messageRecognition() == 6)
+                    break;
+            }
+            lastCaliMovementCounter = movementCounter;
+            
+            executeTurn(Direction.DIRECTION_LEFT);     
+        }
+        else if (StateOfMap.canCalibrateLeft()){
+            executeTurn(Direction.DIRECTION_LEFT);
+            
+            con.writeData("ap");
+            while (true){
+                if (con.messageRecognition() == 6)
+                    break;
+            }
+            lastCaliMovementCounter = movementCounter;
+            
+            executeTurn(Direction.DIRECTION_RIGHT);
+        }
+        
     }
     
     //scan for obstacles
