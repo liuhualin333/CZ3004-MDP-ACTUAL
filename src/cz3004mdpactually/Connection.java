@@ -116,8 +116,8 @@ public class Connection {
                 return 4;
             case "Invalid Input":
                 return 5;
-//            case "String Received":
-//                return 6;
+            case "Calibrate finished":
+                return 6;
             case "explore":
                 return 10;
             case "race":

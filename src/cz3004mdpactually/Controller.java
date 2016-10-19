@@ -43,8 +43,7 @@ public class Controller {
     static List<Node> clearedImpossibleNodes = new LinkedList<Node>();
     static int [][] nearestUnexploredExtended = new int[9][2];
     static boolean explorationDone = false;
-    static boolean fastestPathDone = false;
-    
+      
     //for percentage explore
     static boolean goalReached = false;  //and fullExplore also
     static double nodesToExplore;
@@ -56,11 +55,13 @@ public class Controller {
     
     //for fastest path
     static int consecutiveForward = 0;
+    static boolean fastestPathDone = false;
     
     static int speed;
     static final int sleepTime = 250;
     static boolean turnTwiceFlag;
     static int movementCounter = 0;
+    static int lastCaliMovementCounter = 0;
     static int turnCounter = 0;
     static int [] currentLocation = new int [2];
     static int [] startZoneLocation = new int [2]; //start and end zone are 3x3 tiles
@@ -85,10 +86,6 @@ public class Controller {
             readInt = con.messageRecognition();
             if(readInt == 10){                            
                 setRobotLocationAsExplored();
-                try{
-                TimeUnit.SECONDS.sleep(10);
-                }
-                catch (Exception e){}
                 con.writeData("bExplore start");
                 fullExplore(1);
                 while (!explorationDone){}
@@ -126,10 +123,6 @@ public class Controller {
         //fastPath(1);
         
         //test for integration
-//        try{
-//        TimeUnit.SECONDS.sleep(10);
-//        }
-//        catch (Exception e){}
 //        con.readData();
 //        fullExplore(1);      
     }
@@ -398,6 +391,16 @@ public class Controller {
         while (true){
             if ( con.messageRecognition() == 1 ){
                 break;
+            }
+        }
+        if (movementCounter - lastCaliMovementCounter >= 0){  //will change condition later
+            if(StateOfMap.canCalibrateFront()){
+                con.writeData("ap");
+                while (true){
+                    if (con.messageRecognition() == 6)
+                        break;
+                }
+                lastCaliMovementCounter = movementCounter;
             }
         }
     }
@@ -764,6 +767,13 @@ public class Controller {
                     scan();       //detect obstacles
                     executeTurn(Direction.TURN_RIGHT);
                     publishAndSleep();
+                    if (i < 2){
+                        con.writeData("ap");
+                        while (true){
+                            if (con.messageRecognition() == 6)
+                                break;
+                        }
+                    }
                 }       
 
                 while (!done){
@@ -1343,6 +1353,7 @@ public class Controller {
         //exploration is done here changed that shit
         
         this.speed = speed;
+        explorationDone = true;
         //Controller.mapsimulator.contentPanel.refresh();
 //        for (int i = 0; i < width; i++){
 //            for (int j = 0; j < height; j++){
@@ -1685,10 +1696,10 @@ public class Controller {
             }
             public void saveFile() throws IOException{
                 String part2String = "";
-        String tmpString = "";
-        String tmpPart2Str = "";
-        String part1String = "";        
-        String tmpPart1Str = "";
+                String tmpString = "";
+                String tmpPart2Str = "";
+                String part1String = "";        
+                String tmpPart1Str = "";
                 for(int j = 0; j< height; j++){
                     for(int i = 0; i< width; i++){
                         if(StateOfMap.exploredMap[i][j] == 1){
@@ -1717,34 +1728,33 @@ public class Controller {
                 }
                 //padding part
                 part1String = "11"+part1String+"11";
-for (int i = 0; i < part2String.length()%4; i++){
-            part2String = part2String+"0";
-        }
-        tmpString = "";
-        for (int i = 0 ; i < part2String.length(); i++){
-            tmpPart2Str += part2String.charAt(i);
-            if(tmpPart2Str.length() == 4){
-                int number = Integer.parseInt(tmpPart2Str,2);
-                String hexStr = Integer.toString(number,16);
-                tmpString += hexStr;
-                tmpPart2Str = "";
-            }
+                for (int i = 0; i < part2String.length()%4; i++){
+                    part2String = part2String+"0";
+                }
+                tmpString = "";
+                for (int i = 0 ; i < part2String.length(); i++){
+                    tmpPart2Str += part2String.charAt(i);
+                    if(tmpPart2Str.length() == 4){
+                        int number = Integer.parseInt(tmpPart2Str,2);
+                        String hexStr = Integer.toString(number,16);
+                        tmpString += hexStr;
+                        tmpPart2Str = "";
+                    }
+                }
+                part2String = tmpString;
 
-        }
-        part2String = tmpString;
-        
-        tmpString = "";
-        for (int i = 0 ; i < part1String.length(); i++){
-            tmpPart1Str += part1String.charAt(i);
-            if(tmpPart1Str.length() == 4){
-                int number = Integer.parseInt(tmpPart1Str,2);
-                String hexStr = Integer.toString(number,16);
-                tmpString += hexStr;
-                tmpPart1Str = "";
-            }
+                tmpString = "";
+                for (int i = 0 ; i < part1String.length(); i++){
+                    tmpPart1Str += part1String.charAt(i);
+                    if(tmpPart1Str.length() == 4){
+                        int number = Integer.parseInt(tmpPart1Str,2);
+                        String hexStr = Integer.toString(number,16);
+                        tmpString += hexStr;
+                        tmpPart1Str = "";
+                    }
 
-        }
-        part1String = tmpString;
+                }
+                part1String = tmpString;
         
                 con.writeData( "bGRID "
                         +"15" + " " + "20" + " "
