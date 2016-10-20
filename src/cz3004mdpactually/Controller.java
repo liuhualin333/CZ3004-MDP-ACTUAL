@@ -393,7 +393,7 @@ public class Controller {
                 break;
             }
         }
-        if (movementCounter - lastCaliMovementCounter >= 3){  //will change condition later
+        if (movementCounter - lastCaliMovementCounter >= 2){  //will change condition later
             calibrate();
         }
     }
@@ -408,8 +408,8 @@ public class Controller {
             }
             lastCaliMovementCounter = movementCounter;
         }
-        else if (StateOfMap.canCalibrateRight()){      
-            executeTurn(Direction.DIRECTION_RIGHT);
+        if (StateOfMap.canCalibrateRight()){      
+            executeTurn(Direction.TURN_RIGHT);
             
             con.writeData("ap");
             while (true){
@@ -418,10 +418,10 @@ public class Controller {
             }
             lastCaliMovementCounter = movementCounter;
             
-            executeTurn(Direction.DIRECTION_LEFT);     
+            executeTurn(Direction.TURN_LEFT);     
         }
         else if (StateOfMap.canCalibrateLeft()){
-            executeTurn(Direction.DIRECTION_LEFT);
+            executeTurn(Direction.TURN_LEFT);
             
             con.writeData("ap");
             while (true){
@@ -430,7 +430,7 @@ public class Controller {
             }
             lastCaliMovementCounter = movementCounter;
             
-            executeTurn(Direction.DIRECTION_RIGHT);
+            executeTurn(Direction.TURN_RIGHT);
         }
         
     }
@@ -793,18 +793,26 @@ public class Controller {
             @Override
             protected Integer doInBackground() {
         
-                for (int i = 0; i < 4; i++){
-                    scan();       //detect obstacles
-                    executeTurn(Direction.TURN_RIGHT);
-                    publishAndSleep();
-                    if (i < 2){
-                        con.writeData("ap");
-                        while (true){
-                            if (con.messageRecognition() == 6)
-                                break;
-                        }
-                    }
-                }       
+//                for (int i = 0; i < 4; i++){
+//                    scan();       //detect obstacles
+//                    executeTurn(Direction.TURN_RIGHT);
+//                    publishAndSleep();
+//                    if (i < 2){
+//                        con.writeData("ap");
+//                        while (true){
+//                            if (con.messageRecognition() == 6)
+//                                break;
+//                        }
+//                    }
+//                }
+                scan();
+                executeTurn(Direction.TURN_LEFT);
+                publishAndSleep();
+                scan();
+                publishAndSleep();
+
+                calibrate();
+                publishAndSleep();
 
                 while (!done){
                     while (true){

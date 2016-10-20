@@ -90,6 +90,32 @@ public class StateOfMap {
         return false;
     }
     
+    public static boolean frontPlusOneIsBorder() {
+        switch (Direction.CUR_DIRECTION) {
+            case Direction.DIRECTION_UP:
+                if (Robot.Tile2EY >= Controller.height) {
+                    return true;
+                }
+                break;
+            case Direction.DIRECTION_DOWN:
+                if (Robot.Tile2EY < 0) {
+                    return true;
+                }
+                break;
+            case Direction.DIRECTION_LEFT:
+                if (Robot.Tile2EX < 0) {
+                    return true;
+                }
+                break;
+            case Direction.DIRECTION_RIGHT:
+                if (Robot.Tile2EX >= Controller.width) {
+                    return true;
+                }
+                break;
+        }
+        return false;
+    }
+    
     public static boolean canCalibrateFront() {
         if (frontIsBorder())
             return true;
@@ -97,17 +123,16 @@ public class StateOfMap {
              obstacleMap[Robot.Tile2X][Robot.Tile2Y] == 1 && 
              obstacleMap[Robot.Tile3X][Robot.Tile3Y] == 1 )
             return true;
-//        if ( NotObstacleIsExplored(Robot.Tile1X, Robot.Tile1Y) && 
-//             NotObstacleIsExplored(Robot.Tile2X, Robot.Tile2Y) && 
-//             NotObstacleIsExplored(Robot.Tile3X, Robot.Tile3Y) &&
-//             isValidTile(Robot.Tile1EX, Robot.Tile1EY) &&
-//             isValidTile(Robot.Tile2EX, Robot.Tile2EY) &&
-//             isValidTile(Robot.Tile3EX, Robot.Tile3EY) &&
-//             obstacleMap[Robot.Tile1EX][Robot.Tile1EY] == 1 && 
-//             obstacleMap[Robot.Tile2EX][Robot.Tile2EY] == 1 && 
-//             obstacleMap[Robot.Tile3EX][Robot.Tile3EY] == 1     
-//           )
-//            return true;
+        if (frontPlusOneIsBorder())
+            return true;
+        if ( NotObstacleIsExplored(Robot.Tile1X, Robot.Tile1Y) && 
+             NotObstacleIsExplored(Robot.Tile2X, Robot.Tile2Y) && 
+             NotObstacleIsExplored(Robot.Tile3X, Robot.Tile3Y) &&
+             obstacleMap[Robot.Tile1EX][Robot.Tile1EY] == 1 && 
+             obstacleMap[Robot.Tile2EX][Robot.Tile2EY] == 1 && 
+             obstacleMap[Robot.Tile3EX][Robot.Tile3EY] == 1     
+           )
+            return true;
         return false;
     } 
 
@@ -146,12 +171,48 @@ public class StateOfMap {
         return false;
     }
     
+    public static boolean leftPlusOneIsBorder() {
+        switch (Direction.CUR_DIRECTION) {
+            case Direction.DIRECTION_UP:
+                if (Robot.Tile6EX < 0) {
+                    return true;
+                }
+                break;
+            case Direction.DIRECTION_DOWN:
+                if (Robot.Tile6EX >= Controller.width) {
+                    return true;
+                }
+                break;
+            case Direction.DIRECTION_LEFT:
+                if (Robot.Tile6EY < 0) {
+                    return true;
+                }
+                break;
+            case Direction.DIRECTION_RIGHT:
+                if (Robot.Tile6EY >= Controller.height) {
+                    return true;
+                }
+                break;                
+        }
+        return false;
+    }
+    
     public static boolean canCalibrateLeft() {
         if (leftIsBorder())
             return true;
         if ( obstacleMap[Robot.Tile5X][Robot.Tile5Y] == 1 && 
              obstacleMap[Robot.Tile6X][Robot.Tile6Y] == 1 && 
              obstacleMap[Robot.Tile7X][Robot.Tile7Y] == 1 )
+            return true;
+        if (leftPlusOneIsBorder())
+            return true;
+        if ( NotObstacleIsExplored(Robot.Tile5X, Robot.Tile5Y) && 
+             NotObstacleIsExplored(Robot.Tile6X, Robot.Tile6Y) && 
+             NotObstacleIsExplored(Robot.Tile7X, Robot.Tile7Y) &&
+             obstacleMap[Robot.Tile5EX][Robot.Tile5EY] == 1 && 
+             obstacleMap[Robot.Tile6EX][Robot.Tile6EY] == 1 && 
+             obstacleMap[Robot.Tile7EX][Robot.Tile7EY] == 1     
+           )
             return true;
         return false;
     } 
@@ -191,12 +252,48 @@ public class StateOfMap {
         return false;
     }
     
+    public static boolean rightPlusOneIsBorder() {
+        switch (Direction.CUR_DIRECTION) {
+            case Direction.DIRECTION_UP:
+                if (Robot.Tile9EX >= Controller.width) {
+                    return true;
+                }
+                break;
+            case Direction.DIRECTION_DOWN:
+                if (Robot.Tile9EX < 0) {
+                    return true;
+                }
+                break;
+            case Direction.DIRECTION_LEFT:
+                if (Robot.Tile9EY >= Controller.height) {
+                    return true;
+                }
+                break;
+            case Direction.DIRECTION_RIGHT:
+                if (Robot.Tile9EY < 0) {
+                    return true;
+                }
+                break;
+        }
+        return false;
+    }
+    
     public static boolean canCalibrateRight() {
         if (rightIsBorder())
             return true;
         if ( obstacleMap[Robot.Tile8X][Robot.Tile8Y] == 1 && 
              obstacleMap[Robot.Tile9X][Robot.Tile9Y] == 1 && 
              obstacleMap[Robot.Tile10X][Robot.Tile10Y] == 1 )
+            return true;
+        if (rightPlusOneIsBorder())
+            return true;
+        if ( NotObstacleIsExplored(Robot.Tile8X, Robot.Tile8Y) && 
+             NotObstacleIsExplored(Robot.Tile9X, Robot.Tile9Y) && 
+             NotObstacleIsExplored(Robot.Tile10X, Robot.Tile10Y) &&
+             obstacleMap[Robot.Tile8EX][Robot.Tile8EY] == 1 && 
+             obstacleMap[Robot.Tile9EX][Robot.Tile9EY] == 1 && 
+             obstacleMap[Robot.Tile10EX][Robot.Tile10EY] == 1     
+           )
             return true;
         return false;
     } 
