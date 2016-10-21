@@ -393,7 +393,7 @@ public class Controller {
                 break;
             }
         }
-        if (movementCounter - lastCaliMovementCounter >= 2){  //will change condition later
+        if (movementCounter - lastCaliMovementCounter >= 3){  //will change condition later
             calibrate();
         }
     }
