@@ -18,6 +18,7 @@ public class Connection {
     //BufferedWriter output;
     OutputStream output;
     static String receiveMsg;
+    static boolean writingToArduino = true;
     static boolean STOP = false;
 
     public Connection(){

@@ -298,7 +298,9 @@ public class Controller {
         switch (direction) {
             case Direction.TURN_RIGHT:
                 
-                con.writeData("ad"); //Arduino turn right             
+                Connection.writingToArduino = true;
+                con.writeData("ad"); //Arduino turn right         
+                Connection.writingToArduino = false;
                 switch (Direction.CUR_DIRECTION) {
                     case Direction.DIRECTION_UP:
                         Direction.CUR_DIRECTION = Direction.DIRECTION_RIGHT;
@@ -328,7 +330,9 @@ public class Controller {
                 
             case Direction.TURN_LEFT:
                 
+                Connection.writingToArduino = true;
                 con.writeData("aa"); //Arduino turn left
+                Connection.writingToArduino = false;
                 switch (Direction.CUR_DIRECTION) {
                     case Direction.DIRECTION_UP:
                         Direction.CUR_DIRECTION = Direction.DIRECTION_LEFT;
@@ -361,7 +365,9 @@ public class Controller {
         int x = Robot.R2X;
         int y = Robot.R2Y;
         
+        Connection.writingToArduino = true;
         con.writeData("aw"); //Arduino move forward for tileCount, not specified as of yet cause hardware programming not ready
+        Connection.writingToArduino = false;
         for (int i = 0; i < tileCount; i++) {
             switch (Direction.CUR_DIRECTION) {
                 case Direction.DIRECTION_UP:
@@ -400,6 +406,7 @@ public class Controller {
     
     public void calibrate(){
         
+        Connection.writingToArduino = true;
         if(StateOfMap.canCalibrateFront()){
             con.writeData("ap");
             while (true){
@@ -432,12 +439,14 @@ public class Controller {
             
             executeTurn(Direction.TURN_RIGHT);
         }
-        
+        Connection.writingToArduino = false;
     }
     
     //scan for obstacles
     public int scan(){
+        Connection.writingToArduino = true;
         con.writeData("ac"); //Arduino scan
+        Connection.writingToArduino = false;
         while (true){        //Wait till scanning finishes
             int tmp = con.messageRecognition();
             if (tmp== 12){
