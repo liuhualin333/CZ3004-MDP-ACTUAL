@@ -388,6 +388,21 @@ public class Controller {
                     case 12:
                         howManySteps = "g";
                         break;
+                    case 13:
+                        howManySteps = "h";
+                        break;
+                    case 14:
+                        howManySteps = "i";
+                        break;
+                    case 15:
+                        howManySteps = "j";
+                        break;
+                    case 16:
+                        howManySteps = "k";
+                        break;
+                    case 17:
+                        howManySteps = "l";
+                        break;
                     default:
                         howManySteps = "e";
                         break;
