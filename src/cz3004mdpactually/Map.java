@@ -203,7 +203,7 @@ public class Map {
                             nearestUnexploredCounter++;
                     }
                 }
-                if (nearestUnexploredCounter >= 3){
+                if (nearestUnexploredCounter >= 3 && !closedList.contains(tmp)){
                     tmp.setIsDiagonally(false);
                     tmp.setIsNotPrefered(true);
                     adjac.add(tmp);
@@ -219,7 +219,14 @@ public class Map {
                     tmp.setIsDiagonally(false);
                     adjac.add(tmp);      
                 }
-                
+                else if ( !closedList.contains(tmp)){
+                    for (int i = 0; i < 9; i++){
+                        if (Controller.nearestUnexplored[i][0] == tmp.getX() && Controller.nearestUnexplored[i][1] == tmp.getY()){
+                            adjac.add(tmp);
+                            break;
+                        }
+                    }
+                }
             }
         }
         
@@ -269,7 +276,7 @@ public class Map {
                             nearestUnexploredCounter++;
                     }
                 }
-                if (nearestUnexploredCounter >= 3){
+                if (nearestUnexploredCounter >= 3 && !closedList.contains(tmp)){
                     tmp.setIsDiagonally(false);
                     tmp.setIsNotPrefered(true);
                     adjac.add(tmp);
@@ -285,7 +292,14 @@ public class Map {
                     tmp.setIsDiagonally(false);
                     adjac.add(tmp);      
                 }
-                
+                else if ( !closedList.contains(tmp)){
+                    for (int i = 0; i < 9; i++){
+                        if (Controller.nearestUnexplored[i][0] == tmp.getX() && Controller.nearestUnexplored[i][1] == tmp.getY()){
+                            adjac.add(tmp);
+                            break;
+                        }
+                    }
+                }
             }
         }
 
@@ -335,7 +349,7 @@ public class Map {
                             nearestUnexploredCounter++;
                     }
                 }
-                if (nearestUnexploredCounter >= 3){
+                if (nearestUnexploredCounter >= 3 && !closedList.contains(tmp)){
                     tmp.setIsDiagonally(false);
                     tmp.setIsNotPrefered(true);
                     adjac.add(tmp);
@@ -351,7 +365,14 @@ public class Map {
                     tmp.setIsDiagonally(false);
                     adjac.add(tmp);      
                 }
-                
+                else if ( !closedList.contains(tmp)){
+                    for (int i = 0; i < 9; i++){
+                        if (Controller.nearestUnexplored[i][0] == tmp.getX() && Controller.nearestUnexplored[i][1] == tmp.getY()){
+                            adjac.add(tmp);
+                            break;
+                        }
+                    }
+                }
             }
         }
         
@@ -401,7 +422,7 @@ public class Map {
                             nearestUnexploredCounter++;
                     }
                 }
-                if (nearestUnexploredCounter >= 3){
+                if (nearestUnexploredCounter >= 3 && !closedList.contains(tmp)){
                     tmp.setIsDiagonally(false);
                     tmp.setIsNotPrefered(true);
                     adjac.add(tmp);
@@ -417,7 +438,14 @@ public class Map {
                     tmp.setIsDiagonally(false);
                     adjac.add(tmp);      
                 }
-                
+                else if ( !closedList.contains(tmp)){
+                    for (int i = 0; i < 9; i++){
+                        if (Controller.nearestUnexplored[i][0] == tmp.getX() && Controller.nearestUnexplored[i][1] == tmp.getY()){
+                            adjac.add(tmp);
+                            break;
+                        }
+                    }
+                }
             }
         }
         
@@ -462,48 +490,7 @@ public class Map {
         //END of diagonal portion
         
         return adjac;
-    }
-    
-    //the old 100% working method assuming robot is 1x1
-    private List<Node> oldGetAdjacent(Node n, int[] objective){
-        int x = n.getX();
-        int y = n.getY();
-        List<Node> adjac = new LinkedList<Node>();
-        
-        Node tmp;
-        if (x > 0) {
-            tmp = this.getNode((x - 1), y);
-            if (!tmp.isObstacle() && !closedList.contains(tmp) && tmp.isExplored()) {
-                tmp.setIsDiagonally(false);
-                adjac.add(tmp);
-            }
-        }
-
-        if (x < width - 1) {
-            tmp = this.getNode((x + 1), y);
-            if (!tmp.isObstacle() && !closedList.contains(tmp) && tmp.isExplored()) {
-                tmp.setIsDiagonally(false);
-                adjac.add(tmp);
-            }
-        }
-
-        if (y > 0) {
-            tmp = this.getNode(x, (y - 1));
-            if (!tmp.isObstacle() && !closedList.contains(tmp) && tmp.isExplored()) {
-                tmp.setIsDiagonally(false);
-                adjac.add(tmp);
-            }
-        }
-
-        if (y < height - 1) {
-            tmp = this.getNode(x, (y + 1));
-            if (!tmp.isObstacle() && !closedList.contains(tmp) && tmp.isExplored()) {
-                 tmp.setIsDiagonally(false);
-                adjac.add(tmp);
-            }
-        } 
-        return adjac;
-    }
+    }    
     
 }
 
