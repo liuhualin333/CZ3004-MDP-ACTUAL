@@ -1023,7 +1023,9 @@ public class Controller {
                         StateOfMap.updateDescriptor(node.getX(), node.getY(), 0);
                         updateList.remove(node);
                     }
-                    saveFile();
+                    if(Connection.writingToArduino == false){
+                        saveFile();
+                    }
                 }
                 catch(Exception e){
                 }
