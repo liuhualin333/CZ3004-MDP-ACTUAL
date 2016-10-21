@@ -370,13 +370,39 @@ public class Controller {
     }
     //go , stop() is not needed anymore because specify exactly how much to move forward
     public void forward(int tileCount){
-        
+        boolean notOne = false;
+        String howManySteps = "default";
         int x = Robot.R2X;
         int y = Robot.R2Y;
         
+        if (tileCount != 1){
+            notOne = true;            
+            if (tileCount > 9){
+                switch(tileCount){
+                    case 10:
+                        howManySteps = "e";
+                        break;
+                    case 11:
+                        howManySteps = "f";
+                        break;
+                    case 12:
+                        howManySteps = "g";
+                        break;
+                    default:
+                        howManySteps = "e";
+                        break;
+                }          
+            }
+            else
+                howManySteps = String.valueOf(tileCount);
+        }
+        
         while (Connection.writingToAndroid) {}
         Connection.writingToArduino = true;
-        con.writeData("aw"); //Arduino move forward for tileCount, not specified as of yet cause hardware programming not ready
+        if (notOne)
+            con.writeData("aw"+ howManySteps + "|"); //Arduino move forward for tileCount, not specified as of yet cause hardware programming not ready
+        else
+            con.writeData("aw");
         for (int i = 0; i < tileCount; i++) {
             switch (Direction.CUR_DIRECTION) {
                 case Direction.DIRECTION_UP:
@@ -1470,22 +1496,21 @@ public class Controller {
             protected Integer doInBackground() {
                 mapsimulator.contentPanel.paintRobotLocation(Controller.currentLocation[0], Controller.currentLocation[1]);
 
-                //COMMENTED OUT CONSECUTIVE FORWARD BLOCKS FOR NOW
-//                prevX = Robot.R9X;
-//                prevY = Robot.R9Y;
+                prevX = Robot.R9X;
+                prevY = Robot.R9Y;
                 for (Node s : actionSequence){
                     //System.out.println("Action Path: " + s.getX() + " " + s.getY());
-                    directionX = s.getX() - Robot.R9X;  //- prevX;
-                    directionY = s.getY() - Robot.R9Y;  //- prevY;
-//                    prevX = s.getX();
-//                    prevY = s.getY();
+                    directionX = s.getX() - prevX;
+                    directionY = s.getY() - prevY;
+                    prevX = s.getX();
+                    prevY = s.getY();
                                      
                         if (directionX < 0 && directionY == 0) {
-//                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_LEFT){
-//                                if (consecutiveForward != 0){
-//                                    forward(consecutiveForward);
-//                                    consecutiveForward = 0;
-//                                }
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_LEFT){
+                                if (consecutiveForward != 0){
+                                    forward(consecutiveForward);
+                                    consecutiveForward = 0;
+                                }
                                 turn(Direction.DIRECTION_LEFT);
                                 publishAndSleep(); 
                                 if (turnTwiceFlag){
@@ -1493,16 +1518,16 @@ public class Controller {
                                     publishAndSleep();
                                     turnTwiceFlag = false;
                                 }
-//                            }
-//                            else {
-//                                consecutiveForward++;
-//                            }
+                            }
+                            else {
+                                consecutiveForward++;
+                            }
                         } else if (directionX > 0 && directionY == 0) {
-//                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_RIGHT){
-//                                if (consecutiveForward != 0){
-//                                    forward(consecutiveForward);
-//                                    consecutiveForward = 0;
-//                                }
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_RIGHT){
+                                if (consecutiveForward != 0){
+                                    forward(consecutiveForward);
+                                    consecutiveForward = 0;
+                                }
                                 turn(Direction.DIRECTION_RIGHT);
                                 publishAndSleep();
                                 if (turnTwiceFlag){
@@ -1510,16 +1535,16 @@ public class Controller {
                                     publishAndSleep();
                                     turnTwiceFlag = false;
                                 }
-//                            }
-//                            else {
-//                                consecutiveForward++;
-//                            }
+                            }
+                            else {
+                                consecutiveForward++;
+                            }
                         } else if (directionY < 0 && directionX == 0) {
-//                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_DOWN){
-//                                if (consecutiveForward != 0){
-//                                    forward(consecutiveForward);
-//                                    consecutiveForward = 0;
-//                                }
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_DOWN){
+                                if (consecutiveForward != 0){
+                                    forward(consecutiveForward);
+                                    consecutiveForward = 0;
+                                }
                                 turn(Direction.DIRECTION_DOWN);
                                 publishAndSleep(); 
                                 if (turnTwiceFlag){
@@ -1527,16 +1552,16 @@ public class Controller {
                                     publishAndSleep();
                                     turnTwiceFlag = false;
                                 }
-//                            }
-//                            else {
-//                                consecutiveForward++;
-//                            }
+                            }
+                            else {
+                                consecutiveForward++;
+                            }
                         } else if (directionY > 0 && directionX == 0) {
-//                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_UP){
-//                                if (consecutiveForward != 0){
-//                                    forward(consecutiveForward);
-//                                    consecutiveForward = 0;
-//                                }
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_UP){
+                                if (consecutiveForward != 0){
+                                    forward(consecutiveForward);
+                                    consecutiveForward = 0;
+                                }
                                 turn(Direction.DIRECTION_UP);
                                 publishAndSleep(); 
                                 if (turnTwiceFlag){
@@ -1544,13 +1569,13 @@ public class Controller {
                                     publishAndSleep();
                                     turnTwiceFlag = false;
                                 }
-//                            }
-//                            else {
-//                                consecutiveForward++;
-//                            }
+                            }
+                            else {
+                                consecutiveForward++;
+                            }
                         }                 
                        
-                    if (StateOfMap.frontIsTraversable() ) {//&& consecutiveForward == 0) {            
+                    if (StateOfMap.frontIsTraversable() && consecutiveForward == 0) {            
                         forward(1);
                         publishAndSleep(); 
                     }               
