@@ -87,6 +87,9 @@ public class Controller {
             if(readInt == 10){                            
                 setRobotLocationAsExplored();
                 con.writeData("bExplore start");
+                //need to read the string received here
+                
+                
                 fullExplore(1);
                 while (!explorationDone){}
                 con.writeData("bExplore done");
@@ -299,8 +302,7 @@ public class Controller {
             case Direction.TURN_RIGHT:
                 
                 Connection.writingToArduino = true;
-                con.writeData("ad"); //Arduino turn right         
-                Connection.writingToArduino = false;
+                con.writeData("ad"); //Arduino turn right                         
                 switch (Direction.CUR_DIRECTION) {
                     case Direction.DIRECTION_UP:
                         Direction.CUR_DIRECTION = Direction.DIRECTION_RIGHT;
@@ -323,6 +325,7 @@ public class Controller {
                     //after writing put switch statement in between, before reading
                     //need to wait for response from Arduino anyway, might as well process while reading
                     if ( con.messageRecognition() == 2 ){
+                        Connection.writingToArduino = false;
                         break;
                     }
                 }
@@ -332,7 +335,6 @@ public class Controller {
                 
                 Connection.writingToArduino = true;
                 con.writeData("aa"); //Arduino turn left
-                Connection.writingToArduino = false;
                 switch (Direction.CUR_DIRECTION) {
                     case Direction.DIRECTION_UP:
                         Direction.CUR_DIRECTION = Direction.DIRECTION_LEFT;
@@ -353,6 +355,7 @@ public class Controller {
                 }              
                 while (true){
                     if ( con.messageRecognition() == 3 ){
+                        Connection.writingToArduino = false;
                         break;
                     }
                 }
@@ -367,7 +370,6 @@ public class Controller {
         
         Connection.writingToArduino = true;
         con.writeData("aw"); //Arduino move forward for tileCount, not specified as of yet cause hardware programming not ready
-        Connection.writingToArduino = false;
         for (int i = 0; i < tileCount; i++) {
             switch (Direction.CUR_DIRECTION) {
                 case Direction.DIRECTION_UP:
@@ -396,6 +398,7 @@ public class Controller {
         //just like turn, process then busy wait till Arduino response
         while (true){
             if ( con.messageRecognition() == 1 ){
+                Connection.writingToArduino = false;
                 break;
             }
         }
@@ -406,22 +409,27 @@ public class Controller {
     
     public void calibrate(){
         
-        Connection.writingToArduino = true;
         if(StateOfMap.canCalibrateFront()){
+            Connection.writingToArduino = true;
             con.writeData("ap");
             while (true){
-                if (con.messageRecognition() == 6)
+                if (con.messageRecognition() == 6){
+                    Connection.writingToArduino = false;
                     break;
+                }
             }
             lastCaliMovementCounter = movementCounter;
         }
         if (StateOfMap.canCalibrateRight()){      
             executeTurn(Direction.TURN_RIGHT);
             
+            Connection.writingToArduino = true;
             con.writeData("ap");
             while (true){
-                if (con.messageRecognition() == 6)
+                if (con.messageRecognition() == 6){
+                    Connection.writingToArduino = false;
                     break;
+                }
             }
             lastCaliMovementCounter = movementCounter;
             
@@ -430,10 +438,13 @@ public class Controller {
         else if (StateOfMap.canCalibrateLeft()){
             executeTurn(Direction.TURN_LEFT);
             
+            Connection.writingToArduino = true;
             con.writeData("ap");
             while (true){
-                if (con.messageRecognition() == 6)
+                if (con.messageRecognition() == 6){
+                    Connection.writingToArduino = false;
                     break;
+                }
             }
             lastCaliMovementCounter = movementCounter;
             
@@ -446,11 +457,11 @@ public class Controller {
     public int scan(){
         Connection.writingToArduino = true;
         con.writeData("ac"); //Arduino scan
-        Connection.writingToArduino = false;
         while (true){        //Wait till scanning finishes
             int tmp = con.messageRecognition();
             if (tmp== 12){
                 System.out.println(12);
+                Connection.writingToArduino = false;
                 break;
             }
             System.out.println(tmp);
