@@ -1095,17 +1095,20 @@ public class Controller {
                 }
             }
             public void moveToObjective(int[] objective){ 
-
+                if (currentLocation[0] == objective[0] && currentLocation[1] == objective[1]){
+                    System.out.println("Already at objective!");
+                    return;
+                }
                 actionSequence = map.findPath(currentLocation, objective); 
-                //for (Node tmp : actionSequence)
-                    //System.out.println("Action Path: " + tmp.getX() + " " + tmp.getY());
                 if (actionSequence == null)
                     System.out.println("null");
                 if (actionSequence.isEmpty()){  
                     System.out.println("is empty");
-                    bestPathImpossible = true;                       
-                    impossibleNodes.add( new Node(objective[0], objective[1]));
-                    System.out.println("Impossible Nodes: " + impossibleNodes.size());
+                    if(!thereAreImpossibleNodesLeft){
+                        bestPathImpossible = true;                       
+                        impossibleNodes.add( new Node(objective[0], objective[1]));
+                        System.out.println("Impossible Nodes: " + impossibleNodes.size());
+                    }
                 }
 
                     for (Node s : actionSequence){
@@ -1171,6 +1174,8 @@ public class Controller {
                             updateExploredAndObstacleCount();
                         } 
                         else {
+                            if (thereAreImpossibleNodesLeft)
+                                break;
                             bestPathImpossible = true;                       
                             impossibleNodes.add( actionSequence.get(actionSequence.size()-1) );
                             System.out.println("Impossible Nodes: " + impossibleNodes.size());
