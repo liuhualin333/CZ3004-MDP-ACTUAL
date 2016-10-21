@@ -87,18 +87,22 @@ public class Controller {
             if(readInt == 10){                            
                 setRobotLocationAsExplored();
                 con.writeData("bExplore start");
-                //need to read the string received here
-                
-                
+                while (con.messageRecognition() != 6){}
                 fullExplore(1);
                 while (!explorationDone){}
+                while (Connection.writingToAndroid) {}
                 con.writeData("bExplore done");
+                while (con.messageRecognition() != 6){}
             }
             else if(readInt == 11){
+                while (Connection.writingToAndroid) {}
                 con.writeData("bFastest Path start");
+                while (con.messageRecognition() != 6){}
                 fastPath(1);
                 while (!fastestPathDone){}
+                while (Connection.writingToAndroid) {}
                 con.writeData("bFastest Path done");
+                while (con.messageRecognition() != 6){}
             }         
             //changing the following 3 after initialize() and mapsimulator instantiation might cause problems
             else if(readInt == 7){
@@ -301,6 +305,7 @@ public class Controller {
         switch (direction) {
             case Direction.TURN_RIGHT:
                 
+                while (Connection.writingToAndroid) {}
                 Connection.writingToArduino = true;
                 con.writeData("ad"); //Arduino turn right                         
                 switch (Direction.CUR_DIRECTION) {
@@ -333,6 +338,7 @@ public class Controller {
                 
             case Direction.TURN_LEFT:
                 
+                while (Connection.writingToAndroid) {}
                 Connection.writingToArduino = true;
                 con.writeData("aa"); //Arduino turn left
                 switch (Direction.CUR_DIRECTION) {
@@ -368,6 +374,7 @@ public class Controller {
         int x = Robot.R2X;
         int y = Robot.R2Y;
         
+        while (Connection.writingToAndroid) {}
         Connection.writingToArduino = true;
         con.writeData("aw"); //Arduino move forward for tileCount, not specified as of yet cause hardware programming not ready
         for (int i = 0; i < tileCount; i++) {
@@ -410,10 +417,11 @@ public class Controller {
     public void calibrate(){
         
         if(StateOfMap.canCalibrateFront()){
+            while (Connection.writingToAndroid) {}
             Connection.writingToArduino = true;
             con.writeData("ap");
             while (true){
-                if (con.messageRecognition() == 6){
+                if (con.messageRecognition() == 5){
                     Connection.writingToArduino = false;
                     break;
                 }
@@ -423,10 +431,11 @@ public class Controller {
         if (StateOfMap.canCalibrateRight()){      
             executeTurn(Direction.TURN_RIGHT);
             
+            while (Connection.writingToAndroid) {}
             Connection.writingToArduino = true;
             con.writeData("ap");
             while (true){
-                if (con.messageRecognition() == 6){
+                if (con.messageRecognition() == 5){
                     Connection.writingToArduino = false;
                     break;
                 }
@@ -438,10 +447,11 @@ public class Controller {
         else if (StateOfMap.canCalibrateLeft()){
             executeTurn(Direction.TURN_LEFT);
             
+            while (Connection.writingToAndroid) {}
             Connection.writingToArduino = true;
             con.writeData("ap");
             while (true){
-                if (con.messageRecognition() == 6){
+                if (con.messageRecognition() == 5){
                     Connection.writingToArduino = false;
                     break;
                 }
@@ -450,11 +460,11 @@ public class Controller {
             
             executeTurn(Direction.TURN_RIGHT);
         }
-        Connection.writingToArduino = false;
     }
     
     //scan for obstacles
     public int scan(){
+        while (Connection.writingToAndroid) {}
         Connection.writingToArduino = true;
         con.writeData("ac"); //Arduino scan
         while (true){        //Wait till scanning finishes
@@ -1023,8 +1033,10 @@ public class Controller {
                         StateOfMap.updateDescriptor(node.getX(), node.getY(), 0);
                         updateList.remove(node);
                     }
-                    if(Connection.writingToArduino == false){
+                    if(Connection.writingToArduino == false){  //might skip writing sometimes which is okay
+                        Connection.writingToAndroid = true;
                         saveFile();
+                        Connection.writingToAndroid = false;
                     }
                 }
                 catch(Exception e){
@@ -1824,9 +1836,7 @@ public class Controller {
                         +part1String+" "
                         +part2String);
                         
-//                while(con.messageRecognition() != 6){
-//
-//                }
+                while(con.messageRecognition() != 6){}
 
             }
     

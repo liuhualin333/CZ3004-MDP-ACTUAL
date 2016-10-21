@@ -18,7 +18,8 @@ public class Connection {
     //BufferedWriter output;
     OutputStream output;
     static String receiveMsg;
-    static boolean writingToArduino = true;
+    static boolean writingToArduino = false;
+    static boolean writingToAndroid = false;
     static boolean STOP = false;
 
     public Connection(){
@@ -115,9 +116,9 @@ public class Connection {
                 return 3;
             case "Stop finished":
                 return 4;
-            case "Invalid Input":
-                return 5;
             case "Calibrate finished":
+                return 5;
+            case "String received":
                 return 6;
             case "explore":
                 return 10;
