@@ -938,6 +938,13 @@ public class Controller {
                         //System.out.println("Impossible Nodes: " + impossibleNodes.size());
                         if ( 300 - exploredNodeCount == impossibleNodes.size() ){
                             thereAreImpossibleNodesLeft = true;
+                            impossibleNodes.clear();
+                            for (int i = 0; i < 15; i++){
+                                for (int j = 0; j < 20; j++){
+                                    if(!StateOfMap.isExploredTile(i, j))
+                                        impossibleNodes.add(new Node(i,j));
+                                }
+                            }
                             System.out.println("\nThere are nodes remaining: " + impossibleNodes.size() + "\n");
                             for (Node tmp : impossibleNodes){
                                 nearestUnexplored[0][0] = tmp.getX();
