@@ -1060,7 +1060,8 @@ public class Controller {
                     System.out.println("Movements: " + movementCounter);
                     System.out.println("Turns: " + turnCounter);
                 }
-                             
+                
+                thereAreImpossibleNodesLeft = false;            
                 for (int i = 1; i < 9; i++){
                     nearestUnexplored[i][0] = -1;
                     nearestUnexplored[i][1] = -1;
