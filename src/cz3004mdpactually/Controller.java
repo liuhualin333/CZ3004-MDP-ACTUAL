@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class Controller {
     
-    final int ROBOTSIZE = 3;
     static final int width = 15;
     static final int height = 20;
     static Mapsimulator mapsimulator;
@@ -40,20 +39,11 @@ public class Controller {
     static boolean isUnique = true;
     static List<Node> impossibleNodes = new LinkedList<Node>();
     static List<Node> adjustedImpossibleNodes = new LinkedList<Node>();
-    static List<Node> clearedImpossibleNodes = new LinkedList<Node>();
-    static int [][] nearestUnexploredExtended = new int[9][2];
     static boolean explorationDone = false;
-      
-    //for percentage explore
-    static boolean goalReached = false;  //and fullExplore also
-    static double nodesToExplore;
-    static int nodesToExploreRounded;
-    
-    //for timed explore
-    static int timeLimitAbsolute = 0;
-    static int prevX = 0, prevY = 0;
-    
+    static boolean goalReached = false;
+ 
     //for fastest path
+    static int prevX = 0, prevY = 0;
     static int consecutiveForward = 0;
     static boolean fastestPathDone = false;
     
@@ -650,10 +640,7 @@ public class Controller {
                 if( !StateOfMap.isExploredTile(i, j) ){
                     tmp[0] = i;
                     tmp[1] = j;
-//                    if (goalReached)
-                        distance = heuristicFunc(tmp); //use h value of current->tmp only, greedy but fast
-//                    else
-//                        distance = heuristicFunc2(tmp);
+                    distance = heuristicFunc(tmp); //use just h value to determine, greedy but fast
                     if (distance < lowestDistance){
                         lowestDistance = distance;
                         objective[0] = tmp[0];
@@ -766,23 +753,11 @@ public class Controller {
         SwingWorker worker = new SwingWorker<Integer, Integer>() {
             @Override
             protected Integer doInBackground() {
-        
-//                for (int i = 0; i < 4; i++){
-//                    scan();       //detect obstacles
-//                    executeTurn(Direction.TURN_RIGHT);
-//                    publishAndSleep();
-//                    if (i < 2){
-//                        con.writeData("ap");
-//                        while (true){
-//                            if (con.messageRecognition() == 6)
-//                                break;
-//                        }
-//                    }
-//                }
                 scan();
                 executeTurn(Direction.TURN_LEFT);
                 publishAndSleep();
                 scan();
+                updateExploredAndObstacleCount();
                 publishAndSleep();
 
                 calibrate();
@@ -807,22 +782,8 @@ public class Controller {
                                 leniencyTrigger = false;
                             impossibleNodes.clear();
                         }
-//                        else{
-//                            for (Node tmp : impossibleNodes){
-//                                if (StateOfMap.isExploredTile(tmp.getX(), tmp.getY())){
-//                                    clearedImpossibleNodes.add(tmp); //concurrent modification of same list
-//                                }
-//                            }
-//                            for (Node tmp2 : clearedImpossibleNodes){
-//                                if (impossibleNodes.contains(tmp2))
-//                                    impossibleNodes.remove(tmp2);                             
-//                            }
-//                            System.out.println("check");
-//                            clearedImpossibleNodes.clear();
-//                        }
+
                         if (!StateOfMap.frontIsTraversable()){ 
-                            if (actionSequence.isEmpty())   //skips sleep and publish if robot didn't move
-                                break;
                             break;
                         }
                         else{    
@@ -838,7 +799,6 @@ public class Controller {
                         done = true;
                     
                     else{
-                        //System.out.println("Impossible Nodes: " + impossibleNodes.size());
                         if ( 300 - exploredNodeCount == impossibleNodes.size() ){
                             thereAreImpossibleNodesLeft = true;
                             impossibleNodes.clear();
@@ -852,9 +812,6 @@ public class Controller {
                             for (Node tmp : impossibleNodes){
                                 nearestUnexplored[0][0] = tmp.getX();
                                 nearestUnexplored[0][1] = tmp.getY();
-                                //now technically neighbout of nearest unexplored
-                                //CAN USE ISREACHABLE TILE HERE, ELSE ONLY DO SMTH ELSE
-                                //with reference to comment above, what if impossible node is not at the border, do smth
                                 
                                 if (nearestUnexplored[0][0] <= 0 ){
                                     nearestUnexplored[0][0]++;
@@ -897,41 +854,31 @@ public class Controller {
                     
                     if (thereAreImpossibleNodesLeft){
                         int[] tmp = new int[2];
-                        //leniencyTrigger = true;
+                        
                         System.out.println("Explored nodes: " + exploredNodeCount);
-                        //for (int lastTries = 0; lastTries < 2; lastTries++){
-                            for (Node remainingNode: adjustedImpossibleNodes){
-                                if (Connection.STOP){ //stop exploration and return to start zone
-                                    for (int i = 1; i < 9; i++){
-                                        nearestUnexplored[i][0] = -1;
-                                        nearestUnexplored[i][1] = -1;
-                                    }
-                                    Connection.STOP = false;
-                                    moveToObjective(startZoneLocation);
-                                    return 1;
+                        for (Node remainingNode: adjustedImpossibleNodes){
+                            if (Connection.STOP){ //stop exploration and return to start zone
+                                for (int i = 1; i < 9; i++){
+                                    nearestUnexplored[i][0] = -1;
+                                    nearestUnexplored[i][1] = -1;
                                 }
-                                System.out.println("Remaning Node: " + remainingNode.getX() + " " + remainingNode.getY());
-                                //if (!StateOfMap.isExploredTile(impossibleNodes.get(increment).getX(), impossibleNodes.get(increment).getY())){
-                                    tmp[0] = remainingNode.getX();
-                                    tmp[1] = remainingNode.getY();
-//                                    nearestUnexploredExtended = nearestUnexploredNeighbours(tmp);
-//                                    for (int i = 0; i < 9; i++){
-//                                        nearestUnexplored = nearestUnexploredNeighbours(nearestUnexploredExtended[i]);
-//                                        if (nearestUnexplored[0][0] != -1 && nearestUnexplored[0][1] != -1 && 
-//                                                !StateOfMap.isObstacleTile(nearestUnexplored[0][0], nearestUnexplored[0][1]))
-//                                            moveToObjective(nearestUnexplored[0]);
-//                                    }
-                                    nearestUnexplored = nearestUnexploredNeighbours(tmp);
-                                    //if (!StateOfMap.isObstacleTile(nearestUnexplored[0][0], nearestUnexplored[0][1]))
-                                        moveToObjective(nearestUnexplored[0]);
-                                    System.out.println("Explored nodes: " + exploredNodeCount);
-                                //}
-                                if (exploredNodeCount == 300){
-                                    done = true;
-                                    break;
-                                }
+                                Connection.STOP = false;
+                                moveToObjective(startZoneLocation);
+                                return 1;
                             }
-                        //}
+                            System.out.println("Remaning Node: " + remainingNode.getX() + " " + remainingNode.getY());
+                            tmp[0] = remainingNode.getX();
+                            tmp[1] = remainingNode.getY();
+                            nearestUnexplored = nearestUnexploredNeighbours(tmp);
+                            moveToObjective(nearestUnexplored[0]);
+                            System.out.println("Explored nodes: " + exploredNodeCount);
+
+                            if (exploredNodeCount == 300){
+                                done = true;
+                                break;
+                            }
+                        }
+                            
                         if (exploredNodeCount == 300){
                             done = true;
                             break;
@@ -1071,15 +1018,10 @@ public class Controller {
                             }
                         }
 
-//                        if (explorationDone){
-//                            forward(1);
-//                            publishAndSleep(); 
-//                        }
-//                        else 
                         if (StateOfMap.frontIsTraversable()) {            
-                            //setRobotLocationAsExplored();
                             forward(1);
-                            scan();
+                            if (exploredNodeCount != 300)
+                                scan();
                             publishAndSleep(); 
                             bestPathImpossible = false;
                             updateExploredAndObstacleCount();
@@ -1090,18 +1032,11 @@ public class Controller {
                             bestPathImpossible = true;                       
                             impossibleNodes.add( actionSequence.get(actionSequence.size()-1) );
                             System.out.println("Impossible Nodes: " + impossibleNodes.size());
-                            break;//this is where we handle nearest unexplored or neighbours being obstacles
+                            break;
                         }
 
                     }
-                    //if (!explorationDone){
-                        //scan();           //redundent, especially if there's no path, no need to scan if didn't move
-                        //setRobotLocationAsExplored();
-                    //}
-                    if(bestPathImpossible != true){
-                            //publishAndSleep();
-                    }
-                 }
+                }
                        
         };
         worker.execute();
@@ -1128,31 +1063,12 @@ public class Controller {
         
         this.speed = speed;
         explorationDone = true;
-        //Controller.mapsimulator.contentPanel.refresh();
-//        for (int i = 0; i < width; i++){
-//            for (int j = 0; j < height; j++){
-//                StateOfMap.exploredMap[i][j] = 1;
-//                if(Controller.map.getNode(i, j).isObstacle()){
-//                    StateOfMap.obstacleMap[i][j] = 1;
-//                }
-//                else{
-//                    StateOfMap.obstacleMap[i][j] = 0;
-//                }
-//           }
-//        }
+
         for (int i = 1; i < 9; i++){
             nearestUnexplored[i][0] = -1;
             nearestUnexplored[i][1] = -1;
         }
-        //explorationDone = true;
         moveToObjectiveDemo(goalZoneLocation);
-
-//        for (int i = 0; i < width; i++){
-//            for (int j = 0; j < height; j++){
-//                StateOfMap.exploredMap[i][j] = 0;
-//                StateOfMap.obstacleMap[i][j] = 0;
-//           }
-//        }
     }
     
     //move to a node assuming there is a path to it in the currently explored space
@@ -1258,10 +1174,10 @@ public class Controller {
                 }
                 
                 //just in case the objective reached before you had the chance to execute all the delayed forwards
-//                if (consecutiveForward != 0){            
-//                    forward(consecutiveForward);
-//                    publishAndSleep(); 
-//                }
+                if (consecutiveForward != 0){            
+                    forward(consecutiveForward);
+                    publishAndSleep(); 
+                }
                 fastestPathDone = true;
                 return 1;
 
