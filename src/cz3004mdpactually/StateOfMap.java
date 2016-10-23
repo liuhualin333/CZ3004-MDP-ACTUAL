@@ -11,9 +11,7 @@ package cz3004mdpactually;
  */
 public class StateOfMap {
     //obstacle map is initialized to all false, and will be marked as exploration goes along
-    //change all in astar to use this instead of map.isObstacle()
     public static int[][] obstacleMap = new int[Controller.width][Controller.height];
-    //explored map here is merely to aid the descriptor functions, map nodes also have isExplored()
     public static int[][] exploredMap = new int[Controller.width][Controller.height];
     
     public static boolean isValidTile(int x, int y){

@@ -166,18 +166,10 @@ public class Node {
     }
     public void sethCost(Node objective){
         
-//        if (this.direction != previous.direction){
-//            sethCost(   //manhattan distance
-//                ( Math.abs(this.getX() - objective.getX()) + Math.abs(this.getY() - objective.getY()) )
-//                * BASICMOVEMENTCOST
-//            );
-//        }
-//        else{
-            sethCost(   //manhattan distance
-                ( Math.abs(this.getX() - objective.getX()) + Math.abs(this.getY() - objective.getY()) )
-                * BASICMOVEMENTCOST 
-            );
-        //}
+        sethCost(   //manhattan distance
+            ( Math.abs(this.getX() - objective.getX()) + Math.abs(this.getY() - objective.getY()) )
+            * BASICMOVEMENTCOST 
+        );
     }
   
     //F COST RELATED

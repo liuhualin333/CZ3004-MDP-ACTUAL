@@ -37,12 +37,11 @@ public class Robot {
     public static int Tile8EX = 0, Tile9EX = 0, Tile10EX = 0;
     public static int Tile8EY = 0, Tile9EY = 0, Tile10EY = 0;
     
-    public static int Tile0X = 0, Tile4X = 0; //diagonals, remain unused for now
+    public static int Tile0X = 0, Tile4X = 0; //diagonals, remain unused
     public static int Tile0Y = 0, Tile4Y = 0;
     
     //no need to track back of robot, because surely scanned for obstacles already
     //actual robot also doesn't have any back sensors
-    //currently assume that side sensors are just as good as front sensors 
     
     //Basically, Controller will pass the header position after it's updated, this method will calibrate all the rest
     public static void defineRobotPosition(int x, int y){
