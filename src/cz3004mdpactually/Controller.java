@@ -35,6 +35,7 @@ public class Controller {
     static int obstacleCount;
     boolean done;  //means explored 100%
     static boolean thereAreImpossibleNodesLeft = false;
+    static List<Node> priorityNodes = new LinkedList<Node>();
     static boolean leniencyTrigger = false;
     static boolean isUnique = true;
     static List<Node> impossibleNodes = new LinkedList<Node>();
@@ -76,6 +77,7 @@ public class Controller {
             readInt = con.messageRecognition();
             if(readInt == 10){                            
                 setRobotLocationAsExplored();
+                setPriorityNodes();
                 con.writeData("bExplore start");
                 while (con.messageRecognition() != 6){}
                 fullExplore(1);
@@ -209,6 +211,17 @@ public class Controller {
         StateOfMap.updateDescriptor(Robot.R7X, Robot.R7Y, 1);
         StateOfMap.updateDescriptor(Robot.R8X, Robot.R8Y, 1);
         StateOfMap.updateDescriptor(Robot.R9X, Robot.R9Y, 1);
+    }
+    public void setPriorityNodes(){
+        
+        for (int i = 2; i < 19; i++)
+            priorityNodes.add(new Node(1,i));
+        for (int i = 2; i < 14; i++)
+            priorityNodes.add(new Node(i,18));
+        for (int i = 17; i > 0; i--)
+            priorityNodes.add(new Node(13,i));
+        for (int i = 12; i > 3; i--)
+            priorityNodes.add(new Node(i,1));
     }
     //elementary behaviours
     //determines where the robot should turn based on current direction and objective direction, then execute
@@ -626,7 +639,10 @@ public class Controller {
             if ( tmp.getX() == objective[0] && tmp.getY() == objective[1] )
                 return 5000;
         }    
-        return Math.abs( currentLocation[0] - objective[0] ) + Math.abs( currentLocation[1] - objective[1] );
+        if (!goalReached)
+            return Math.abs( goalZoneLocation[0] - objective[0] ) + Math.abs( goalZoneLocation[1] - objective[1] );
+        else
+            return Math.abs( currentLocation[0] - objective[0] ) + Math.abs( currentLocation[1] - objective[1] );
     }
        
     public int[] determineNearestUnexplored(){
@@ -634,6 +650,15 @@ public class Controller {
         int[] objective = new int[2];
         int lowestDistance = 9999;  //random initial super high value
         int distance = 0;
+        
+        Node priority;
+        if (!priorityNodes.isEmpty()){
+            priority = priorityNodes.get(0);
+            priorityNodes.remove(0);
+            objective[0] = priority.getX();
+            objective[1] = priority.getY();
+            return objective;
+        }
         
         //for each unexplored node calculate only h() cost, smallest wins
         for (int i = 0; i < width; i++){
@@ -763,6 +788,16 @@ public class Controller {
 
                 calibrate();
                 publishAndSleep();
+                while(!priorityNodes.isEmpty()){
+                    if (!bestPathImpossible || impossibleNodes.size() > 60){
+                        if (impossibleNodes.size() > 60)
+                            leniencyTrigger = true;
+                        else
+                            leniencyTrigger = false;
+                        impossibleNodes.clear();
+                    }
+                    moveToObjective(determineNearestUnexplored());
+                }
 
                 while (!done){
                     while (true){

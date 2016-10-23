@@ -164,9 +164,9 @@ public class Map {
             //if it is not obstacle, not processed yet, and explored
             //and there is space for robot to move through, then add to the list
             if ( !closedList.contains(tmp)
-                    && StateOfMap.NotObstacleIsExplored(tmp1.getX(), tmp1.getY()) 
-                    && StateOfMap.NotObstacleIsExplored(tmp2.getX(), tmp2.getY()) 
-                    && StateOfMap.NotObstacleIsExplored(tmp3.getX(), tmp3.getY()) ){
+                    && StateOfMap.validNotObstacle(tmp1.getX(), tmp1.getY()) 
+                    && StateOfMap.validNotObstacle(tmp2.getX(), tmp2.getY()) 
+                    && StateOfMap.validNotObstacle(tmp3.getX(), tmp3.getY()) ){
                 tmp.setIsDiagonally(false);
                 adjac.add(tmp);
             }
@@ -238,9 +238,9 @@ public class Map {
             tmp3 = this.getNode((x + 2), (y - 1));  //10
             
             if ( !closedList.contains(tmp)
-                    && StateOfMap.NotObstacleIsExplored(tmp1.getX(), tmp1.getY()) 
-                    && StateOfMap.NotObstacleIsExplored(tmp2.getX(), tmp2.getY()) 
-                    && StateOfMap.NotObstacleIsExplored(tmp3.getX(), tmp3.getY()) ){
+                    && StateOfMap.validNotObstacle(tmp1.getX(), tmp1.getY()) 
+                    && StateOfMap.validNotObstacle(tmp2.getX(), tmp2.getY()) 
+                    && StateOfMap.validNotObstacle(tmp3.getX(), tmp3.getY()) ){
                 tmp.setIsDiagonally(false);
                 adjac.add(tmp);
             }
@@ -312,9 +312,9 @@ public class Map {
             tmp3 = this.getNode((x + 1), (y - 2));  //14
             
             if ( !closedList.contains(tmp)
-                    && StateOfMap.NotObstacleIsExplored(tmp1.getX(), tmp1.getY()) 
-                    && StateOfMap.NotObstacleIsExplored(tmp2.getX(), tmp2.getY()) 
-                    && StateOfMap.NotObstacleIsExplored(tmp3.getX(), tmp3.getY()) ){
+                    && StateOfMap.validNotObstacle(tmp1.getX(), tmp1.getY()) 
+                    && StateOfMap.validNotObstacle(tmp2.getX(), tmp2.getY()) 
+                    && StateOfMap.validNotObstacle(tmp3.getX(), tmp3.getY()) ){
                 tmp.setIsDiagonally(false);
                 adjac.add(tmp);
             }
@@ -386,9 +386,9 @@ public class Map {
             tmp3 = this.getNode((x + 1), (y + 2));  //3
             
             if ( !closedList.contains(tmp)
-                    && StateOfMap.NotObstacleIsExplored(tmp1.getX(), tmp1.getY()) 
-                    && StateOfMap.NotObstacleIsExplored(tmp2.getX(), tmp2.getY()) 
-                    && StateOfMap.NotObstacleIsExplored(tmp3.getX(), tmp3.getY()) ){
+                    && StateOfMap.validNotObstacle(tmp1.getX(), tmp1.getY()) 
+                    && StateOfMap.validNotObstacle(tmp2.getX(), tmp2.getY()) 
+                    && StateOfMap.validNotObstacle(tmp3.getX(), tmp3.getY()) ){
                 tmp.setIsDiagonally(false);
                 adjac.add(tmp);
             }

@@ -28,8 +28,10 @@ public class StateOfMap {
     
     public static boolean isExploredTile(int x, int y){
         return (exploredMap[x][y] == 1);
+    } 
+    public static boolean validNotObstacle (int x, int y) {
+        return isValidTile(x, y) && !isObstacleTile(x, y);
     }
-    
     public static boolean NotObstacleIsExplored(int x, int y) {
         return isValidTile(x, y) && isExploredTile(x, y) && !isObstacleTile(x, y);
     }
