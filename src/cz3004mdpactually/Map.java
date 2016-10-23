@@ -11,7 +11,7 @@ import java.util.List;
  * @author Jo
  */
 public class Map {
-    public static boolean CANMOVEDIAGONALLY = false; //CANNOT SET TRUE YET
+    public static boolean CANMOVEDIAGONALLY = false;
     
     private int width;  // x
     private int height; // y
@@ -25,7 +25,6 @@ public class Map {
         for (int i = 0; i < width; i++){
             for (int j = 0; j < height; j++)
                 nodeMap[i][j] = new Node(i, j); 
-                //all nodes current set to explored=true, during actual runs explored and obstacle set to false
         }
     }
     
@@ -144,11 +143,6 @@ public class Map {
         int nearestUnexploredCounter = 0;
         List<Node> adjac = new LinkedList<Node>();     
         
-        //Diagonal movement flags during horizontal/vertical checking, not implemented yet
-        boolean _0 = false;
-        boolean _3 = false;
-        boolean _8 = false;
-        boolean _11 = false;
         
         Node tmp;
         Node tmp1;
@@ -222,6 +216,7 @@ public class Map {
                 else if ( !closedList.contains(tmp)){
                     for (int i = 0; i < 9; i++){
                         if (Controller.nearestUnexplored[i][0] == tmp.getX() && Controller.nearestUnexplored[i][1] == tmp.getY()){
+                            tmp.setIsDiagonally(false);
                             adjac.add(tmp);
                             break;
                         }
@@ -295,6 +290,7 @@ public class Map {
                 else if ( !closedList.contains(tmp)){
                     for (int i = 0; i < 9; i++){
                         if (Controller.nearestUnexplored[i][0] == tmp.getX() && Controller.nearestUnexplored[i][1] == tmp.getY()){
+                            tmp.setIsDiagonally(false);
                             adjac.add(tmp);
                             break;
                         }
@@ -368,6 +364,7 @@ public class Map {
                 else if ( !closedList.contains(tmp)){
                     for (int i = 0; i < 9; i++){
                         if (Controller.nearestUnexplored[i][0] == tmp.getX() && Controller.nearestUnexplored[i][1] == tmp.getY()){
+                            tmp.setIsDiagonally(false);
                             adjac.add(tmp);
                             break;
                         }
@@ -441,6 +438,7 @@ public class Map {
                 else if ( !closedList.contains(tmp)){
                     for (int i = 0; i < 9; i++){
                         if (Controller.nearestUnexplored[i][0] == tmp.getX() && Controller.nearestUnexplored[i][1] == tmp.getY()){
+                            tmp.setIsDiagonally(false);
                             adjac.add(tmp);
                             break;
                         }
@@ -448,47 +446,7 @@ public class Map {
                 }
             }
         }
-        
-        //complicated implementation, not done yet just save for later if nothing else to do, NOT SAFE TO USE!!
-        if (CANMOVEDIAGONALLY) {
-            if (x < width && y < height) {
-                tmp = this.getNode((x + 1), (y + 1));
-                if ( (!tmp.isObstacle() && !closedList.contains(tmp)) && 
-                        (tmp.isExplored() || (objective[0] == x && objective[1] == y )) ) {
-                        tmp.setIsDiagonally(true);
-                        adjac.add(tmp);
-                    }
-            }
-
-            if (x > 0 && y > 0) {
-                tmp = this.getNode((x - 1), (y - 1));
-                if ( (!tmp.isObstacle() && !closedList.contains(tmp)) && 
-                        (tmp.isExplored() || (objective[0] == x && objective[1] == y )) ) {
-                        tmp.setIsDiagonally(true);
-                        adjac.add(tmp);
-                    }
-            }
-
-            if (x > 0 && y < height) {
-                tmp = this.getNode((x - 1), (y + 1));
-                if ( (!tmp.isObstacle() && !closedList.contains(tmp)) && 
-                        (tmp.isExplored() || (objective[0] == x && objective[1] == y )) ) {
-                        tmp.setIsDiagonally(true);
-                        adjac.add(tmp);
-                    }
-            }
-
-            if (x < width && y > 0) {
-                tmp = this.getNode((x + 1), (y - 1));
-                if ( (!tmp.isObstacle() && !closedList.contains(tmp)) && 
-                        (tmp.isExplored() || (objective[0] == x && objective[1] == y )) ) {
-                        tmp.setIsDiagonally(true);
-                        adjac.add(tmp);
-                    }
-            }
-        }
-        //END of diagonal portion
-        
+              
         return adjac;
     }    
     
