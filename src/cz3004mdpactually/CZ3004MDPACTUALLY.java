@@ -20,17 +20,8 @@ public class CZ3004MDPACTUALLY {
     public static Controller controller = new Controller();
     
     public static void main(String[] args) {
-        // TODO code application logic here
+
         controller.start();
-        /*Connection connect = new Connection();
-        //connect.writeData("test");
-        while (true){
-        try{
-        TimeUnit.SECONDS.sleep(5);
-        }
-        catch (Exception e){}
-        System.out.println(connect.readData());
-        }*/
                 
     }
     
