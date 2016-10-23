@@ -431,7 +431,8 @@ public class Controller {
             }
         }
         if (movementCounter - lastCaliMovementCounter >= 3){  //will change condition later
-            calibrate();
+            if (!explorationDone)
+                calibrate();
         }
     }
     
@@ -1069,6 +1070,7 @@ public class Controller {
             nearestUnexplored[i][1] = -1;
         }
         moveToObjectiveDemo(goalZoneLocation);
+        fastestPathDone = true;
     }
     
     //move to a node assuming there is a path to it in the currently explored space
@@ -1178,7 +1180,6 @@ public class Controller {
                     forward(consecutiveForward);
                     publishAndSleep(); 
                 }
-                fastestPathDone = true;
                 return 1;
 
              }
