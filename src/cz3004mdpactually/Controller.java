@@ -31,6 +31,8 @@ public class Controller {
     static boolean bestPathImpossible;
       
     //for full explore
+    static boolean justTurnedRight = false;
+    static boolean movedAlready = false;
     static int exploredNodeCount;
     static int obstacleCount;
     boolean done;  //means explored 100%
@@ -77,7 +79,7 @@ public class Controller {
             readInt = con.messageRecognition();
             if(readInt == 10){                            
                 setRobotLocationAsExplored();
-                setPriorityNodes();
+                //setPriorityNodes();
                 con.writeData("bExplore start");
                 while (con.messageRecognition() != 6){}
                 fullExplore(1);
@@ -186,7 +188,7 @@ public class Controller {
         robotStartLocation[0] = x;
         robotStartLocation[1] = y;
         
-        Robot.defineRobotPosition(x + 1, y);   
+        Robot.defineRobotPosition(x, y + 1);   
         
         currentLocation[0] = robotStartLocation[0];
         currentLocation[1] = robotStartLocation[1];
@@ -214,14 +216,24 @@ public class Controller {
     }
     public void setPriorityNodes(){
         
-        for (int i = 2; i < 19; i++)
-            priorityNodes.add(new Node(1,i));
         for (int i = 2; i < 14; i++)
-            priorityNodes.add(new Node(i,18));
-        for (int i = 17; i > 0; i--)
-            priorityNodes.add(new Node(13,i));
-        for (int i = 12; i > 3; i--)
             priorityNodes.add(new Node(i,1));
+        for (int i = 2; i < 19; i++)
+            priorityNodes.add(new Node(13,i));
+        for (int i = 12; i > 0; i--)
+            priorityNodes.add(new Node(i,18));
+        for (int i = 17; i > 3; i--)
+            priorityNodes.add(new Node(1,i));
+        
+        
+//        for (int i = 2; i < 19; i++)
+//            priorityNodes.add(new Node(1,i));
+//        for (int i = 2; i < 14; i++)
+//            priorityNodes.add(new Node(i,18));
+//        for (int i = 17; i > 0; i--)
+//            priorityNodes.add(new Node(13,i));
+//        for (int i = 12; i > 3; i--)
+//            priorityNodes.add(new Node(i,1));
     }
     //elementary behaviours
     //determines where the robot should turn based on current direction and objective direction, then execute
@@ -780,7 +792,7 @@ public class Controller {
             @Override
             protected Integer doInBackground() {
                 scan();
-                executeTurn(Direction.TURN_LEFT);
+                executeTurn(Direction.TURN_RIGHT);
                 publishAndSleep();
                 scan();
                 updateExploredAndObstacleCount();
@@ -788,15 +800,39 @@ public class Controller {
 
                 calibrate();
                 publishAndSleep();
-                while(!priorityNodes.isEmpty()){
-                    if (!bestPathImpossible || impossibleNodes.size() > 60){
-                        if (impossibleNodes.size() > 60)
-                            leniencyTrigger = true;
-                        else
-                            leniencyTrigger = false;
-                        impossibleNodes.clear();
+                
+                if (!priorityNodes.isEmpty()){
+                    while(!priorityNodes.isEmpty()){
+                        if (!bestPathImpossible || impossibleNodes.size() > 60){
+                            if (impossibleNodes.size() > 60)
+                                leniencyTrigger = true;
+                            else
+                                leniencyTrigger = false;
+                            impossibleNodes.clear();
+                        }
+                        moveToObjective(determineNearestUnexplored());
                     }
-                    moveToObjective(determineNearestUnexplored());
+                }
+                else{
+                    while(true){
+                        if (StateOfMap.rightIsTraversable() && !justTurnedRight){
+                            executeTurn(Direction.TURN_RIGHT);
+                            justTurnedRight = true;
+                        }      
+                        else if (!StateOfMap.frontIsTraversable()){
+                            executeTurn(Direction.TURN_LEFT);
+                        }
+                        else{
+                            forward(1);
+                            justTurnedRight = false;
+                            movedAlready = true;
+                        }
+                        scan();
+                        updateExploredAndObstacleCount();
+                        publishAndSleep();
+                        if (movedAlready && currentLocation[0] == startZoneLocation[0] && currentLocation[1] == startZoneLocation[1])
+                            break;
+                    }
                 }
 
                 while (!done){
