@@ -18,8 +18,8 @@ public class Connection {
     //BufferedWriter output;
     OutputStream output;
     static String receiveMsg;
-    static boolean writingToArduino = false;
-    static boolean writingToAndroid = false;
+    static volatile boolean writingToArduino = false;
+    static volatile boolean writingToAndroid = false;
     static boolean STOP = false;
 
     public Connection(){
