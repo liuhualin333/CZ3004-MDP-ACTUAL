@@ -115,7 +115,7 @@ public class Controller {
                 con.writeData("bSet robot done");
             }
             
-        }     
+        }
     }
     
     //check if this is the goal zone
@@ -312,7 +312,7 @@ public class Controller {
                 
                 while (Connection.writingToAndroid) {}
                 Connection.writingToArduino = true;
-                con.writeData("ad"); //Arduino turn right                         
+                con.writeData("ad|"); //Arduino turn right                         
                 switch (Direction.CUR_DIRECTION) {
                     case Direction.DIRECTION_UP:
                         Direction.CUR_DIRECTION = Direction.DIRECTION_RIGHT;
@@ -345,7 +345,7 @@ public class Controller {
                 
                 while (Connection.writingToAndroid) {}
                 Connection.writingToArduino = true;
-                con.writeData("aa"); //Arduino turn left
+                con.writeData("aa|"); //Arduino turn left
                 switch (Direction.CUR_DIRECTION) {
                     case Direction.DIRECTION_UP:
                         Direction.CUR_DIRECTION = Direction.DIRECTION_LEFT;
@@ -422,7 +422,7 @@ public class Controller {
         if (notOne)
             con.writeData("aw"+ howManySteps + "|"); //Arduino move forward for tileCount, not specified as of yet cause hardware programming not ready
         else
-            con.writeData("aw");
+            con.writeData("aw|");
         for (int i = 0; i < tileCount; i++) {
             switch (Direction.CUR_DIRECTION) {
                 case Direction.DIRECTION_UP:
@@ -455,10 +455,6 @@ public class Controller {
                 break;
             }
         }
-        if (movementCounter - lastCaliMovementCounter >= 3){  //will change condition later
-            if (!explorationDone)
-                calibrate();
-        }
     }
     
     public void calibrate(){
@@ -466,7 +462,7 @@ public class Controller {
         if(StateOfMap.canCalibrateFront()){
             while (Connection.writingToAndroid) {}
             Connection.writingToArduino = true;
-            con.writeData("ap");
+            con.writeData("ap|");
             while (true){
                 if (con.messageRecognition() == 5){
                     Connection.writingToArduino = false;
@@ -480,7 +476,7 @@ public class Controller {
             
             while (Connection.writingToAndroid) {}
             Connection.writingToArduino = true;
-            con.writeData("ap");
+            con.writeData("ap|");
             while (true){
                 if (con.messageRecognition() == 5){
                     Connection.writingToArduino = false;
@@ -496,7 +492,7 @@ public class Controller {
             
             while (Connection.writingToAndroid) {}
             Connection.writingToArduino = true;
-            con.writeData("ap");
+            con.writeData("ap|");
             while (true){
                 if (con.messageRecognition() == 5){
                     Connection.writingToArduino = false;
@@ -513,7 +509,7 @@ public class Controller {
     public int scan(){
         while (Connection.writingToAndroid) {}
         Connection.writingToArduino = true;
-        con.writeData("ac"); //Arduino scan
+        con.writeData("ac|"); //Arduino scan
         while (true){        //Wait till scanning finishes
             int tmp = con.messageRecognition();
             if (tmp== 12){
@@ -641,6 +637,10 @@ public class Controller {
                     }
                 }
             }
+        }
+        if (movementCounter - lastCaliMovementCounter >= 3){  //will change condition later
+            if (!explorationDone)
+                calibrate();
         }
         return scannedNodes; 
     }
@@ -790,7 +790,7 @@ public class Controller {
         this.speed = speed;
         SwingWorker worker = new SwingWorker<Integer, Integer>() {
             @Override
-            protected Integer doInBackground() {
+            protected Integer doInBackground() {                            
                 scan();
                 executeTurn(Direction.TURN_RIGHT);
                 publishAndSleep();
