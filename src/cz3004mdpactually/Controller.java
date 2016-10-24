@@ -84,17 +84,17 @@ public class Controller {
                 while (con.messageRecognition() != 6){}
                 fullExplore(1);
                 while (!explorationDone){}
-                while (Connection.writingToAndroid) {}
+                while (Connection.writingToAndroid || Connection.writingToArduino) {}
                 con.writeData("bExplore done");
                 while (con.messageRecognition() != 6){}
             }
             else if(readInt == 11){
-                while (Connection.writingToAndroid) {}
+                while (Connection.writingToAndroid || Connection.writingToArduino) {}
                 con.writeData("bFastest Path start");
                 while (con.messageRecognition() != 6){}
                 fastPath(1);
                 while (!fastestPathDone){}
-                while (Connection.writingToAndroid) {}
+                while (Connection.writingToAndroid || Connection.writingToArduino) {}
                 con.writeData("bFastest Path done");
                 while (con.messageRecognition() != 6){}
             }         
