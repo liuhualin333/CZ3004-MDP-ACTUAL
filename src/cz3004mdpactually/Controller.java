@@ -996,6 +996,12 @@ public class Controller {
                     moveToObjective(goalZoneLocation);
                 moveToObjective(startZoneLocation);
                 turn(Direction.DIRECTION_RIGHT);    //this line and the next prepare the robot for fastest path
+                publishAndSleep();
+                if (turnTwiceFlag){
+                    turn(Direction.DIRECTION_RIGHT);
+                    publishAndSleep();
+                    turnTwiceFlag = false;
+                }
                 calibrate();                        //we want to be facing the right direction and aligned well before it
                 System.out.println("Movements: " + movementCounter);
                 System.out.println("Turns: " + turnCounter);
