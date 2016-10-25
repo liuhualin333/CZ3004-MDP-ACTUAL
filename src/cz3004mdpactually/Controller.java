@@ -858,7 +858,11 @@ public class Controller {
                         if (!StateOfMap.frontIsTraversable()){ 
                             break;
                         }
-                        else{    
+                        else{
+                            if (exploredNodeCount == 300){
+                                done = true;
+                                break;
+                            }
                             forward(1);
                             scan();
                             publishAndSleep();
@@ -991,6 +995,8 @@ public class Controller {
                 if(!goalReached)
                     moveToObjective(goalZoneLocation);
                 moveToObjective(startZoneLocation);
+                turn(Direction.DIRECTION_RIGHT);    //this line and the next prepare the robot for fastest path
+                calibrate();                        //we want to be facing the right direction and aligned well before it
                 System.out.println("Movements: " + movementCounter);
                 System.out.println("Turns: " + turnCounter);
                 explorationDone = true;
