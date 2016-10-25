@@ -123,22 +123,22 @@ public class StateOfMap {
              obstacleMap[Robot.Tile2X][Robot.Tile2Y] == 1 && 
              obstacleMap[Robot.Tile3X][Robot.Tile3Y] == 1 )
             return true;
-        if (frontPlusOneIsBorder()){
-            if ( NotObstacleIsExplored(Robot.Tile1X, Robot.Tile1Y) && 
-                 NotObstacleIsExplored(Robot.Tile2X, Robot.Tile2Y) && 
-                 NotObstacleIsExplored(Robot.Tile3X, Robot.Tile3Y) )
-                return true;
-            else 
-                return false;
-        }
-        if ( NotObstacleIsExplored(Robot.Tile1X, Robot.Tile1Y) && 
-             NotObstacleIsExplored(Robot.Tile2X, Robot.Tile2Y) && 
-             NotObstacleIsExplored(Robot.Tile3X, Robot.Tile3Y) &&
-             obstacleMap[Robot.Tile1EX][Robot.Tile1EY] == 1 && 
-             obstacleMap[Robot.Tile2EX][Robot.Tile2EY] == 1 && 
-             obstacleMap[Robot.Tile3EX][Robot.Tile3EY] == 1     
-           )
-            return true;
+//        if (frontPlusOneIsBorder()){
+//            if ( NotObstacleIsExplored(Robot.Tile1X, Robot.Tile1Y) && 
+//                 NotObstacleIsExplored(Robot.Tile2X, Robot.Tile2Y) && 
+//                 NotObstacleIsExplored(Robot.Tile3X, Robot.Tile3Y) )
+//                return true;
+//            else 
+//                return false;
+//        }
+//        if ( NotObstacleIsExplored(Robot.Tile1X, Robot.Tile1Y) && 
+//             NotObstacleIsExplored(Robot.Tile2X, Robot.Tile2Y) && 
+//             NotObstacleIsExplored(Robot.Tile3X, Robot.Tile3Y) &&
+//             obstacleMap[Robot.Tile1EX][Robot.Tile1EY] == 1 && 
+//             obstacleMap[Robot.Tile2EX][Robot.Tile2EY] == 1 && 
+//             obstacleMap[Robot.Tile3EX][Robot.Tile3EY] == 1     
+//           )
+//            return true;
         return false;
     } 
 
@@ -210,22 +210,22 @@ public class StateOfMap {
              obstacleMap[Robot.Tile6X][Robot.Tile6Y] == 1 && 
              obstacleMap[Robot.Tile7X][Robot.Tile7Y] == 1 )
             return true;
-        if (leftPlusOneIsBorder()){
-            if ( NotObstacleIsExplored(Robot.Tile5X, Robot.Tile5Y) && 
-                 NotObstacleIsExplored(Robot.Tile6X, Robot.Tile6Y) && 
-                 NotObstacleIsExplored(Robot.Tile7X, Robot.Tile7Y) )
-                return true;
-            else 
-                return false;
-        }
-        if ( NotObstacleIsExplored(Robot.Tile5X, Robot.Tile5Y) && 
-             NotObstacleIsExplored(Robot.Tile6X, Robot.Tile6Y) && 
-             NotObstacleIsExplored(Robot.Tile7X, Robot.Tile7Y) &&
-             obstacleMap[Robot.Tile5EX][Robot.Tile5EY] == 1 && 
-             obstacleMap[Robot.Tile6EX][Robot.Tile6EY] == 1 && 
-             obstacleMap[Robot.Tile7EX][Robot.Tile7EY] == 1     
-           )
-            return true;
+//        if (leftPlusOneIsBorder()){
+//            if ( NotObstacleIsExplored(Robot.Tile5X, Robot.Tile5Y) && 
+//                 NotObstacleIsExplored(Robot.Tile6X, Robot.Tile6Y) && 
+//                 NotObstacleIsExplored(Robot.Tile7X, Robot.Tile7Y) )
+//                return true;
+//            else 
+//                return false;
+//        }
+//        if ( NotObstacleIsExplored(Robot.Tile5X, Robot.Tile5Y) && 
+//             NotObstacleIsExplored(Robot.Tile6X, Robot.Tile6Y) && 
+//             NotObstacleIsExplored(Robot.Tile7X, Robot.Tile7Y) &&
+//             obstacleMap[Robot.Tile5EX][Robot.Tile5EY] == 1 && 
+//             obstacleMap[Robot.Tile6EX][Robot.Tile6EY] == 1 && 
+//             obstacleMap[Robot.Tile7EX][Robot.Tile7EY] == 1     
+//           )
+//            return true;
         return false;
     } 
 
@@ -297,22 +297,22 @@ public class StateOfMap {
              obstacleMap[Robot.Tile9X][Robot.Tile9Y] == 1 && 
              obstacleMap[Robot.Tile10X][Robot.Tile10Y] == 1 )
             return true;
-        if (rightPlusOneIsBorder()){
-            if ( NotObstacleIsExplored(Robot.Tile8X, Robot.Tile8Y) && 
-                 NotObstacleIsExplored(Robot.Tile9X, Robot.Tile9Y) && 
-                 NotObstacleIsExplored(Robot.Tile10X, Robot.Tile10Y) )
-                return true;
-            else 
-                return false;
-        }
-        if ( NotObstacleIsExplored(Robot.Tile8X, Robot.Tile8Y) && 
-             NotObstacleIsExplored(Robot.Tile9X, Robot.Tile9Y) && 
-             NotObstacleIsExplored(Robot.Tile10X, Robot.Tile10Y) &&
-             obstacleMap[Robot.Tile8EX][Robot.Tile8EY] == 1 && 
-             obstacleMap[Robot.Tile9EX][Robot.Tile9EY] == 1 && 
-             obstacleMap[Robot.Tile10EX][Robot.Tile10EY] == 1     
-           )
-            return true;
+//        if (rightPlusOneIsBorder()){
+//            if ( NotObstacleIsExplored(Robot.Tile8X, Robot.Tile8Y) && 
+//                 NotObstacleIsExplored(Robot.Tile9X, Robot.Tile9Y) && 
+//                 NotObstacleIsExplored(Robot.Tile10X, Robot.Tile10Y) )
+//                return true;
+//            else 
+//                return false;
+//        }
+//        if ( NotObstacleIsExplored(Robot.Tile8X, Robot.Tile8Y) && 
+//             NotObstacleIsExplored(Robot.Tile9X, Robot.Tile9Y) && 
+//             NotObstacleIsExplored(Robot.Tile10X, Robot.Tile10Y) &&
+//             obstacleMap[Robot.Tile8EX][Robot.Tile8EY] == 1 && 
+//             obstacleMap[Robot.Tile9EX][Robot.Tile9EY] == 1 && 
+//             obstacleMap[Robot.Tile10EX][Robot.Tile10EY] == 1     
+//           )
+//            return true;
         return false;
     } 
 }
