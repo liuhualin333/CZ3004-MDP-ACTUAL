@@ -1186,7 +1186,7 @@ public class Controller {
                             if (Direction.CUR_DIRECTION != Direction.DIRECTION_LEFT){
                                 if (consecutiveForward != 0){
                                     forward(consecutiveForward);
-                                    consecutiveForward = 0;
+                                    consecutiveForward = 1;
                                 }
                                 turn(Direction.DIRECTION_LEFT);
                                 publishAndSleep(); 
@@ -1203,7 +1203,7 @@ public class Controller {
                             if (Direction.CUR_DIRECTION != Direction.DIRECTION_RIGHT){
                                 if (consecutiveForward != 0){
                                     forward(consecutiveForward);
-                                    consecutiveForward = 0;
+                                    consecutiveForward = 1;
                                 }
                                 turn(Direction.DIRECTION_RIGHT);
                                 publishAndSleep();
@@ -1220,7 +1220,7 @@ public class Controller {
                             if (Direction.CUR_DIRECTION != Direction.DIRECTION_DOWN){
                                 if (consecutiveForward != 0){
                                     forward(consecutiveForward);
-                                    consecutiveForward = 0;
+                                    consecutiveForward = 1;
                                 }
                                 turn(Direction.DIRECTION_DOWN);
                                 publishAndSleep(); 
@@ -1237,7 +1237,7 @@ public class Controller {
                             if (Direction.CUR_DIRECTION != Direction.DIRECTION_UP){
                                 if (consecutiveForward != 0){
                                     forward(consecutiveForward);
-                                    consecutiveForward = 0;
+                                    consecutiveForward = 1;
                                 }
                                 turn(Direction.DIRECTION_UP);
                                 publishAndSleep(); 
