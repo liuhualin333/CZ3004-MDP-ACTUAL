@@ -475,7 +475,7 @@ public class Controller {
             
             //executeTurn(Direction.TURN_LEFT);     
         }
-        else if(StateOfMap.canCalibrateFront()){
+        if(StateOfMap.canCalibrateFront()){
             while (Connection.writingToAndroid) {}
             Connection.writingToArduino = true;
             con.writeData("ap|");
@@ -487,7 +487,7 @@ public class Controller {
             }
             lastCaliMovementCounter = movementCounter;
         }
-        else if (StateOfMap.canCalibrateLeft()){
+        if (StateOfMap.canCalibrateLeft()){
             executeTurn(Direction.TURN_LEFT);
             
             while (Connection.writingToAndroid) {}
@@ -638,7 +638,7 @@ public class Controller {
                 }
             }
         }
-        if (movementCounter - lastCaliMovementCounter >= 3){  //will change condition later
+        if (movementCounter - lastCaliMovementCounter >= 1){  //will change condition later
             if (!explorationDone)
                 calibrate();
         }
