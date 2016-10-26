@@ -459,20 +459,8 @@ public class Controller {
     
     public void calibrate(){
         
-        if(StateOfMap.canCalibrateFront()){
-            while (Connection.writingToAndroid) {}
-            Connection.writingToArduino = true;
-            con.writeData("ap|");
-            while (true){
-                if (con.messageRecognition() == 5){
-                    Connection.writingToArduino = false;
-                    break;
-                }
-            }
-            lastCaliMovementCounter = movementCounter;
-        }
         if (StateOfMap.canCalibrateRight()){      
-            executeTurn(Direction.TURN_RIGHT);
+            //executeTurn(Direction.TURN_RIGHT);
             
             while (Connection.writingToAndroid) {}
             Connection.writingToArduino = true;
@@ -485,7 +473,19 @@ public class Controller {
             }
             lastCaliMovementCounter = movementCounter;
             
-            executeTurn(Direction.TURN_LEFT);     
+            //executeTurn(Direction.TURN_LEFT);     
+        }
+        else if(StateOfMap.canCalibrateFront()){
+            while (Connection.writingToAndroid) {}
+            Connection.writingToArduino = true;
+            con.writeData("ap|");
+            while (true){
+                if (con.messageRecognition() == 5){
+                    Connection.writingToArduino = false;
+                    break;
+                }
+            }
+            lastCaliMovementCounter = movementCounter;
         }
         else if (StateOfMap.canCalibrateLeft()){
             executeTurn(Direction.TURN_LEFT);
