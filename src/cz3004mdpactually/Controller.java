@@ -792,6 +792,11 @@ public class Controller {
             @Override
             protected Integer doInBackground() {                            
                 scan();
+                executeTurn(Direction.TURN_LEFT);
+                publishAndSleep();
+                calibrate();
+                executeTurn(Direction.TURN_RIGHT);
+                publishAndSleep();
                 executeTurn(Direction.TURN_RIGHT);
                 publishAndSleep();
                 scan();
@@ -827,6 +832,7 @@ public class Controller {
                             justTurnedRight = false;
                             movedAlready = true;
                         }
+                        publishAndSleep();
                         scan();
                         updateExploredAndObstacleCount();
                         publishAndSleep();
@@ -864,6 +870,7 @@ public class Controller {
                                 break;
                             }
                             forward(1);
+                            publishAndSleep();
                             scan();
                             publishAndSleep();
                             updateExploredAndObstacleCount();
@@ -1104,9 +1111,11 @@ public class Controller {
 
                         if (StateOfMap.frontIsTraversable()) {            
                             forward(1);
-                            if (exploredNodeCount != 300)
+                            publishAndSleep();
+                            if (exploredNodeCount != 300){
                                 scan();
-                            publishAndSleep(); 
+                                publishAndSleep(); 
+                            }
                             bestPathImpossible = false;
                             updateExploredAndObstacleCount();
                         } 
