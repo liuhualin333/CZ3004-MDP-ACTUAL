@@ -119,9 +119,9 @@ public class StateOfMap {
     public static boolean canCalibrateFront() {
         if (frontIsBorder())
             return true;
-        if ( obstacleMap[Robot.Tile1X][Robot.Tile1Y] == 1 && 
-             obstacleMap[Robot.Tile2X][Robot.Tile2Y] == 1 && 
-             obstacleMap[Robot.Tile3X][Robot.Tile3Y] == 1 )
+        if ( //obstacleMap[Robot.Tile1X][Robot.Tile1Y] == 1 && 
+             obstacleMap[Robot.Tile2X][Robot.Tile2Y] == 1 )//&& 
+             //obstacleMap[Robot.Tile3X][Robot.Tile3Y] == 1 )
             return true;
 //        if (frontPlusOneIsBorder()){
 //            if ( NotObstacleIsExplored(Robot.Tile1X, Robot.Tile1Y) && 

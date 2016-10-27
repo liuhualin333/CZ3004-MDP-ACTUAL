@@ -85,12 +85,12 @@ public class Controller {
                 while (con.messageRecognition() != 6){}
                 fullExplore(1);
                 while (!explorationDone){}
-                while (Connection.writingToAndroid || Connection.writingToArduino) {}
-                con.writeData("bExplore done");
-                while (con.messageRecognition() != 6){}
+                //while (Connection.writingToAndroid || Connection.writingToArduino) {}
+                //con.writeData("bExplore done");
+                //while (con.messageRecognition() != 6){}
             }
             else if(readInt == 11){
-                while (Connection.writingToAndroid || Connection.writingToArduino) {}
+                //while (Connection.writingToAndroid || Connection.writingToArduino) {}
                 con.writeData("bFastest Path start");
                 while (con.messageRecognition() != 6){}
                 fastPath(1);
@@ -858,6 +858,8 @@ public class Controller {
                         if (movedAlready && currentLocation[0] == startZoneLocation[0] && currentLocation[1] == startZoneLocation[1])
                             break;
                     }
+                    if ( exploredNodeCount >= 260)
+                        done = true;
                 }
 
                 while (!done){
@@ -1001,6 +1003,7 @@ public class Controller {
                 
                 if (done){                        
                     System.out.println("Exploration complete, moving to goal then back to start.");
+                    System.out.println("Ignored Nodes: " + (300 - exploredNodeCount));
                     System.out.println("Obstacle count: " + obstacleCount);
                     System.out.println("Movements: " + movementCounter);
                     System.out.println("Turns: " + turnCounter);                   
@@ -1020,7 +1023,22 @@ public class Controller {
                 }             
                 if(!goalReached)
                     moveToObjective(goalZoneLocation);
-                moveToObjective(startZoneLocation);
+                if(currentLocation[0] != startZoneLocation[0] && currentLocation[1] != startZoneLocation[1])
+                    moveToObjective(startZoneLocation);
+                System.out.println("Movements: " + movementCounter);
+                System.out.println("Turns: " + turnCounter);
+                System.out.println("Done exploration, sleep now");
+                
+                try{
+                TimeUnit.SECONDS.sleep(20);
+                }
+                catch (Exception e){}
+                System.out.println("Calibrate in 10..");
+                try{
+                TimeUnit.SECONDS.sleep(10);
+                }
+                catch (Exception e){}
+                calibrate();
                 turn(Direction.DIRECTION_RIGHT);    //this line and the next prepare the robot for fastest path
                 publishAndSleep();
                 if (turnTwiceFlag){
@@ -1028,9 +1046,8 @@ public class Controller {
                     publishAndSleep();
                     turnTwiceFlag = false;
                 }
-                calibrate();                        //we want to be facing the right direction and aligned well before it
-                System.out.println("Movements: " + movementCounter);
-                System.out.println("Turns: " + turnCounter);
+                calibrate();
+                System.out.println("Calibration is done.");
                 explorationDone = true;
                 return 1;
             }
