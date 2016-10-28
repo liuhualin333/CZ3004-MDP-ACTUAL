@@ -85,14 +85,24 @@ public class Controller {
                 while (con.messageRecognition() != 6){}
                 fullExplore(1);
                 while (!explorationDone){}
+                System.out.println("Out of fullExplore code");
                 //while (Connection.writingToAndroid || Connection.writingToArduino) {}
                 //con.writeData("bExplore done");
                 //while (con.messageRecognition() != 6){}
+                while(true){
+                    readInt = con.messageRecognition();
+                    if (readInt == 11)
+                        break;
+                }
+                System.out.println("Time for fastest Path");
+                fastPath(1);
+                while (!fastestPathDone){}
+                System.out.println("Fastest Path Done");
             }
             else if(readInt == 11){
                 //while (Connection.writingToAndroid || Connection.writingToArduino) {}
-                con.writeData("bFastest Path start");
-                while (con.messageRecognition() != 6){}
+                //con.writeData("bFastest Path start");
+                //while (con.messageRecognition() != 6){}
                 fastPath(1);
                 while (!fastestPathDone){}
                 while (Connection.writingToAndroid || Connection.writingToArduino) {}
@@ -115,7 +125,7 @@ public class Controller {
                 setRobotStartLocation(tmp[0], tmp[1]);
                 con.writeData("bSet robot done");
             }
-            
+
         }
     }
     
