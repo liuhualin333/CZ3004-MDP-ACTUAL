@@ -858,7 +858,7 @@ public class Controller {
                         if (movedAlready && currentLocation[0] == startZoneLocation[0] && currentLocation[1] == startZoneLocation[1])
                             break;
                     }
-                    if ( exploredNodeCount >= 260)
+                    if ( exploredNodeCount >= 270)
                         done = true;
                 }
 
