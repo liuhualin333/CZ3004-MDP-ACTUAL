@@ -1049,14 +1049,67 @@ public class Controller {
                 }
                 catch (Exception e){}
                 calibrate();
-                turn(Direction.DIRECTION_RIGHT);    //this line and the next prepare the robot for fastest path
-                publishAndSleep();
-                if (turnTwiceFlag){
-                    turn(Direction.DIRECTION_RIGHT);
-                    publishAndSleep();
-                    turnTwiceFlag = false;
-                }
-                calibrate();
+                
+                //determine where to face using the first node in fastest path actionSequence
+                    actionSequence = map.findPath(currentLocation, goalZoneLocation); 
+                    for (Node s : actionSequence){
+                        System.out.println("Action Path: " + s.getX() + " " + s.getY());
+                        directionX = s.getX() - Robot.R9X;
+                        directionY = s.getY() - Robot.R9Y;
+
+                        if (directionX < 0 && directionY == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_LEFT){
+                                turn(Direction.DIRECTION_LEFT);
+                                publishAndSleep();
+                                calibrate();
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_LEFT);
+                                    publishAndSleep();
+                                    turnTwiceFlag = false;
+                                    calibrate();
+                                }
+                            }
+                        } else if (directionX > 0 && directionY == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_RIGHT){
+                                turn(Direction.DIRECTION_RIGHT);
+                                publishAndSleep(); 
+                                calibrate();
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_RIGHT);
+                                    publishAndSleep();
+                                    turnTwiceFlag = false;
+                                    calibrate();
+                                }
+                            }
+                        } else if (directionY < 0 && directionX == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_DOWN){
+                                turn(Direction.DIRECTION_DOWN);
+                                publishAndSleep();
+                                calibrate();
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_DOWN);
+                                    publishAndSleep();
+                                    turnTwiceFlag = false;
+                                    calibrate();
+                                }
+                            }
+                        } else if (directionY > 0 && directionX == 0) {
+                            if (Direction.CUR_DIRECTION != Direction.DIRECTION_UP){
+                                turn(Direction.DIRECTION_UP);
+                                publishAndSleep(); 
+                                calibrate();
+                                if (turnTwiceFlag){
+                                    turn(Direction.DIRECTION_UP);
+                                    publishAndSleep();
+                                    turnTwiceFlag = false;
+                                    calibrate();
+                                }
+                            }
+                        }
+                        break;
+                    }
+                //end determine which direction to face
+
                 System.out.println("Calibration is done.");
                 explorationDone = true;
                 return 1;
@@ -1208,7 +1261,6 @@ public class Controller {
             nearestUnexplored[i][1] = -1;
         }
         moveToObjectiveDemo(goalZoneLocation);
-        fastestPathDone = true;
     }
     
     //move to a node assuming there is a path to it in the currently explored space
@@ -1318,6 +1370,7 @@ public class Controller {
                     forward(consecutiveForward);
                     publishAndSleep(); 
                 }
+                fastestPathDone = true;
                 return 1;
 
              }
