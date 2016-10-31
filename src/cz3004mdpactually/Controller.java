@@ -1048,7 +1048,13 @@ public class Controller {
                 TimeUnit.SECONDS.sleep(10);
                 }
                 catch (Exception e){}
+                
+                //intense calibration
                 calibrate();
+                for (int i = 0; i < 4; i++){
+                    executeTurn(Direction.TURN_RIGHT);
+                    calibrate();
+                }
                 
                 //determine where to face using the first node in fastest path actionSequence
                     actionSequence = map.findPath(currentLocation, goalZoneLocation); 
