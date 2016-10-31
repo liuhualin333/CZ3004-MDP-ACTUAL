@@ -42,13 +42,13 @@ public class Controller {
     static boolean isUnique = true;
     static List<Node> impossibleNodes = new LinkedList<Node>();
     static List<Node> adjustedImpossibleNodes = new LinkedList<Node>();
-    static boolean explorationDone = false;
+    static volatile boolean explorationDone = false;
     static boolean goalReached = false;
  
     //for fastest path
     static int prevX = 0, prevY = 0;
     static int consecutiveForward = 0;
-    static boolean fastestPathDone = false;
+    static volatile boolean fastestPathDone = false;
     
     static int speed;
     static final int sleepTime = 100;
