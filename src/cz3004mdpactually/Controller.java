@@ -35,7 +35,7 @@ public class Controller {
     static boolean movedAlready = false;
     static int exploredNodeCount;
     static int obstacleCount;
-    boolean done;  //means explored 100%
+    boolean done;
     static boolean thereAreImpossibleNodesLeft = false;
     static List<Node> priorityNodes = new LinkedList<Node>();
     static boolean leniencyTrigger = false;
@@ -499,7 +499,7 @@ public class Controller {
             lastCaliMovementCounter = movementCounter;
         }
         if (StateOfMap.canCalibrateLeft()){
-            if (movementCounter - lastCaliLeftMovementCounter > 3){
+            if (movementCounter - lastCaliLeftMovementCounter > 3 || done == true){
                 executeTurn(Direction.TURN_LEFT);
 
                 while (Connection.writingToAndroid) {}
