@@ -499,7 +499,7 @@ public class Controller {
             lastCaliMovementCounter = movementCounter;
         }
         if (StateOfMap.canCalibrateLeft()){
-            if (movementCounter - lastCaliLeftMovementCounter > 3 || done == true){
+            if (movementCounter - lastCaliLeftMovementCounter > 6 || done == true){
                 executeTurn(Direction.TURN_LEFT);
 
                 while (Connection.writingToAndroid) {}
@@ -1053,10 +1053,10 @@ public class Controller {
                 
                 //intense calibration
                 calibrate();
-                for (int i = 0; i < 4; i++){
-                    executeTurn(Direction.TURN_RIGHT);
-                    calibrate();
-                }
+//                for (int i = 0; i < 4; i++){
+//                    executeTurn(Direction.TURN_RIGHT);
+//                    calibrate();
+//                }
                 
                 //determine where to face using the first node in fastest path actionSequence
                     actionSequence = map.findPath(currentLocation, goalZoneLocation); 
