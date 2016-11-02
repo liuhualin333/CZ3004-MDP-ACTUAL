@@ -486,7 +486,7 @@ public class Controller {
             
             //executeTurn(Direction.TURN_LEFT);     
         }
-        if(StateOfMap.canCalibrateFront()){
+        else if(StateOfMap.canCalibrateFront()){
             while (Connection.writingToAndroid) {}
             Connection.writingToArduino = true;
             con.writeData("ap|");
@@ -865,10 +865,12 @@ public class Controller {
                         scan();
                         updateExploredAndObstacleCount();
                         publishAndSleep();
-                        if (movedAlready && currentLocation[0] == startZoneLocation[0] && currentLocation[1] == startZoneLocation[1])
-                            break;
+                        if (movedAlready && currentLocation[0] == startZoneLocation[0] && currentLocation[1] == startZoneLocation[1]){
+                            if ( exploredNodeCount >= 250)
+                                break;
+                        }
                     }
-                    if ( exploredNodeCount >= 270)
+                    if ( exploredNodeCount >= 250)
                         done = true;
                 }
 
