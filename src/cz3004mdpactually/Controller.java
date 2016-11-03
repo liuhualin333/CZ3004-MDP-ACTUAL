@@ -56,6 +56,7 @@ public class Controller {
     static int movementCounter = 0;
     static int lastCaliMovementCounter = 0;
     static int lastCaliLeftMovementCounter = 0;
+    static int lastCaliRightMovementCounter = 0;
     static int turnCounter = 0;
     static int [] currentLocation = new int [2];
     static int [] startZoneLocation = new int [2]; //start and end zone are 3x3 tiles
@@ -471,8 +472,7 @@ public class Controller {
     public void calibrate(){
         
         if (StateOfMap.canCalibrateRight()){      
-            //executeTurn(Direction.TURN_RIGHT);
-            
+               
             while (Connection.writingToAndroid) {}
             Connection.writingToArduino = true;
             con.writeData("ap|");
@@ -484,7 +484,21 @@ public class Controller {
             }
             lastCaliMovementCounter = movementCounter;
             
-            //executeTurn(Direction.TURN_LEFT);     
+            if (movementCounter - lastCaliRightMovementCounter > 4 ){
+                executeTurn(Direction.TURN_RIGHT);
+                while (Connection.writingToAndroid) {}
+                Connection.writingToArduino = true;
+                con.writeData("ap|");
+                while (true){
+                    if (con.messageRecognition() == 5){
+                        Connection.writingToArduino = false;
+                        break;
+                    }
+                }
+                executeTurn(Direction.TURN_LEFT);  
+                lastCaliRightMovementCounter = movementCounter;
+                lastCaliMovementCounter = movementCounter;
+            }
         }
         else if(StateOfMap.canCalibrateFront()){
             while (Connection.writingToAndroid) {}
