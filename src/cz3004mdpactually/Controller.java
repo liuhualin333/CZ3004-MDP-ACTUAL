@@ -499,7 +499,7 @@ public class Controller {
             lastCaliMovementCounter = movementCounter;
         }
         if (StateOfMap.canCalibrateLeft()){
-            if (movementCounter - lastCaliLeftMovementCounter > 6 || done == true){
+            if (movementCounter - lastCaliLeftMovementCounter > 4 || done == true){
                 executeTurn(Direction.TURN_LEFT);
 
                 while (Connection.writingToAndroid) {}

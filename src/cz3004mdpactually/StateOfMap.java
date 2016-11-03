@@ -36,9 +36,44 @@ public class StateOfMap {
         return isValidTile(x, y) && isExploredTile(x, y) && !isObstacleTile(x, y);
     }
     
+    public static boolean goalOrStart (int x, int y) {
+        
+        switch(x){
+            case 0:
+                if (y == 0 || y == 1 || y == 2)
+                    return true;
+                break;
+            case 1:
+                if (y == 0 || y == 1 || y == 2)
+                    return true;
+                break;
+            case 2:
+                if (y == 0 || y == 1 || y == 2)
+                    return true;
+                break;
+            case 12:
+                if (y == 17 || y == 18 || y == 19)
+                    return true;
+                break;
+            case 13:
+                if (y == 17 || y == 18 || y == 19)
+                    return true;
+                break;
+            case 14:
+                if (y == 17 || y == 18 || y == 19)
+                    return true;
+                break;
+            default:
+                return false;
+        }
+        return false;
+    }
+    
     public static void setObstacleTile(int x, int y, int value){
-        if ( isValidTile(x,y) )
-            obstacleMap[x][y] = value;
+        if ( isValidTile(x,y) ){
+            if ( !goalOrStart(x,y) )
+                obstacleMap[x][y] = value;
+        }
 //        if ( !Controller.updateList.contains(Controller.map.getNode(x, y)))
 //            Controller.updateList.add(Controller.map.getNode(x, y));
     }
